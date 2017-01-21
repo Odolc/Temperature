@@ -156,6 +156,15 @@ class temperature extends eqLogic {
 	}   
 	log::add('temperature', 'debug', 'Configuration : seuil Inconfort ' . $seuil);
 
+	
+	// valeurs pour test, l'indice de chaleur doit être de 53°C...
+	/*
+	$temperature = 35.0;
+	log::add('temperature', 'debug', 'temperature ' . $temperature);
+	$humidite = 90.0;
+	log::add('temperature', 'debug', 'humidite ' . $humidite);
+	*/
+
 	/* calcul du windchill
 		
   	*/
@@ -180,16 +189,9 @@ class temperature extends eqLogic {
         //log::add('windchill', 'info', 'getInformations');
 
   	/* calcul de l'indice de chaleur
-  		xxx
+  		
   	*/
-	
-	// valeurs pour test, l'indice de chaleur doit être de 53°C...
-	/*
-	$temperature = 35.0;
-	log::add('temperature', 'debug', 'temperature ' . $temperature);
-	$humidite = 90.0;
-	log::add('temperature', 'debug', 'humidite ' . $humidite);
-	*/
+
 	if(($temperature > 27.0) and ($humidite > 40.0)) {
 		$c1 = -42.379;
 		$c2 = 2.04901523;
