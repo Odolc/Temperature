@@ -186,9 +186,9 @@ class temperature extends eqLogic {
 	// valeurs pour test, l'indice de chaleur doit être de 53°C...
 	/*
 	$temperature = 35.0;
-	//log::add('temperature', 'debug', 'temperature ' . $temperature);
-	$humidite = 75.0;
-	//log::add('temperature', 'debug', 'humidite ' . $humidite);
+	log::add('temperature', 'debug', 'temperature ' . $temperature);
+	$humidite = 90.0;
+	log::add('temperature', 'debug', 'humidite ' . $humidite);
 	*/
 	if(($temperature > 27.0) and ($humidite > 40.0)) {
 		$c1 = -42.379;
@@ -274,7 +274,7 @@ class temperature extends eqLogic {
 			log::add('temperature', 'debug', 'old_alert_h ' . $old_alert_h);
 			$cmd->setConfiguration('value', $alert_h);
 			$cmd->save();
-			if ($alert_r!=$old_alert_h) {
+			if ($alert_h!=$old_alert_h) {
 				$cmd->setCollectDate('');
 				$cmd->event($alert_h);
 			}
