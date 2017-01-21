@@ -1,0 +1,3 @@
+
+Le plugin ne comporte pas de configuration générale.
+Il faut ajouter des équipements pour la température, l’humidité et la vitesse du vent
