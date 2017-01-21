@@ -1,3 +1,0 @@
-
-The plugin doesn't contain a main setting
-Il faut ajouter un équipement pour la température et un équipement pour l’humidité
