@@ -1,7 +1,0 @@
-[panel,primary]
-.Version 1.0
---
-Erstellung des Plugins
-.Version 1.1
---
-Doc Korrektur
