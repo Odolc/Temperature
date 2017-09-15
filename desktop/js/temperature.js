@@ -72,14 +72,9 @@ function addCmdToTable(_cmd) {
         tr += '<td><input class="cmdAttr form-control input-sm" data-l1key="unite" style="width : 90px;" placeholder="{{Unité}}"></td>';
         tr += '</td>';
         tr += '<td>';
-        
-        //tr += '<span><input type="checkbox" data-size="mini" data-label-text="{{Historiser}}" class="cmdAttr bootstrapSwitch" data-l1key="isHistorized" /></span>';
-        //tr += '<span><input type="checkbox" data-size="mini" data-label-text="{{Afficher}}" class="cmdAttr bootstrapSwitch" data-l1key="isVisible" /><br/></span>';
 	tr += '<span><label class="checkbox-inline"><input type="checkbox" class="cmdAttr checkbox-inline" data-l1key="isHistorized" checked/>{{Historiser}}</label></span> ';
 	tr += '<span><label class="checkbox-inline"><input type="checkbox" cLass="cmdAttr checkbox-inline" data-l1key="isVisible" checked/>{{Afficher}}</label></span> ';
-
         tr += '<span><input type="checkbox" class="cmdAttr" data-l1key="eventOnly"' + disabled + ' /> {{Evénement seulement}}<br/></span>';
-        
         tr += '</td>';
         tr += '<td>';
         if (is_numeric(_cmd.id)) {
