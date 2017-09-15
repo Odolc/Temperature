@@ -1,0 +1,2 @@
+
+Dieses Plugin erlaubt es, die Wirkung des Windes auf die Temperatur, Windchill (eher bei niedrigen Temperaturen) sowie die Wirkung der Incofort durch Feuchtigkeit verursacht werden, bei höheren Temperaturen (Humidex) zu berechnen.
