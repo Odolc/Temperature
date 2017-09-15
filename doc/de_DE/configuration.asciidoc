@@ -1,4 +1,0 @@
-
-Das Plugin enthält keine allgemeine Konfiguration.
-Man muß Geräte für Temperatur, Luftfeuchtigkeit und Windgeschwindigkeit hinzufügen.
-Il est possible d'indiquer un seuil d'alerte pour l'indice de chaleur. Par défaut c'est 40°C qui déclenche l'alerte inconfort
