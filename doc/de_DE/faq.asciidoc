@@ -1,0 +1,13 @@
+[panel,primary]
+.Stützt sich das Plugin auf APIs Dritter ?
+--
+Nein, das Plugin macht die Berechnung hinsichtlich der Temperatur, der Feuchtigkeit und der Windgeschwindigkeit intern.
+--
+.Windfaktor (oder Wind-Chill Index), was ist das?
+--
+xxx
+--
+.Und der Humidex index?
+--
+xxx
+--
