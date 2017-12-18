@@ -9,4 +9,4 @@ Doc Korrektur
 --
 .Version 2.0
 --
-Mise à jour pour compatibilité Jeedom V3
+Update für Jeedom V3 Kompatibilität
