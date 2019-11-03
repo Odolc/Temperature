@@ -56,59 +56,59 @@ class temperature extends eqLogic {
         $windchillCmd = new temperatureCmd();
         $windchillCmd->setName(__('Windchill', __FILE__));
         $windchillCmd->setEqLogic_id($this->id);
-	$windchillCmd->setLogicalId('windchill');
+        $windchillCmd->setLogicalId('windchill');
         $windchillCmd->setConfiguration('data', 'windchill');
         $windchillCmd->setType('info');
         $windchillCmd->setSubType('numeric');
         $windchillCmd->setUnite('°C');
         $windchillCmd->setEventOnly(1);
-	$windchillCmd->setIsHistorized(0);
-	$windchillCmd->setDisplay('generic_type','GENERIC');
+        $windchillCmd->setIsHistorized(0);
+        $windchillCmd->setDisplay('generic_type','GENERIC');
         $windchillCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'indice de chaleur
         $indiceChaleurCmd = new temperatureCmd();
         $indiceChaleurCmd->setName(__('Indice de chaleur', __FILE__));
         $indiceChaleurCmd->setEqLogic_id($this->id);
-	$indiceChaleurCmd->setLogicalId('IndiceChaleur');
+        $indiceChaleurCmd->setLogicalId('IndiceChaleur');
         $indiceChaleurCmd->setConfiguration('data', 'indiceChaleur');
         $indiceChaleurCmd->setType('info');
         $indiceChaleurCmd->setSubType('numeric');
         $indiceChaleurCmd->setUnite('°C');
         $indiceChaleurCmd->setEventOnly(1);
-	$indiceChaleurCmd->setIsHistorized(0);
-	//$indiceChaleurCmd->setIsVisible(0);
-	$indiceChaleurCmd->setDisplay('generic_type','GENERIC');
+        $indiceChaleurCmd->setIsHistorized(0);
+        //$indiceChaleurCmd->setIsVisible(0);
+        $indiceChaleurCmd->setDisplay('generic_type','GENERIC');
         $indiceChaleurCmd->save();
 
 	// Ajout d'une commande dans le tableau pour l'alerte inconfort
         $AlertInconfortCmd = new temperatureCmd();
         $AlertInconfortCmd->setName(__('Alerte inconfort', __FILE__));
         $AlertInconfortCmd->setEqLogic_id($this->id);
-	$AlertInconfortCmd->setLogicalId('alerte_inconfort');
+        $AlertInconfortCmd->setLogicalId('alerte_inconfort');
         $AlertInconfortCmd->setConfiguration('data', 'alert_h');
         $AlertInconfortCmd->setType('info');
         $AlertInconfortCmd->setSubType('binary');
         $AlertInconfortCmd->setUnite('');
         $AlertInconfortCmd->setEventOnly(1);
-	$AlertInconfortCmd->setIsHistorized(0);
-	//$AlertInconfortCmd->setIsVisible(1);
-	$AlertInconfortCmd->setDisplay('generic_type','GENERIC');
+        $AlertInconfortCmd->setIsHistorized(0);
+        //$AlertInconfortCmd->setIsVisible(1);
+        $AlertInconfortCmd->setDisplay('generic_type','GENERIC');
         $AlertInconfortCmd->save();
         
 	// Ajout d'une commande dans le tableau pour l'info inconfort 
         $InfoInconfortCmd = new temperatureCmd();
         $InfoInconfortCmd->setName(__('Message inconfort', __FILE__));
         $InfoInconfortCmd->setEqLogic_id($this->id);
-	$InfoInconfortCmd->setLogicalId('info_inconfort');
+        $InfoInconfortCmd->setLogicalId('info_inconfort');
         $InfoInconfortCmd->setConfiguration('data', 'info_inconfort');
         $InfoInconfortCmd->setType('info');
         $InfoInconfortCmd->setSubType('string');
         $InfoInconfortCmd->setUnite('');
         $InfoInconfortCmd->setEventOnly(1);
-	$InfoInconfortCmd->setIsHistorized(0);
-	//$InfoInconfortCmd->setIsVisible(1);
-	$InfoInconfortCmd->setDisplay('generic_type','GENERIC');
+        $InfoInconfortCmd->setIsHistorized(0);
+        //$InfoInconfortCmd->setIsVisible(1);
+        $InfoInconfortCmd->setDisplay('generic_type','GENERIC');
         $InfoInconfortCmd->save();
 
 	
