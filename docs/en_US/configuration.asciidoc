@@ -1,0 +1,4 @@
+
+The plugin does not have general configuration.
+Il faut ajouter des équipements pour la température, l’humidité et la vitesse du vent
+Il est possible d'indiquer un seuil d'alerte pour l'indice de chaleur. Par défaut c'est 40°C qui déclenche l'alerte inconfort
