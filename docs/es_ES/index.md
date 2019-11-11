@@ -12,8 +12,8 @@ Il est possible d'indiquer un seuil d'alerte pour l'indice de chaleur. Par défa
 
 Voici un exemple de configuration
 
-![exemple](../images/exemple.png)
-![exemple](../images/exemple1.png)
+![exemple](../images/exemple.PNG)
+![exemple](../images/exemple1.PNG)
 
 # FAQ
 
