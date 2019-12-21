@@ -6,14 +6,16 @@ Ce plugin permet de calculer l'effet du vent sur la température ressentie, wind
 
 Le plugin ne comporte pas de configuration générale.
 Il faut ajouter des équipements pour la température, l’humidité et la vitesse du vent
-Il est possible d'indiquer un seuil d'alerte pour l'indice de chaleur. Par défaut c'est 40°C qui déclenche l'alerte inconfort
+Il est possible d'indiquer :
+- Un seuil d'alerte pour l'indice de chaleur (HUMIDEX). Par défaut c'est 40°C qui déclenche l'alerte
+- Un seuil de pé-alerte pour l'indice de chaleur (HUMIDEX). Par défaut c'est 30°C qui déclenche la préalerte
 
 # Exemple de configuration
 
 Voici un exemple de configuration
 
-![exemple](../images/exemple.PNG)
-![exemple](../images/exemple1.PNG)
+![exemple](../images/exemple.png)
+![exemple](../images/exemple1.png)
 
 # FAQ
 
