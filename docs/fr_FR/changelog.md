@@ -6,6 +6,10 @@ description: Plugin pour calculer le windchill et l'indice de température", Ind
 ## Changelog
 >*Remarque : en cas de mise à jour non listée ici, c'est que celle-ci ne comporte que des changements mineurs du type documentation ou corrections de bugs mineurs.*
 
+# Version 3.1.1
+
+- Correction Images dans la doc
+
 # Version 3.1
 
 - Ajout d’un cron 30
