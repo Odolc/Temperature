@@ -130,7 +130,7 @@ class temperature extends eqLogic {
         $temperatureCmd= $this->getCmd(null, 'alerte_humidex');
         if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
-            $temperaturemd->setName(__('Alerte Humidex', __FILE__));
+            $temperatureCmd->setName(__('Alerte Humidex', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);
             $temperatureCmd->setLogicalId('alerte_humidex');
             $temperatureCmd->setConfiguration('data', 'alert_h');
@@ -355,6 +355,7 @@ class temperature extends eqLogic {
             $alert_ph = 0;
         }
         log::add('temperature', 'debug', '│ Seuil Pré-alerte Humidex : ' . $alert_ph);
+        log::add('temperature', 'debug', '└─────────');
 
         /*  ********************** Mise à Jour des équipements *************************** */
         log::add('temperature', 'debug', '┌───────── MISE A JOUR : '.$_eqName);
