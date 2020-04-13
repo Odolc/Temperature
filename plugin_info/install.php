@@ -29,7 +29,7 @@ function temperature_install() {
         $cron->remove();
     }
 
-    message::add('temperature', 'Merci pour l\'installation du plugin Temperature');
+    message::add('Plugin Température', 'Merci pour l\'installation du plugin Température');
 }
 
 function temperature_update() {
@@ -68,7 +68,7 @@ function temperature_update() {
         log::add('temperature', 'error', 'temperature_update ERROR: '.$e);
     }
 
-    message::add('temperature', 'Merci pour la mise à jour de ce plugin, consultez le changelog');
+    message::add('Plugin Température', 'Merci pour la mise à jour de ce plugin, consultez le changelog');
 }
 
 function updateLogicalId($eqLogic, $from, $to) {
