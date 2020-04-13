@@ -257,18 +257,18 @@ class temperature extends eqLogic {
         $seuil=$this->getConfiguration('SEUIL');
         if ($seuil == '') {
             $seuil=40;
-            log::add('temperature', 'debug', '│ Aucun Seuil Alerte Humidex de saisie, valeur par défaut : ' . $seuil. ' ');
+            log::add('temperature', 'debug', '│ Aucun Seuil Alerte Humidex de saisie, valeur par défaut : ' . $seuil.' °C');
         } else {
-            log::add('temperature', 'debug', '│ Seuil Alerte Humidex : ' . $seuil. ' ');
+            log::add('temperature', 'debug', '│ Seuil Alerte Humidex : ' . $seuil. ' °C');
         }
 
 		/*  ********************** Seuil Alerte Humidex*************************** */
         $pre_seuil=$this->getConfiguration('PRE_SEUIL');
         if ($pre_seuil == '') {
             $pre_seuil=30;
-            log::add('temperature', 'debug', '│ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : '. $pre_seuil. ' ');
+            log::add('temperature', 'debug', '│ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : '. $pre_seuil. ' °C');
         } else {
-            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex : ' . $pre_seuil. ' ');
+            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex : ' . $pre_seuil. ' °C');
         }
         log::add('temperature', 'debug', '└─────────');
 
@@ -379,7 +379,7 @@ class temperature extends eqLogic {
 			$cmd->setConfiguration('value', $indiceChaleur);
 			$cmd->save();
             $cmd->event($indiceChaleur);
-            log::add('temperature', 'debug', '│ Facteur Humidex : ' . $indiceChaleur.'°C');
+            log::add('temperature', 'debug', '│ Facteur Humidex : ' . $indiceChaleur.' °C');
 		}
 
         $cmd = $this->getCmd('info', 'alert_h');
@@ -387,7 +387,7 @@ class temperature extends eqLogic {
 			$cmd->setConfiguration('value', $alert_h);
 			$cmd->save();
             $cmd->event($alert_h);
-            log::add('temperature', 'debug', '│ Facteur Humidex : ' . $alert_h.'°C');
+            log::add('temperature', 'debug', '│ Facteur Humidex : ' . $alert_h.' °C');
 		}
 
         $cmd = $this->getCmd('info', 'alerte_humidex');
