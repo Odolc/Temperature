@@ -1,5 +1,4 @@
 <?php
-
 /* This file is part of Jeedom.
  *
  * Jeedom is free software: you can redistribute it and/or modify
@@ -23,7 +22,7 @@ try {
     if (!isConnect('admin')) {
         throw new Exception(__('401 - Accès non autorisé', __FILE__));
     }
-    
+
      if (init('action') == 'getTemperature') {
         $temperature = temperature::byId(init('id'));
         if (!is_object($temperature)) {
@@ -39,7 +38,18 @@ try {
         ajax::success($return);
      }
 
-    
+    if (init('action') == 'autoDEL_eq') {
+		$eqLogic = temperature::byId(init('id'));
+		if (!is_object($eqLogic)) {
+			throw new Exception(__('Temperature eqLogic non trouvé : ', __FILE__) . init('id'));
+        }
+        foreach ($eqLogic->getCmd() as $cmd) {
+            $cmd->remove();
+            $cmd->save();
+        }
+        ajax::success();
+    }
+
     throw new Exception(__('Aucune methode correspondante à : ', __FILE__) . init('action'));
     /*     * *********Catch exeption*************** */
 } catch (Exception $e) {

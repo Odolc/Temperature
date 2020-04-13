@@ -18,24 +18,64 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-
 function temperature_install() {
+    jeedom::getApiKey('temperature');
+
     config::save('functionality::cron5::enable', 1, 'rosee');
     config::save('functionality::cron30::enable', 0, 'rosee');
+
     $cron = cron::byClassAndFunction('temperature', 'pull');
     if (is_object($cron)) {
         $cron->remove();
     }
+
+    message::add('temperature', 'Merci pour l\'installation du plugin Temperature');
 }
 
 function temperature_update() {
-    if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1)
-        config::save('functionality::cron5::enable', 1, 'rosee');
-    if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1)
-        config::save('functionality::cron30::enable', 0, 'rosee');
+    jeedom::getApiKey('temperature');
+
     $cron = cron::byClassAndFunction('temperature', 'pull');
     if (is_object($cron)) {
         $cron->remove();
+    }
+
+    if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1) {
+        config::save('functionality::cron5::enable', 1, 'rosee');
+    }
+
+    if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1) {
+        config::save('functionality::cron30::enable', 0, 'rosee');
+    }
+
+    $plugin = plugin::byId('temperature');
+    $eqLogics = eqLogic::byType($plugin->getId());
+    /* foreach ($eqLogics as $eqLogic) {
+
+    }*/
+
+    //resave eqs for new cmd:
+    try
+    {
+        $eqs = eqLogic::byType('temperature');
+        foreach ($eqs as $eq){
+            $eq->save();
+        }
+    }
+    catch (Exception $e)
+    {
+        $e = print_r($e, 1);
+        log::add('temperature', 'error', 'baro_update ERROR: '.$e);
+    }
+
+    message::add('temperature', 'Merci pour la mise à jour de ce plugin, consultez le changelog');
+}
+
+function updateLogicalId($eqLogic, $from, $to) {
+    $temperatureCmd = $eqLogic->getCmd(null, $from);
+    if (is_object($temperatureCmd)) {
+        $temperatureCmd->setLogicalId($to);
+        $temperatureCmd->save();
     }
 }
 
