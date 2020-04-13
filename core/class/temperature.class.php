@@ -307,7 +307,7 @@ class temperature extends eqLogic {
         $c8 = 8.5282 * pow(10,-4);
         $c9 = -1.99 * pow(10,-6);
         $tempF = 32.0 + 1.8 * $temperature;
-        //log::add('temperature', 'debug', 'tempF : ' . $tempF);
+        log::add('temperature', 'debug', '│ Température (F) : ' . $tempF.' °F');
         $terme1 = $c1 + $c2 * $tempF + $c3 * $humidity + $c4 * $tempF * $humidity;
         $terme2 = $c5 * pow($tempF,2.0);
         $terme3 = $c6 * pow($humidity,2.0);
@@ -321,17 +321,17 @@ class temperature extends eqLogic {
 
         if($indiceChaleur < 15.0) {
             $info_inconfort = 'Sensation de frais ou de froid';
-        }elseif(($indiceChaleur >= 15.0) and ($indiceChaleur <= 19.0)) {
+        }elseif($indiceChaleur >= 15.0 && $indiceChaleur <= 19.0) {
             $info_inconfort = 'Aucun inconfort';
-        }elseif(($indiceChaleur > 19.0) and ($indiceChaleur <= 29.0)) {
+        }elseif($indiceChaleur > 19.0 && $indiceChaleur <= 29.0) {
             $info_inconfort = "Sensation de bien être";
-        }elseif(($indiceChaleur > 29.0) and ($indiceChaleur <= 34.0)) {
+        }elseif($indiceChaleur > 29.0 && $indiceChaleur <= 34.0) {
             $info_inconfort = "Sensation d'inconfort plus ou moins grande";
-        }elseif(($indiceChaleur > 34.0) and ($indiceChaleur <= 39.0)) {
+        }elseif($indiceChaleur > 34.0 && $indiceChaleur <= 39.0) {
             $info_inconfort = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
-        }elseif(($indiceChaleur > 39.0) and ($indiceChaleur <= 45.0)) {
+        }elseif($indiceChaleur > 39.0 && $indiceChaleur <= 45.0) {
             $info_inconfort = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
-        }elseif(($indiceChaleur > 45.0) and ($indiceChaleur <= 53.0)) {
+        }elseif($indiceChaleur > 45.0 && $indiceChaleur <= 53.0) {
             $info_inconfort = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
         }else {
             $info_inconfort = 'Coup de chaleur imminent (danger de mort).';

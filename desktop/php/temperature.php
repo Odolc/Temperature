@@ -109,7 +109,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     <fieldset>
                         <div class="form-group">
                             <label class="col-md-2 control-label">{{Température}}
-                                <sup><i class="fas fa-question-circle" title="{{Commande température.}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Température}}"></i></sup>
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
@@ -126,7 +126,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input type="text" class="eqLogicAttr form-control input-sm" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative %}}">
+                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{(%) Humidité Relative }}">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectHumiCmd"><i class="fas fa-list-alt"></i></a>
                                     </span>
@@ -139,7 +139,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input type="text" class="eqLogicAttr form-control input-sm" data-l1key="configuration" data-l2key="vent" placeholder="{{Vitesse du vent}}">
+                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="vent" placeholder="{{Vitesse du vent}}">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectWindCmd"><i class="fas fa-list-alt"></i></a>
                                     </span>
@@ -151,7 +151,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
                             </label>
                             <div class="col-md-2">
-                                <input type="text" class="eqLogicAttr form-control input-sm" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
+                                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
                             </div>
                         </div>
                         <div class="form-group">
@@ -159,7 +159,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
                             </label>
                             <div class="col-md-2">
-                                <input type="text" class="eqLogicAttr form-control input-sm" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
+                                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
                             </div>
                         </div>
                     </fieldset>
