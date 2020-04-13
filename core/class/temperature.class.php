@@ -236,7 +236,7 @@ class temperature extends eqLogic {
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $humidity = $cmdvirt->execCmd();
-            log::add('temperature', 'debug', '│ Humidité Relative : ' . $humidity.' %');
+            log::add('temperature', 'debug', '│ Humidité Relative : ' . $humidity.'  %');
         } else {
             throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
             log::add('temperature', 'error', 'Configuration : humidite non existante : ' . $this->getConfiguration('humidite'));
