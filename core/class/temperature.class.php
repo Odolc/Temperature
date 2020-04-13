@@ -235,7 +235,7 @@ class temperature extends eqLogic {
         $idvirt = str_replace("#","",$this->getConfiguration('humidite'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
-            $humidite = $cmdvirt->execCmd();
+            $humidity = $cmdvirt->execCmd();
             log::add('temperature', 'debug', '│ Humidité Relative : ' . $humidity.' %');
         } else {
             throw new Exception(__('Le champ "Humidité Relative" ne peut être vide',__FILE__));
@@ -308,12 +308,12 @@ class temperature extends eqLogic {
         $c9 = -1.99 * pow(10,-6);
         $tempF = 32.0 + 1.8 * $temperature;
         //log::add('temperature', 'debug', 'tempF : ' . $tempF);
-        $terme1 = $c1 + $c2 * $tempF + $c3 * $humidite + $c4 * $tempF * $humidite;
+        $terme1 = $c1 + $c2 * $tempF + $c3 * $humidity + $c4 * $tempF * $humidity;
         $terme2 = $c5 * pow($tempF,2.0);
-        $terme3 = $c6 * pow($humidite,2.0);
-        $terme4 = $c7 * $humidite * pow($tempF,2.0);
-        $terme5 = $c8 * $tempF * pow($humidite,2.0);
-        $terme6 = $c9 * pow($tempF,2.0) * pow($humidite,2.0);
+        $terme3 = $c6 * pow($humidity,2.0);
+        $terme4 = $c7 * $humidity * pow($tempF,2.0);
+        $terme5 = $c8 * $tempF * pow($humidity,2.0);
+        $terme6 = $c9 * pow($tempF,2.0) * pow($humidity,2.0);
         $indiceChaleurF = $terme1 + $terme2 + $terme3 + $terme4 + $terme5 + $terme6;
         $indiceChaleur = ($indiceChaleurF - 32.0) / 1.8;
         $indiceChaleur = round(($indiceChaleur), 1);
