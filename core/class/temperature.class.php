@@ -137,7 +137,7 @@ class temperature extends eqLogic {
 
         // Ajout d'une commande dans le tableau pour le windchill
         $temperatureCmd= $this->getCmd(null, 'windchill');
-        if (!is_object($windchillCmd)) {
+        if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
             $temperatureCmd->setName(__('Windchill', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);

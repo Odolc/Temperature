@@ -65,7 +65,7 @@ function temperature_update() {
     catch (Exception $e)
     {
         $e = print_r($e, 1);
-        log::add('temperature', 'error', 'baro_update ERROR: '.$e);
+        log::add('temperature', 'error', 'temperature_update ERROR: '.$e);
     }
 
     message::add('temperature', 'Merci pour la mise à jour de ce plugin, consultez le changelog');
