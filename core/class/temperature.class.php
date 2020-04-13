@@ -24,19 +24,19 @@ class temperature extends eqLogic {
 
     /*     * ***********************Methode static*************************** */
 	public static function cron5() {
-		foreach (eqLogic::byType('temperature') as $rosee) {
+        foreach (eqLogic::byType('temperature') as $rosee) {
 			if ($rosee->getIsEnable()) {
 				log::add('temperature', 'debug', '================= CRON 5 ==================');
 				$rosee->getInformations();
 			}
 		}
 	}
-    
+
   	public static function cron30($_eqlogic_id = null) {
 		//no both cron5 and cron30 enabled:
-		if (config::byKey('functionality::cron5::enable', 'temperature', 0) == 1)
-		{
-			config::save('functionality::cron30::enable', 0, 'temperature');
+        if (config::byKey('functionality::cron5::enable', 'temperature', 0) == 1)
+        {
+            config::save('functionality::cron30::enable', 0, 'temperature');
 			return;
 		}
 		foreach (eqLogic::byType('temperature') as $rosee) {
@@ -45,9 +45,7 @@ class temperature extends eqLogic {
 				$rosee->getInformations();
 			}
 		}
-	}  
-
-
+	}
 
     /*     * *********************Methode d'instance************************* */
     public function refresh() {
@@ -61,32 +59,22 @@ class temperature extends eqLogic {
 
 
     public function preUpdate() {
+        if (!$this->getIsEnable()) return;
+
     	if ($this->getConfiguration('temperature') == '') {
     		throw new Exception(__('Le champ temperature ne peut etre vide',__FILE__));
         }
-        
+
         if ($this->getConfiguration('humidite') == '') {
         	throw new Exception(__('Le champ humidite ne peut etre vide',__FILE__));
     	}
-    	
+
     	if ($this->getConfiguration('vent') == '') {
         	throw new Exception(__('Le champ vitesse du vent ne peut etre vide',__FILE__));
     	}
     }
 
     public function postInsert() {
-    	// Ajout d'une commande dans le tableau pour le windchill
-            $windchillCmd = new temperatureCmd();
-            $windchillCmd->setName(__('Windchill', __FILE__));
-            $windchillCmd->setEqLogic_id($this->id);
-            $windchillCmd->setLogicalId('windchill');
-            $windchillCmd->setConfiguration('data', 'windchill');
-            $windchillCmd->setType('info');
-            $windchillCmd->setSubType('numeric');
-            $windchillCmd->setUnite('°C');
-            $windchillCmd->setIsHistorized(0);
-            $windchillCmd->setDisplay('generic_type','GENERIC_INFO');
-            $windchillCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'indice de chaleur
             $indiceChaleurCmd = new temperatureCmd();
@@ -114,7 +102,7 @@ class temperature extends eqLogic {
             $AlertInconfortCmd->setIsHistorized(0);
             $AlertInconfortCmd->setDisplay('generic_type','GENERIC_INFO');
             $AlertInconfortCmd->save();
-        
+
 	// Ajout d'une commande dans le tableau pour la  pré-alerte inconfort
             $AlertInconfortCmd = new temperatureCmd();
             $AlertInconfortCmd->setName(__('Pré Alerte Humidex', __FILE__));
@@ -127,8 +115,8 @@ class temperature extends eqLogic {
             $AlertInconfortCmd->setIsHistorized(0);
             $AlertInconfortCmd->setDisplay('generic_type','GENERIC_INFO');
             $AlertInconfortCmd->save();
-        
-	// Ajout d'une commande dans le tableau pour l'info inconfort 
+
+	// Ajout d'une commande dans le tableau pour l'info inconfort
             $InfoInconfortCmd = new temperatureCmd();
             $InfoInconfortCmd->setName(__('Message inconfort', __FILE__));
             $InfoInconfortCmd->setEqLogic_id($this->id);
@@ -143,8 +131,32 @@ class temperature extends eqLogic {
             $InfoInconfortCmd->save();
 	}
 
-  	public function postSave()
-    {
+  	public function postSave() {
+        log::add('baro', 'debug', 'postSave()');
+        $order = 1;
+
+        // Ajout d'une commande dans le tableau pour le windchill
+        $temperatureCmd= $this->getCmd(null, 'windchill');
+        if (!is_object($windchillCmd)) {
+            $temperatureCmd = new temperatureCmd();
+            $temperatureCmd->setName(__('Windchill', __FILE__));
+            $temperatureCmd->setEqLogic_id($this->id);
+            $temperatureCmd->setLogicalId('windchill');
+            $temperatureCmd->setConfiguration('data', 'windchill');
+            $temperatureCmd->setType('info');
+            $temperatureCmd->setSubType('numeric');
+            $temperatureCmd->setIsHistorized(0);
+            $temperatureCmd->setOrder($order);
+            $order ++;
+        }
+        $temperatureCmd->setEqLogic_id($this->getId());
+        $temperatureCmd->setUnite('°C');
+        $temperatureCmd->setDisplay('generic_type','GENERIC_INFO');
+        $temperatureCmd->setType('info');
+        $temperatureCmd->setSubType('numeric');
+        $temperatureCmd->save();
+
+
         $refresh = $this->getCmd(null, 'refresh');
         if (!is_object($refresh)) {
             $refresh = new temperatureCmd();
@@ -156,10 +168,10 @@ class temperature extends eqLogic {
         $refresh->setSubType('other');
         $refresh->setEqLogic_id($this->getId());
         $refresh->save();
-    }  
-    
-    
-    
+    }
+
+
+
 	/*  **********************Getteur Setteur*************************** */
 	public function postUpdate() {
         foreach (eqLogic::byType('temperature') as $temperature) {
@@ -180,7 +192,7 @@ class temperature extends eqLogic {
             } else {
                 log::add('temperature', 'error', 'Configuration : temperature non existante : ' . $this->getConfiguration('temperature'));
             }
-        
+
         /*  ********************** HUMIDITE *************************** */
             $idvirt = str_replace("#","",$this->getConfiguration('humidite'));
             $cmdvirt = cmd::byId($idvirt);
@@ -190,8 +202,8 @@ class temperature extends eqLogic {
             } else {
                 log::add('temperature', 'error', 'Configuration : humidite non existante : ' . $this->getConfiguration('humidite'));
             }
-        
-        /*  ********************** VENT *************************** */        
+
+        /*  ********************** VENT *************************** */
             $idvirt = str_replace("#","",$this->getConfiguration('vent'));
             $cmdvirt = cmd::byId($idvirt);
             if (is_object($cmdvirt)) {
@@ -200,8 +212,8 @@ class temperature extends eqLogic {
             } else {
                 log::add('temperature', 'error', 'Configuration : vent non existant : ' . $this->getConfiguration('vent'));
             }
-        
-		/*  ********************** Seuil Alerte Humidex*************************** */ 
+
+		/*  ********************** Seuil Alerte Humidex*************************** */
             $seuil=$this->getConfiguration('SEUIL');
             if ($seuil == '') {
                 $seuil=40;
@@ -210,8 +222,8 @@ class temperature extends eqLogic {
             } else {
                 log::add('temperature', 'debug', 'Seuil Alerte Humidex : ' . $seuil);
             }
-        
-		/*  ********************** Seuil Alerte Humidex*************************** */ 
+
+		/*  ********************** Seuil Alerte Humidex*************************** */
             $pre_seuil=$this->getConfiguration('PRE_SEUIL');
             if ($pre_seuil == '') {
                 $pre_seuil=30;
@@ -222,7 +234,7 @@ class temperature extends eqLogic {
             }
 
 	/* calcul du windchill
-		
+
   	*/
         log::add('temperature', 'debug', '========= CALCUL DU WINDCHILL ========');
         if($temperature > 10.0) {
@@ -245,7 +257,7 @@ class temperature extends eqLogic {
         //log::add('windchill', 'info', 'getInformations');
 
   	/* calcul de l'indice de chaleur
-  		
+
   	*/
         log::add('temperature', 'debug', '========= CALCUL DU FACTEUR HUMIDEX ========');
             $c1 = -42.379;
@@ -285,8 +297,8 @@ class temperature extends eqLogic {
                 $info_inconfort = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
             }else {
                 $info_inconfort = 'Coup de chaleur imminent (danger de mort).';
-            }    
-	
+            }
+
 	// Calcul de l'alerte inconfort indice de chaleur en fonction du seuil d'alerte
         log::add('temperature', 'debug', '=============== ALERTE HUMIDEX ===============');
             if(($indiceChaleur) >= $seuil) {
@@ -302,7 +314,7 @@ class temperature extends eqLogic {
         log::add('temperature', 'debug', 'Seuil Pré-alerte Humidex : ' . $alert_ph);
         log::add('temperature', 'debug', 'Seuil Alerte Haute Humidex : ' . $alert_h);
         log::add('temperature', 'debug', '=============== MISE A JOUR ===============');
-        
+
         $cmd = $this->getCmd('info', 'windchill');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $windchill);
@@ -310,7 +322,7 @@ class temperature extends eqLogic {
             $cmd->event($windchill);
                 log::add('temperature', 'debug', 'Windchill : ' . $windchill.'°C');
 		}
-     
+
         $cmd = $this->getCmd('info', 'info_inconfort');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $info_inconfort);
@@ -318,7 +330,7 @@ class temperature extends eqLogic {
             $cmd->event($info_inconfort);
                 log::add('temperature', 'debug', 'Degré de comfort : ' . $info_inconfort. '');
 		}
-  
+
         $cmd = $this->getCmd('info', 'indiceChaleur');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $indiceChaleur);
@@ -326,15 +338,15 @@ class temperature extends eqLogic {
             $cmd->event($indiceChaleur);
                 log::add('temperature', 'debug', 'Facteur Humidex : ' . $indiceChaleur.'°C');
 		}
- 
+
         $cmd = $this->getCmd('info', 'alert_h');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $alert_h);
 			$cmd->save();
             $cmd->event($alert_h);
                 log::add('temperature', 'debug', 'Facteur Humidex : ' . $alert_h.'°C');
-		}        
-        
+		}
+
         $cmd = $this->getCmd('info', 'alerte_humidex');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $alert_h);
@@ -343,7 +355,7 @@ class temperature extends eqLogic {
             $cmd->event($alert_h);
                 log::add('temperature', 'debug', 'Etat Alerte Haute Humidex : ' . $alert_h. '');
 		}
-        
+
         $cmd = $this->getCmd('info', 'palerte_humidex');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $alert_ph);
@@ -352,7 +364,7 @@ class temperature extends eqLogic {
             $cmd->event($alert_ph);
                 log::add('temperature', 'debug', 'Etat Pré-alerte Humidex : ' . $alert_ph. '');
 		}
-        
+
         return ;
     }
 }
@@ -375,5 +387,3 @@ class temperatureCmd extends cmd {
 		}
 	}
 }
-
-?>
