@@ -278,7 +278,6 @@ class temperature extends eqLogic {
 
         if($temperature > 10.0) {
             $windchill = $temperature;
-            $visibleWindchill = 0;
         } else {
             if($vent >= 4.8) {
                 $Terme1 = 13.12 + 0.6215 * $temperature;
@@ -288,11 +287,9 @@ class temperature extends eqLogic {
             } else {
                 $windchill = $temperature + 0.2 * (0.1345 * $temperature - 1.59) * $vent;
             }
-            $visibleWindchill = 1;
         }
         $windchill = round(($windchill), 1);
         log::add('temperature', 'debug', '│ Windchill : ' . $windchill.'°C');
-        log::add('temperature', 'debug', '│ visibleWindchill : ' . $visibleWindchill);
         log::add('temperature', 'debug', '└───────');
 
         /*  ********************** Calcul de l'indice de chaleur *************************** */
