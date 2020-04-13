@@ -14,34 +14,57 @@
  * along with Jeedom. If not, see <http://www.gnu.org/licenses/>.
  */
 $('#bt_selectTempCmd').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'numeric'}}, function (result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info',
+            subType: 'numeric'
+        }
+    }, function (result) {
         $('.eqLogicAttr[data-l2key=temperature]').atCaret('insert', result.human);
     });
 });
 
 $('#bt_selectHumiCmd').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'numeric'}}, function (result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info',
+            subType: 'numeric'
+        }
+    }, function (result) {
         $('.eqLogicAttr[data-l2key=humidite]').atCaret('insert', result.human);
     });
 });
 
 $('#bt_selectWindCmd').on('click', function () {
-    jeedom.cmd.getSelectModal({cmd: {type: 'info', subType: 'numeric'}}, function (result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info',
+            subType: 'numeric'
+        }
+    }, function (result) {
         $('.eqLogicAttr[data-l2key=vent]').atCaret('insert', result.human);
     });
 });
 
-$("#table_cmd").delegate(".listEquipementInfo", 'click', function() {
+$("#table_cmd").delegate(".listEquipementInfo", 'click', function () {
     var el = $(this);
-    jeedom.cmd.getSelectModal({cmd: {type: 'info'}}, function(result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'info'
+        }
+    }, function (result) {
         var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=calcul]');
         calcul.atCaret('insert', result.human);
     });
 });
 
-$("#table_cmd").delegate(".listEquipementAction", 'click', function() {
+$("#table_cmd").delegate(".listEquipementAction", 'click', function () {
     var el = $(this);
-    jeedom.cmd.getSelectModal({cmd: {type: 'action'}}, function(result) {
+    jeedom.cmd.getSelectModal({
+        cmd: {
+            type: 'action'
+        }
+    }, function (result) {
         var calcul = el.closest('tr').find('.cmdAttr[data-l1key=configuration][data-l2key=' + el.attr('data-input') + ']');
         calcul.value(result.human);
     });
@@ -112,7 +135,7 @@ $('#bt_autoDEL_eq').on('click', function () {
 
 function addCmdToTable(_cmd) {
     if (!isset(_cmd)) {
-        console.log("add cmd:" + init(_cmd.id))	// ajouté pour debug
+        console.log("add cmd:" + init(_cmd.id)) // ajouté pour debug
         var _cmd = {
             configuration: {}
         };
