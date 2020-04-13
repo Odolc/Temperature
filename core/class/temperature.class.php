@@ -25,7 +25,7 @@ class temperature extends eqLogic {
     /*     * ***********************Methode static*************************** */
 	public static function cron5() {
         foreach (eqLogic::byType('temperature') as $temperature) {
-			if ($temperature>getIsEnable()) {
+			if ($temperature->getIsEnable()) {
 				log::add('temperature', 'debug', '================= CRON 5 ==================');
 				$temperature->getInformations();
 			}
