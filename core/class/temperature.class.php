@@ -257,8 +257,7 @@ class temperature extends eqLogic {
         $seuil=$this->getConfiguration('SEUIL');
         if ($seuil == '') {
             $seuil=40;
-            log::add('temperature', 'debug', '│ Seuil Alerte Humidex aucun équipement sélectionné');
-            log::add('temperature', 'debug', '│ Seuil Alerte Humidex par défaut : ' . $seuil. ' ');
+            log::add('temperature', 'debug', '│ Aucun Seuil Alerte Humidex de saisie, valeur par défaut : ' . $seuil. ' ');
         } else {
             log::add('temperature', 'debug', '│ Seuil Alerte Humidex : ' . $seuil. ' ');
         }
@@ -267,8 +266,7 @@ class temperature extends eqLogic {
         $pre_seuil=$this->getConfiguration('PRE_SEUIL');
         if ($pre_seuil == '') {
             $pre_seuil=30;
-            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex aucun équipement sélectionné');
-            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex par défaut : ' . $pre_seuil. ' ');
+            log::add('temperature', 'debug', '│ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : '. $pre_seuil. ' ');
         } else {
             log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex : ' . $pre_seuil. ' ');
         }
