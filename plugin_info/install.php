@@ -21,8 +21,8 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 function temperature_install() {
     jeedom::getApiKey('temperature');
 
-    config::save('functionality::cron5::enable', 1, 'rosee');
-    config::save('functionality::cron30::enable', 0, 'rosee');
+    config::save('functionality::cron5::enable', 1, 'temperature');
+    config::save('functionality::cron30::enable', 0, 'temperature');
 
     $cron = cron::byClassAndFunction('temperature', 'pull');
     if (is_object($cron)) {
@@ -40,12 +40,12 @@ function temperature_update() {
         $cron->remove();
     }
 
-    if (config::byKey('functionality::cron5::enable', 'rosee', -1) == -1) {
-        config::save('functionality::cron5::enable', 1, 'rosee');
+    if (config::byKey('functionality::cron5::enable', 'temperature', -1) == -1) {
+        config::save('functionality::cron5::enable', 1, 'temperature');
     }
 
-    if (config::byKey('functionality::cron30::enable', 'rosee', -1) == -1) {
-        config::save('functionality::cron30::enable', 0, 'rosee');
+    if (config::byKey('functionality::cron30::enable', 'temperature', -1) == -1) {
+        config::save('functionality::cron30::enable', 0, 'temperature');
     }
 
     $plugin = plugin::byId('temperature');
