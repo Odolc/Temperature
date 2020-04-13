@@ -62,15 +62,15 @@ class temperature extends eqLogic {
         if (!$this->getIsEnable()) return;
 
     	if ($this->getConfiguration('temperature') == '') {
-    		throw new Exception(__('Le champ temperature ne peut etre vide',__FILE__));
+    		throw new Exception(__('Le champ "Température" ne peut etre vide',__FILE__));
         }
 
         if ($this->getConfiguration('humidite') == '') {
-        	throw new Exception(__('Le champ humidite ne peut etre vide',__FILE__));
+        	throw new Exception(__('Le champ "Humidité Relative" ne peut etre vide',__FILE__));
     	}
 
     	if ($this->getConfiguration('vent') == '') {
-        	throw new Exception(__('Le champ vitesse du vent ne peut etre vide',__FILE__));
+        	throw new Exception(__('Le champ "Vitesse du Vent" ne peut etre vide',__FILE__));
     	}
     }
 
@@ -169,7 +169,7 @@ class temperature extends eqLogic {
         $temperatureCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'info inconfort
-        $temperatureCmd= $this->getCmd(null, 'palerte_humidex');
+        $temperatureCmd= $this->getCmd(null, 'info_inconfort');
         if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
             $temperatureCmd->setName(__('Message inconfort', __FILE__));
