@@ -14,8 +14,8 @@ Il est possible d'indiquer :
 
 Voici un exemple de configuration
 
-![exemple](../images/exemple.png)
-![exemple](../images/exemple1.png)
+![exemple](../images/temp_exemple.png)
+![exemple](../images/temp_exemple1.png)
 
 # FAQ
 
