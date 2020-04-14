@@ -148,12 +148,12 @@ class temperature extends eqLogic {
         $temperatureCmd->save();
 
         // Ajout d'une commande dans le tableau pour la  pré-alerte inconfort
-        $temperatureCmd= $this->getCmd(null, 'palerte_humidex');
+        $temperatureCmd= $this->getCmd(null, 'alert_1');
         if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
             $temperatureCmd->setName(__('Pré Alerte Humidex', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('palerte_humidex');
+            $temperatureCmd->setLogicalId('alert_1');
             $temperatureCmd->setConfiguration('data', 'alert_ph');
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('binary');
@@ -386,12 +386,13 @@ class temperature extends eqLogic {
             log::add('temperature', 'debug', '│ Facteur Humidex : ' . $indiceChaleur.' °C');
 		}
 
-        $cmd = $this->getCmd('info', 'alert_h');
+        $cmd = $this->getCmd('info', 'alerte_1');
 		if (is_object($cmd)) {
-			$cmd->setConfiguration('value', $alert_h);
+			$cmd->setConfiguration('value', $alert_ph);
 			$cmd->save();
-            $cmd->event($alert_h);
-            log::add('temperature', 'debug', '│ Facteur Humidex : ' . $alert_h.' °C');
+            $cmd->setCollectDate('');
+            $cmd->event($alert_ph);
+            log::add('temperature', 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_ph. '');
 		}
 
         $cmd = $this->getCmd('info', 'alerte_humidex');
@@ -403,14 +404,7 @@ class temperature extends eqLogic {
             log::add('temperature', 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_h. '');
 		}
 
-        $cmd = $this->getCmd('info', 'palerte_humidex');
-		if (is_object($cmd)) {
-			$cmd->setConfiguration('value', $alert_ph);
-			$cmd->save();
-            $cmd->setCollectDate('');
-            $cmd->event($alert_ph);
-            log::add('temperature', 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_ph. '');
-		}
+
         log::add('temperature', 'debug', '└─────────');
         log::add('temperature', 'debug', '================ FIN CRON =================');
 
