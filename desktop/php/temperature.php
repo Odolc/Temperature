@@ -122,7 +122,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Humidité Relative}}
-                                <sup><i class="fas fa-question-circle" title="{{Commande humidité en %.}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{(%) Humidité relative}}"></i></sup>
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
@@ -135,7 +135,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">{{Vitesse du Vent}}
-                                <sup><i class="fas fa-question-circle" title="{{Vitesse du vent.}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{(km/h) Vitesse du vent.}}"></i></sup>
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">

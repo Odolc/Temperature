@@ -247,7 +247,7 @@ class temperature extends eqLogic {
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $vent = $cmdvirt->execCmd();
-            log::add('temperature', 'debug', '│ Vent : ' . $vent.' ');
+            log::add('temperature', 'debug', '│ Vent : ' . $vent.' km/h');
         } else {
             throw new Exception(__('Le champ "Vitesse du Vent" ne peut être vide',__FILE__));
             log::add('temperature', 'error', 'Configuration : vent non existant : ' . $this->getConfiguration('vent'));
