@@ -247,11 +247,18 @@ class temperature extends eqLogic {
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $vent = $cmdvirt->execCmd();
-            log::add('temperature', 'debug', '│ Vent : ' . $vent.' km/h');
+            $unite = $cmdvirt->getUnite();
+            log::add('temperature', 'debug', '│ Vent : ' . $vent.' ' .$unite);
         } else {
             throw new Exception(__('Le champ "Vitesse du Vent" ne peut être vide',__FILE__));
             log::add('temperature', 'error', 'Configuration : vent non existant : ' . $this->getConfiguration('vent'));
         }
+        if ($unite == 'm/s') {
+            log::add('temperature', 'debug', '│ la vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
+            $vent = $vent * 3.6;
+            log::add('temperature', 'debug', '│ Vent : ' . $vent.' km/h');
+        }
+
 
         /*  ********************** Seuil Alerte Humidex*************************** */
         $seuil=$this->getConfiguration('SEUIL');
