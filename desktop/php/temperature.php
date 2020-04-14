@@ -135,7 +135,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                         </div>
                         <div class="form-group">
                             <label class="col-md-2 control-label">{{Vitesse du Vent}}
-                                <sup><i class="fas fa-question-circle" title="{{(km/h) Vitesse du vent.}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{(km/h) Vitesse du vent}}"></i></sup>
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
@@ -148,7 +148,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
-                                <sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
                             </label>
                             <div class="col-md-2">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
@@ -156,7 +156,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Seuil Pré-alerte Humidex}}
-                                <sup><i class="fas fa-question-circle" title="{{Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
                             </label>
                             <div class="col-md-2">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
