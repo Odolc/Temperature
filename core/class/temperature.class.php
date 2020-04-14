@@ -254,7 +254,7 @@ class temperature extends eqLogic {
             log::add('temperature', 'error', 'Configuration : vent non existant : ' . $this->getConfiguration('vent'));
         }
         if ($unite == 'm/s') {
-            log::add('temperature', 'debug', '│ la vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
+            log::add('temperature', 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
             $vent = $vent * 3.6;
             log::add('temperature', 'debug', '│ Vent : ' . $vent.' km/h');
         }
