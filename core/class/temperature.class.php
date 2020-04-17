@@ -135,13 +135,13 @@ class temperature extends eqLogic {
         $temperatureCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'alerte inconfort
-        $temperatureCmd= $this->getCmd(null, 'alerte_humidex');
+        $temperatureCmd= $this->getCmd(null, 'alerte_2');
         if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
             $temperatureCmd->setName(__('Alerte Humidex', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('alerte_humidex');
-            $temperatureCmd->setConfiguration('data', 'alert_h');
+            $temperatureCmd->setLogicalId('alerte_2');
+            $temperatureCmd->setConfiguration('data', 'alert_2');
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('binary');
             $temperatureCmd->setUnite('');
@@ -166,7 +166,7 @@ class temperature extends eqLogic {
             $temperatureCmd->setName(__('Pré Alerte Humidex', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);
             $temperatureCmd->setLogicalId('alert_1');
-            $temperatureCmd->setConfiguration('data', 'alert_ph');
+            $temperatureCmd->setConfiguration('data', 'alert_1');
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('binary');
             $temperatureCmd->setUnite('');
@@ -365,18 +365,18 @@ class temperature extends eqLogic {
         /*  ********************** Calcul de l'alerte inconfort indice de chaleur en fonction du seuil d'alerte *************************** */
         log::add('temperature', 'debug', '┌───────── ALERTE HUMIDEX : '.$_eqName);
         if(($indiceChaleur) >= $seuil) {
-            $alert_h = 1;
+            $alert_2 = 1;
         } else {
-            $alert_h = 0;
+            $alert_2 = 0;
         }
-        log::add('temperature', 'debug', '│ Seuil Alerte Haute Humidex : ' . $alert_h);
+        log::add('temperature', 'debug', '│ Seuil Alerte Haute Humidex : ' . $alert_2);
 
         if(($indiceChaleur) >= $pre_seuil) {
-            $alert_ph = 1;
+            $alert_1 = 1;
         } else {
-            $alert_ph = 0;
+            $alert_1 = 0;
         }
-        log::add('temperature', 'debug', '│ Seuil Pré-alerte Humidex : ' . $alert_ph);
+        log::add('temperature', 'debug', '│ Seuil Pré-alerte Humidex : ' . $alert_1);
         log::add('temperature', 'debug', '└─────────');
 
         /*  ********************** Mise à Jour des équipements *************************** */
@@ -408,20 +408,20 @@ class temperature extends eqLogic {
 
         $cmd = $this->getCmd('info', 'alerte_1');
 		if (is_object($cmd)) {
-			$cmd->setConfiguration('value', $alert_ph);
+			$cmd->setConfiguration('value', $alert_1);
 			$cmd->save();
             $cmd->setCollectDate('');
-            $cmd->event($alert_ph);
-            log::add('temperature', 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_ph. '');
+            $cmd->event($alert_1);
+            log::add('temperature', 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1. '');
 		}
 
         $cmd = $this->getCmd('info', 'alerte_humidex');
 		if (is_object($cmd)) {
-			$cmd->setConfiguration('value', $alert_h);
+			$cmd->setConfiguration('value', $alert_2);
 			$cmd->save();
             $cmd->setCollectDate('');
-            $cmd->event($alert_h);
-            log::add('temperature', 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_h. '');
+            $cmd->event($alert_2);
+            log::add('temperature', 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2. '');
 		}
 
 

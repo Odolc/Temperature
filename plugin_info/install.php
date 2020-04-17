@@ -52,7 +52,7 @@ function temperature_update() {
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
         updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1');
-        updateLogicalId($eqLogic, 'alert_g', 'alert_2');
+        updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2');
     }
 
     //resave eqs for new cmd:
