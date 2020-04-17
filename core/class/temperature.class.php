@@ -93,8 +93,8 @@ class temperature extends eqLogic {
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('numeric');
             $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd->setTemplate('dashboard','core::multiline');
-            $temperatureCmd->setTemplate('mobile','core::multiline');
+            $temperatureCmd->setTemplate('dashboard','core::line');
+            $temperatureCmd->setTemplate('mobile','core::line');
             $temperatureCmd->setOrder($order);
             $order ++;
         }
@@ -103,8 +103,8 @@ class temperature extends eqLogic {
         $temperatureCmd->setDisplay('generic_type','GENERIC_INFO');
         $temperatureCmd->setType('info');
         $temperatureCmd->setSubType('numeric');
-        $temperatureCmd->setTemplate('dashboard','core::multiline');
-        $temperatureCmd->setTemplate('mobile','core::multiline');
+        $temperatureCmd->setTemplate('dashboard','core::line');
+        $temperatureCmd->setTemplate('mobile','core::line');
         $temperatureCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'indice de chaleur
