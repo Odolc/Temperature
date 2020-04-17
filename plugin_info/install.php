@@ -53,6 +53,7 @@ function temperature_update() {
     foreach ($eqLogics as $eqLogic) {
         updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1');
         updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2');
+        updateLogicalId($eqLogic, 'info_inconfort', 'msg');
     }
 
     //resave eqs for new cmd:

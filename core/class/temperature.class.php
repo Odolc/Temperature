@@ -185,13 +185,13 @@ class temperature extends eqLogic {
         $temperatureCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'info inconfort
-        $temperatureCmd= $this->getCmd(null, 'info_inconfort');
+        $temperatureCmd= $this->getCmd(null, 'msg');
         if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
             $temperatureCmd->setName(__('Message inconfort', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('info_inconfort');
-            $temperatureCmd->setConfiguration('data', 'info_inconfort');
+            $temperatureCmd->setLogicalId('msg');
+            $temperatureCmd->setConfiguration('data', 'msg');
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('string');
             $temperatureCmd->setUnite('');
@@ -344,21 +344,21 @@ class temperature extends eqLogic {
         log::add('temperature', 'debug', '│ Indice de Chaleur (Humidex) : ' . $indiceChaleur. ' °C');
 
         if($indiceChaleur < 15.0) {
-            $info_inconfort = 'Sensation de frais ou de froid';
+            $msg = 'Sensation de frais ou de froid';
         }elseif($indiceChaleur >= 15.0 && $indiceChaleur <= 19.0) {
-            $info_inconfort = 'Aucun inconfort';
+            $msg = 'Aucun inconfort';
         }elseif($indiceChaleur > 19.0 && $indiceChaleur <= 29.0) {
-            $info_inconfort = "Sensation de bien être";
+            $msg = "Sensation de bien être";
         }elseif($indiceChaleur > 29.0 && $indiceChaleur <= 34.0) {
-            $info_inconfort = "Sensation d'inconfort plus ou moins grande";
+            $msg = "Sensation d'inconfort plus ou moins grande";
         }elseif($indiceChaleur > 34.0 && $indiceChaleur <= 39.0) {
-            $info_inconfort = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
+            $msg = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
         }elseif($indiceChaleur > 39.0 && $indiceChaleur <= 45.0) {
-            $info_inconfort = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
+            $msg = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
         }elseif($indiceChaleur > 45.0 && $indiceChaleur <= 53.0) {
-            $info_inconfort = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
+            $msg = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
         }else {
-            $info_inconfort = 'Coup de chaleur imminent (danger de mort).';
+            $msg = 'Coup de chaleur imminent (danger de mort).';
         }
         log::add('temperature', 'debug', '└─────────');
 
@@ -390,12 +390,12 @@ class temperature extends eqLogic {
             log::add('temperature', 'debug', '│ Windchill : ' . $windchill.' °C');
 		}
 
-        $cmd = $this->getCmd('info', 'info_inconfort');
+        $cmd = $this->getCmd('info', 'msg');
 		if (is_object($cmd)) {
-			$cmd->setConfiguration('value', $info_inconfort);
+			$cmd->setConfiguration('value', $msg);
 			$cmd->save();
-            $cmd->event($info_inconfort);
-            log::add('temperature', 'debug', '│ Degré de comfort : ' . $info_inconfort. '');
+            $cmd->event($msg);
+            log::add('temperature', 'debug', '│ Degré de comfort : ' . $msg. '');
 		}
 
         $cmd = $this->getCmd('info', 'indiceChaleur');
