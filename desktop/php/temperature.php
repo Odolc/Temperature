@@ -16,6 +16,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <br />
                 <span>{{Ajouter}}</span>
             </div>
+            <div class="cursor eqLogicAction logoSecondary" data-action="gotoPluginConf">
+                <i class="fas fa-wrench"></i><br>
+                <span>{{Configuration}}</span>
+            </div>
         </div>
         <legend><i class="jeedom-thermo-moyen"></i> {{Mes températures ressenties}}</legend>
         <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
