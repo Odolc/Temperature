@@ -93,7 +93,7 @@ class temperature extends eqLogic {
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('numeric');
             $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd>setTemplate('dashboard','core::multiline');
+            $temperatureCmd->setTemplate('dashboard','core::multiline');
             $temperatureCmd->setTemplate('mobile','core::multiline');
             $temperatureCmd->setOrder($order);
             $order ++;
@@ -103,7 +103,7 @@ class temperature extends eqLogic {
         $temperatureCmd->setDisplay('generic_type','GENERIC_INFO');
         $temperatureCmd->setType('info');
         $temperatureCmd->setSubType('numeric');
-        $temperatureCmd>setTemplate('dashboard','core::multiline');
+        $temperatureCmd->setTemplate('dashboard','core::multiline');
         $temperatureCmd->setTemplate('mobile','core::multiline');
         $temperatureCmd->save();
 
@@ -120,7 +120,7 @@ class temperature extends eqLogic {
             $temperatureCmd->setUnite('°C');
             $temperatureCmd->setIsHistorized(0);
             $temperatureCmd->setIsVisible(0);
-            $temperatureCmd>setTemplate('dashboard','core::multiline');
+            $temperatureCmd->setTemplate('dashboard','core::multiline');
             $temperatureCmd->setTemplate('mobile','core::multiline');
             $temperatureCmd->setOrder($order);
             $order ++;
@@ -130,7 +130,7 @@ class temperature extends eqLogic {
         $temperatureCmd->setDisplay('generic_type','GENERIC_INFO');
         $temperatureCmd->setType('info');
         $temperatureCmd->setSubType('numeric');
-        $temperatureCmd>setTemplate('dashboard','core::line');
+        $temperatureCmd->setTemplate('dashboard','core::line');
         $temperatureCmd->setTemplate('mobile','core::line');
         $temperatureCmd->save();
 
@@ -146,7 +146,7 @@ class temperature extends eqLogic {
             $temperatureCmd->setSubType('binary');
             $temperatureCmd->setUnite('');
             $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd>setTemplate('dashboard','core::line');
+            $temperatureCmd->setTemplate('dashboard','core::line');
             $temperatureCmd->setTemplate('mobile','core::line');
             $temperatureCmd->setOrder($order);
             $order ++;
@@ -155,7 +155,7 @@ class temperature extends eqLogic {
         $temperatureCmd->setDisplay('generic_type','SIREN_STATE');
         $temperatureCmd->setType('info');
         $temperatureCmd->setSubType('binary');
-        $temperatureCmd>setTemplate('dashboard','core::line');
+        $temperatureCmd->setTemplate('dashboard','core::line');
         $temperatureCmd->setTemplate('mobile','core::line');
         $temperatureCmd->save();
 
@@ -171,7 +171,7 @@ class temperature extends eqLogic {
             $temperatureCmd->setSubType('binary');
             $temperatureCmd->setUnite('');
             $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd>setTemplate('dashboard','core::line');
+            $temperatureCmd->setTemplate('dashboard','core::line');
             $temperatureCmd->setTemplate('mobile','core::line');
             $temperatureCmd->setOrder($order);
             $order ++;
@@ -180,7 +180,7 @@ class temperature extends eqLogic {
         $temperatureCmd->setDisplay('generic_type','SIREN_STATE');
         $temperatureCmd->setType('info');
         $temperatureCmd->setSubType('binary');
-        $temperatureCmd>setTemplate('dashboard','core::line');
+        $temperatureCmd->setTemplate('dashboard','core::line');
         $temperatureCmd->setTemplate('mobile','core::line');
         $temperatureCmd->save();
 
@@ -198,7 +198,7 @@ class temperature extends eqLogic {
             $temperatureCmd->setIsHistorized(0);
             $temperatureCmd->setIsVisible(0);
             $temperatureCmd->setDisplay('generic_type','GENERIC_INFO');
-            $temperatureCmd>setTemplate('dashboard','core::Multiline');
+            $temperatureCmd->setTemplate('dashboard','core::Multiline');
             $temperatureCmd->setTemplate('mobile','core::Multiline');
             $temperatureCmd->setOrder($order);
             $order ++;
@@ -208,7 +208,7 @@ class temperature extends eqLogic {
         $temperatureCmd->setDisplay('generic_type','GENERIC_INFO');
         $temperatureCmd->setType('info');
         $temperatureCmd->setSubType('string');
-        $temperatureCmd>setTemplate('dashboard','core::Multiline');
+        $temperatureCmd->setTemplate('dashboard','core::Multiline');
         $temperatureCmd->setTemplate('mobile','core::Multiline');
         $temperatureCmd->save();
 
