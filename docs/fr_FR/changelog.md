@@ -13,15 +13,15 @@ description: Plugin pour calculer le windchill et l'indice de température", Ind
 - Modification création des commandes
 - Résolution Bug cron
 - Amélioration affichage V4
+- Mise à jour de la doc
+- Ajout widget core sur les commandes
 
 >*Info : Penser à sauvegarder chaque équipement
 
 # Version 3.1.1
-
 - Correction Images dans la doc
 
 # Version 3.1
-
 - Ajout d’un cron 30
 - Amélioration de l'affichage pour le Core V4
 - Possibilité de renommer les commandes
@@ -38,15 +38,12 @@ description: Plugin pour calculer le windchill et l'indice de température", Ind
 >*Remarque : Il est conseillé de supprimer le plugin et ensuite le réinstaller*
 
 # Version 3.0
-
 - Support de PHP 7.3
 - Migration vers font-awesome 5
 - Migration affichage au format core V4
 
 # Version 2.0
-
 - Mise à jour pour compatibilité Jeedom V3
 
 # Version 1.1
-
 - Correction Doc

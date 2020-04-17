@@ -11,11 +11,14 @@ Il est possible d'indiquer :
 - Un seuil de pé-alerte pour l'indice de chaleur (HUMIDEX). Par défaut c'est 30°C qui déclenche la préalerte
 
 # Exemple de configuration
+## Vue de la liste des équipements
 
-Voici un exemple de configuration
+![exemple vue d'ensemble](../images/vue.png)
 
-![exemple](../images/temp_exemple.png)
-![exemple](../images/temp_exemple1.png)
+## Exemple de configuration
+
+![exemple équipement](../images/equipement.png)
+![exemple commandes](../images/commandes.png)
 
 # FAQ
 
