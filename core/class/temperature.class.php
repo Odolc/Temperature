@@ -135,12 +135,12 @@ class temperature extends eqLogic {
         $temperatureCmd->save();
 
         // Ajout d'une commande dans le tableau pour l'alerte inconfort
-        $temperatureCmd= $this->getCmd(null, 'alerte_2');
+        $temperatureCmd= $this->getCmd(null, 'alert_2');
         if (!is_object($temperatureCmd)) {
             $temperatureCmd = new temperatureCmd();
             $temperatureCmd->setName(__('Alerte Humidex', __FILE__));
             $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('alerte_2');
+            $temperatureCmd->setLogicalId('alert_2');
             $temperatureCmd->setConfiguration('data', 'alert_2');
             $temperatureCmd->setType('info');
             $temperatureCmd->setSubType('binary');
@@ -406,7 +406,7 @@ class temperature extends eqLogic {
             log::add('temperature', 'debug', '│ Facteur Humidex : ' . $indiceChaleur.' °C');
 		}
 
-        $cmd = $this->getCmd('info', 'alerte_1');
+        $cmd = $this->getCmd('info', 'alert_1');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $alert_1);
 			$cmd->save();
@@ -415,7 +415,7 @@ class temperature extends eqLogic {
             log::add('temperature', 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1. '');
 		}
 
-        $cmd = $this->getCmd('info', 'alerte_humidex');
+        $cmd = $this->getCmd('info', 'alert_2');
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $alert_2);
 			$cmd->save();
