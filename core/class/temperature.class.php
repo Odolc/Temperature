@@ -405,6 +405,7 @@ class temperature extends eqLogic {
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $windchill);
 			$cmd->save();
+            $cmd->setCollectDate('');
             $cmd->event($windchill);
             log::add('temperature', 'debug', '│ Windchill : ' . $windchill.' °C');
 		}
@@ -413,6 +414,7 @@ class temperature extends eqLogic {
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $td);
 			$cmd->save();
+            $cmd->setCollectDate('');
             $cmd->event($td);
             log::add('temperature', 'debug', '│ Degré de comfort : ' . $td. '');
 		}
@@ -421,6 +423,7 @@ class temperature extends eqLogic {
 		if (is_object($cmd)) {
 			$cmd->setConfiguration('value', $heat_index);
 			$cmd->save();
+            $cmd->setCollectDate('');
             $cmd->event($heat_index);
             log::add('temperature', 'debug', '│ Facteur Humidex : ' . $heat_index.' °C');
 		}
