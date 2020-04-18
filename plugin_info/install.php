@@ -46,11 +46,11 @@ function temperature_update() {
     if (config::byKey('functionality::cron5::enable', 'temperature', -1) == -1) {
         config::save('functionality::cron5::enable', 1, 'temperature');
     }
-    
+
     if (config::byKey('functionality::cron10::enable', 'temperature', -1) == -1) {
         config::save('functionality::cron10::enable', 1, 'temperature');
     }
-    
+
     if (config::byKey('functionality::cron15::enable', 'temperature', -1) == -1) {
         config::save('functionality::cron15::enable', 1, 'temperature');
     }
@@ -62,13 +62,15 @@ function temperature_update() {
     if (config::byKey('functionality::cronHourly::enable', 'temperature', -1) == -1) {
         config::save('functionality::cronHourly::enable', 0, 'temperature');
     }
-    
+
     $plugin = plugin::byId('temperature');
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
         updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1');
         updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2');
-        updateLogicalId($eqLogic, 'info_inconfort', 'msg');
+        updateLogicalId($eqLogic, 'info_inconfort', 'td');
+        updateLogicalId($eqLogic, 'msg', 'td');
+        updateLogicalId($eqLogic, 'IndiceChaleur', 'heat_index');
     }
 
     //resave eqs for new cmd:
