@@ -21,8 +21,11 @@ require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 function temperature_install() {
     jeedom::getApiKey('temperature');
 
-    config::save('functionality::cron5::enable', 1, 'temperature');
+    config::save('functionality::cron5::enable', 0, 'temperature');
+    config::save('functionality::cron10::enable', 0, 'temperature');
+    config::save('functionality::cron15::enable', 1, 'temperature');
     config::save('functionality::cron30::enable', 0, 'temperature');
+    config::save('functionality::cronhourly::enable', 0, 'temperature');
 
     $cron = cron::byClassAndFunction('temperature', 'pull');
     if (is_object($cron)) {
@@ -43,11 +46,23 @@ function temperature_update() {
     if (config::byKey('functionality::cron5::enable', 'temperature', -1) == -1) {
         config::save('functionality::cron5::enable', 1, 'temperature');
     }
+    
+    if (config::byKey('functionality::cron10::enable', 'temperature', -1) == -1) {
+        config::save('functionality::cron10::enable', 1, 'temperature');
+    }
+    
+    if (config::byKey('functionality::cron15::enable', 'temperature', -1) == -1) {
+        config::save('functionality::cron15::enable', 1, 'temperature');
+    }
 
     if (config::byKey('functionality::cron30::enable', 'temperature', -1) == -1) {
         config::save('functionality::cron30::enable', 0, 'temperature');
     }
 
+    if (config::byKey('functionality::cronHourly::enable', 'temperature', -1) == -1) {
+        config::save('functionality::cronHourly::enable', 0, 'temperature');
+    }
+    
     $plugin = plugin::byId('temperature');
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {

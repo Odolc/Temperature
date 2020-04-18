@@ -23,7 +23,7 @@ class temperature extends eqLogic {
     /*     * *************************Attributs****************************** */
 
     /*     * ***********************Methode static*************************** */
-	public static function cron5() {
+	public static function cron5($_eqlogic_id = null) {
         foreach (eqLogic::byType('temperature') as $temperature) {
 			if ($temperature->getIsEnable()) {
 				log::add('temperature', 'debug', '================= CRON 5 ==================');
@@ -32,9 +32,27 @@ class temperature extends eqLogic {
 		}
 	}
 
+    public static function cron10($_eqlogic_id = null) {
+        foreach (eqLogic::byType('temperature') as $temperature) {
+			if ($temperature->getIsEnable()) {
+				log::add('temperature', 'debug', '================= CRON 10 ==================');
+				$temperature->getInformations();
+			}
+		}
+	}
+
+    public static function cron15($_eqlogic_id = null) {
+        foreach (eqLogic::byType('temperature') as $temperature) {
+			if ($temperature->getIsEnable()) {
+				log::add('temperature', 'debug', '================= CRON 15 ==================');
+				$temperature->getInformations();
+			}
+		}
+	}
+
   	public static function cron30($_eqlogic_id = null) {
 		//no both cron5 and cron30 enabled:
-        if (config::byKey('functionality::cron5::enable', 'temperature', 0) == 1)
+        if (config::byKey('functionality::cron15::enable', 'temperature', 0) == 1)
         {
             config::save('functionality::cron30::enable', 0, 'temperature');
 			return;
@@ -46,6 +64,15 @@ class temperature extends eqLogic {
 			}
 		}
 	}
+
+    public static function cronHourly() {
+        foreach (eqLogic::byType('temperature') as $rosee) {
+            if ($rosee->getIsEnable()) {
+                log::add('temperature', 'debug', '================= CRON HEURE =================');
+                $rosee->getInformations();
+            }
+        }
+    }
 
     /*     * *********************Methode d'instance************************* */
     public function refresh() {
