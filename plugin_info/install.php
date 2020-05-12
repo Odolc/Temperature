@@ -88,6 +88,9 @@ function temperature_update() {
     }
 
     //message::add('Plugin Température', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
+    foreach (eqLogic::byType('temperature') as $temperature) {
+        $temperature->getInformations();
+    }
 }
 
 function updateLogicalId($eqLogic, $from, $to) {

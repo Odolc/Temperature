@@ -66,10 +66,10 @@ class temperature extends eqLogic {
 	}
 
     public static function cronHourly() {
-        foreach (eqLogic::byType('temperature') as $rosee) {
-            if ($rosee->getIsEnable()) {
+        foreach (eqLogic::byType('temperature') as $temperature) {
+            if ($temperature->getIsEnable()) {
                 log::add('temperature', 'debug', '================= CRON HEURE =================');
-                $rosee->getInformations();
+                $temperature->getInformations();
             }
         }
     }
@@ -248,9 +248,7 @@ class temperature extends eqLogic {
 
 	/*  **********************Getteur Setteur*************************** */
 	public function postUpdate() {
-        foreach (eqLogic::byType('temperature') as $temperature) {
-            $temperature->getInformations();
-        }
+        $this->getInformations();
 	}
 
 	public function getInformations() {
@@ -466,7 +464,9 @@ class temperatureCmd extends cmd {
 
 	public function execute($_options = null) {
 		if ($this->getLogicalId() == 'refresh') {
+            log::add('temperature', 'debug', ' ─────────> ACTUALISATION MANUELLE');
 			$this->getEqLogic()->getInformations();
+            log::add('temperature', 'debug', ' ─────────> FIN ACTUALISATION MANUELLE');
 			return;
 		}
 	}
