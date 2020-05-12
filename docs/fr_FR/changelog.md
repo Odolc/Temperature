@@ -1,12 +1,14 @@
 ---
-title: Jeedom | Plugin Température
-description: Plugin pour calculer le windchill et l'indice de température", Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.
+layout: default
+title: Plugin Température - changelog
+lang: fr_FR
+pluginId: temperature
 ---
 
 # Info
->*Important : en cas de mise à jour disponible pour laquelle il n’y a pas d’information dans cette section, c’est qu’elle n’intègre aucune nouveauté majeure. Cela peut être un ajout de documentation, une correction de documentation, des traductions ou bien de la correction de bugs mineurs.*
+>***Pour rappel*** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
 
-# Version 202004xx
+# Version 20200512
 - Ajout de log supplémentaire en mode DEBUG
 - Nettoyage log
 - Ajout bouton pour recréer les commandes
@@ -15,6 +17,8 @@ description: Plugin pour calculer le windchill et l'indice de température", Ind
 - Amélioration affichage V4
 - Mise à jour de la doc
 - Ajout widget core sur les commandes
+- Correction bug enregistrement individuel de chaque équipement
+- Enregistrement des équipements après chaque mise à jour
 
 >*Info : Penser à sauvegarder chaque équipement
 

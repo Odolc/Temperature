@@ -1,3 +1,10 @@
+---
+layout: default
+title: Plugin Température - documentation
+lang: fr_FR
+pluginId: temperature
+---
+
 # Description
 
 Ce plugin permet de calculer l'effet du vent sur la température ressentie, windchill (plutôt lorsque les températures sont basses), ainsi que l'effet d'incofort provoqué par le taux d'humidité lorsque les températures sont élevées (humidex).

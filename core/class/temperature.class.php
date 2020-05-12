@@ -106,7 +106,8 @@ class temperature extends eqLogic {
 	}
 
   	public function postSave() {
-        log::add('temperature', 'debug', 'postSave()');
+        $_eqName = $this->getName();
+        log::add('temperature', 'debug', 'postSave() =>'.$_eqName);
         $order = 1;
 
         // Ajout d'une commande dans le tableau pour le windchill
