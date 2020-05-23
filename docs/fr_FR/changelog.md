@@ -8,7 +8,7 @@ pluginId: temperature
 # Info
 >***Pour rappel*** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
 
-# Version 20200512
+# Version 20200523
 - Ajout de log supplémentaire en mode DEBUG
 - Nettoyage log
 - Ajout bouton pour recréer les commandes
@@ -19,6 +19,7 @@ pluginId: temperature
 - Ajout widget core sur les commandes
 - Correction bug enregistrement individuel de chaque équipement
 - Enregistrement des équipements après chaque mise à jour
+- Modification documentations
 
 >*Info : Penser à sauvegarder chaque équipement
 
