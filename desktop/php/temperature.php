@@ -130,7 +130,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </label>
                             <div class="col-md-6">
                                 <div class="input-group">
-                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative }}">
+                                    <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative}}">
                                     <span class="input-group-btn">
                                         <a class="btn btn-default listCmdActionOther roundedRight" id="bt_selectHumiCmd"><i class="fas fa-list-alt"></i></a>
                                     </span>
