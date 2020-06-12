@@ -123,7 +123,6 @@ function addCmdToTable(_cmd) {
 		return;
 	}
 
-
 	var tr = '<tr class="cmd" data-cmd_id="' + init(_cmd.id) + '">';
 	tr += '<td>';
 	tr += '<span class="cmdAttr" data-l1key="id"></span>';
