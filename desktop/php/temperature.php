@@ -22,18 +22,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
             </div>
         </div>
         <legend><i class="jeedom-thermo-moyen"></i> {{Mes températures ressenties}}</legend>
-        <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+        <div class="input-group" style="margin:5px;">
+            <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
+            <div class="input-group-btn">
+                <a id="bt_resetSearch" class="btn" style="width:30px"><i class="fas fa-times"></i> </a>
+            </div>
+        </div>
         <div class="eqLogicThumbnailContainer">
             <?php
-			foreach ($eqLogics as $eqLogic) {
-				$opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
-				echo '<div class="eqLogicDisplayCard cursor '.$opacity.'" data-eqLogic_id="' . $eqLogic->getId() . '" >';
-				echo '<img src="' . $plugin->getPathImgIcon() . '" />';
-				echo '<br>';
-				echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
-				echo '</div>';
-			}
-			?>
+            foreach ($eqLogics as $eqLogic) {
+                $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
+                echo '<div class="eqLogicDisplayCard cursor ' . $opacity . '" data-eqLogic_id="' . $eqLogic->getId() . '" >';
+                echo '<img src="' . $plugin->getPathImgIcon() . '" />';
+                echo '<br>';
+                echo '<span class="name">' . $eqLogic->getHumanName(true, true) . '</span>';
+                echo '</div>';
+            }
+            ?>
         </div>
     </div>
 
@@ -68,10 +73,10 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
                                     <?php
-									foreach (jeeObject::all() as $object) {
-									 echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
-									}
-									?>
+                                    foreach (jeeObject::all() as $object) {
+                                        echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
+                                    }
+                                    ?>
                                 </select>
                             </div>
                         </div>
@@ -79,12 +84,12 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Catégorie}}</label>
                             <div class="col-sm-10">
                                 <?php
-									foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
-										echo '<label class="checkbox-inline">';
-										echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
-										echo '</label>';
-									}
-								?>
+                                foreach (jeedom::getConfiguration('eqLogic:category') as $key => $value) {
+                                    echo '<label class="checkbox-inline">';
+                                    echo '<input type="checkbox" class="eqLogicAttr" data-l1key="category" data-l2key="' . $key . '" />' . $value['name'];
+                                    echo '</label>';
+                                }
+                                ?>
                             </div>
                         </div>
                         <div class="form-group">
@@ -194,6 +199,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
 </div>
 
 <?php
-    include_file('desktop', 'temperature', 'js', 'temperature');
-    include_file('core', 'plugin.template', 'js');
+include_file('desktop', 'temperature', 'js', 'temperature');
+include_file('core', 'plugin.template', 'js');
 ?>
