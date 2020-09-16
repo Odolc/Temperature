@@ -240,17 +240,26 @@ class temperature extends eqLogic
         $temperatureCmd->setSubType('string');
         $temperatureCmd->save();
 
+        $createRefreshCmd = true;
         $refresh = $this->getCmd(null, 'refresh');
         if (!is_object($refresh)) {
-            $refresh = new temperatureCmd();
-            $refresh->setLogicalId('refresh');
-            $refresh->setIsVisible(1);
-            $refresh->setName(__('Rafraichir', __FILE__));
+            $refresh = cmd::byEqLogicIdCmdName($this->getId(), __('Rafraichir', __FILE__));
+            if (is_object($refresh)) {
+                $createRefreshCmd = false;
+            }
         }
-        $refresh->setType('action');
-        $refresh->setSubType('other');
-        $refresh->setEqLogic_id($this->getId());
-        $refresh->save();
+        if ($createRefreshCmd) {
+            if (!is_object($refresh)) {
+                $refresh = new temperatureCmd();
+                $refresh->setLogicalId('refresh');
+                $refresh->setIsVisible(1);
+                $refresh->setName(__('Rafraichir', __FILE__));
+            }
+            $refresh->setType('action');
+            $refresh->setSubType('other');
+            $refresh->setEqLogic_id($this->getId());
+            $refresh->save();
+        }
     }
 
 
@@ -472,7 +481,10 @@ class temperatureCmd extends cmd
     /*     * *********************Methode d'instance************************* */
     public function dontRemoveCmd()
     {
-        return true;
+        if ($this->getLogicalId() == 'refresh') {
+            return true;
+        }
+        return false;
     }
 
     public function execute($_options = null)
