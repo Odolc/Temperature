@@ -210,148 +210,28 @@ class temperature extends eqLogic
         log::add('temperature', 'debug', 'postSave() =>' . $_eqName);
         $order = 1;
 
+        if (version_compare(jeedom::version(), "4", "<")) {
+            $templatecore_V4 = null;
+        } else {
+            $templatecore_V4  = 'core::';
+        };
+
+        $Equipement = eqlogic::byId($this->getId());
+
         // Ajout d'une commande dans le tableau pour le windchill
-        $temperatureCmd = $this->getCmd(null, 'windchill');
-        if (!is_object($temperatureCmd)) {
-            $temperatureCmd = new temperatureCmd();
-            $temperatureCmd->setName(__('Windchill', __FILE__));
-            $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('windchill');
-            $temperatureCmd->setConfiguration('data', 'windchill');
-            $temperatureCmd->setType('info');
-            $temperatureCmd->setSubType('numeric');
-            $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd->setTemplate('dashboard', 'core::line');
-            $temperatureCmd->setTemplate('mobile', 'core::line');
-            $temperatureCmd->setOrder($order);
-            $order++;
-        }
-        $temperatureCmd->setEqLogic_id($this->getId());
-        $temperatureCmd->setUnite('°C');
-        $temperatureCmd->setDisplay('generic_type', 'GENERIC_INFO');
-        $temperatureCmd->setType('info');
-        $temperatureCmd->setSubType('numeric');
-        $temperatureCmd->setTemplate('dashboard', 'core::line');
-        $temperatureCmd->setTemplate('mobile', 'core::line');
-        $temperatureCmd->save();
-
+        $Equipement->AddCommand('Windchill', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', '0', 'null', 'default', 'default', 'default', $order, '0', true, null, null, 1, null);
+        $order++;
         // Ajout d'une commande dans le tableau pour l'indice de chaleur
-        $temperatureCmd = $this->getCmd(null, 'heat_index');
-        if (!is_object($temperatureCmd)) {
-            $temperatureCmd = new temperatureCmd();
-            $temperatureCmd->setName(__('Indice de chaleur', __FILE__));
-            $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('heat_index');
-            $temperatureCmd->setConfiguration('data', 'heat_index');
-            $temperatureCmd->setType('info');
-            $temperatureCmd->setSubType('numeric');
-            $temperatureCmd->setUnite('°C');
-            $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd->setIsVisible(0);
-            $temperatureCmd->setTemplate('dashboard', 'core::multiline');
-            $temperatureCmd->setTemplate('mobile', 'core::multiline');
-            $temperatureCmd->setOrder($order);
-            $order++;
-        }
-        $temperatureCmd->setEqLogic_id($this->getId());
-        $temperatureCmd->setUnite('°C');
-        $temperatureCmd->setDisplay('generic_type', 'GENERIC_INFO');
-        $temperatureCmd->setType('info');
-        $temperatureCmd->setSubType('numeric');
-        $temperatureCmd->save();
-
+        $Equipement->AddCommand('Indice de chaleur', 'heat_index', 'info', 'numeric', $templatecore_V4 . 'multiline', '°C', 'GENERIC_INFO', '0', 'null', 'default', 'default', 'default', $order, '0', true, null, null, 1, null);
+        $order++;
+        // Ajout d'une commande dans le tableau pour la pré-alerte inconfort
+        $Equipement->AddCommand('Pré Alerte Humidex', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+        $order++;
         // Ajout d'une commande dans le tableau pour l'alerte inconfort
-        $temperatureCmd = $this->getCmd(null, 'alert_2');
-        if (!is_object($temperatureCmd)) {
-            $temperatureCmd = new temperatureCmd();
-            $temperatureCmd->setName(__('Alerte Humidex', __FILE__));
-            $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('alert_2');
-            $temperatureCmd->setConfiguration('data', 'alert_2');
-            $temperatureCmd->setType('info');
-            $temperatureCmd->setSubType('binary');
-            $temperatureCmd->setUnite('');
-            $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd->setTemplate('dashboard', 'core::line');
-            $temperatureCmd->setTemplate('mobile', 'core::line');
-            $temperatureCmd->setOrder($order);
-            $order++;
-        }
-        $temperatureCmd->setEqLogic_id($this->getId());
-        $temperatureCmd->setDisplay('generic_type', 'SIREN_STATE');
-        $temperatureCmd->setType('info');
-        $temperatureCmd->setSubType('binary');
-        $temperatureCmd->save();
-
-        // Ajout d'une commande dans le tableau pour la  pré-alerte inconfort
-        $temperatureCmd = $this->getCmd(null, 'alert_1');
-        if (!is_object($temperatureCmd)) {
-            $temperatureCmd = new temperatureCmd();
-            $temperatureCmd->setName(__('Pré Alerte Humidex', __FILE__));
-            $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('alert_1');
-            $temperatureCmd->setConfiguration('data', 'alert_1');
-            $temperatureCmd->setType('info');
-            $temperatureCmd->setSubType('binary');
-            $temperatureCmd->setUnite('');
-            $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd->setTemplate('dashboard', 'core::line');
-            $temperatureCmd->setTemplate('mobile', 'core::line');
-            $temperatureCmd->setOrder($order);
-            $order++;
-        }
-        $temperatureCmd->setEqLogic_id($this->getId());
-        $temperatureCmd->setDisplay('generic_type', 'SIREN_STATE');
-        $temperatureCmd->setType('info');
-        $temperatureCmd->setSubType('binary');
-        $temperatureCmd->save();
-
+        $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+        $order++;
         // Ajout d'une commande dans le tableau pour l'info inconfort
-        $temperatureCmd = $this->getCmd(null, 'td');
-        if (!is_object($temperatureCmd)) {
-            $temperatureCmd = new temperatureCmd();
-            $temperatureCmd->setName(__('Message inconfort', __FILE__));
-            $temperatureCmd->setEqLogic_id($this->id);
-            $temperatureCmd->setLogicalId('td');
-            $temperatureCmd->setConfiguration('data', 'td');
-            $temperatureCmd->setType('info');
-            $temperatureCmd->setSubType('string');
-            $temperatureCmd->setUnite('');
-            $temperatureCmd->setIsHistorized(0);
-            $temperatureCmd->setIsVisible(0);
-            $temperatureCmd->setDisplay('generic_type', 'GENERIC_INFO');
-            $temperatureCmd->setTemplate('dashboard', 'core::Multiline');
-            $temperatureCmd->setTemplate('mobile', 'core::Multiline');
-            $temperatureCmd->setOrder($order);
-            $order++;
-        }
-        $temperatureCmd->setEqLogic_id($this->getId());
-        $temperatureCmd->setUnite('');
-        $temperatureCmd->setDisplay('generic_type', 'GENERIC_INFO');
-        $temperatureCmd->setType('info');
-        $temperatureCmd->setSubType('string');
-        $temperatureCmd->save();
-
-        $createRefreshCmd = true;
-        $refresh = $this->getCmd(null, 'refresh');
-        if (!is_object($refresh)) {
-            $refresh = cmd::byEqLogicIdCmdName($this->getId(), __('Rafraichir', __FILE__));
-            if (is_object($refresh)) {
-                $createRefreshCmd = false;
-            }
-        }
-        if ($createRefreshCmd) {
-            if (!is_object($refresh)) {
-                $refresh = new temperatureCmd();
-                $refresh->setLogicalId('refresh');
-                $refresh->setIsVisible(1);
-                $refresh->setName(__('Rafraichir', __FILE__));
-            }
-            $refresh->setType('action');
-            $refresh->setSubType('other');
-            $refresh->setEqLogic_id($this->getId());
-            $refresh->save();
-        }
+        $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
     }
 
 
@@ -444,7 +324,6 @@ class temperature extends eqLogic
                 $windchill = $temperature + 0.2 * (0.1345 * $temperature - 1.59) * $vent;
             }
         }
-        $windchill = round(($windchill), 1);
         log::add('temperature', 'debug', '│ Windchill : ' . $windchill . '°C');
         log::add('temperature', 'debug', '└───────');
 
@@ -469,7 +348,6 @@ class temperature extends eqLogic
         $terme6 = $c9 * pow($tempF, 2.0) * pow($humidity, 2.0);
         $heat_index_F = $terme1 + $terme2 + $terme3 + $terme4 + $terme5 + $terme6;
         $heat_index = ($heat_index_F - 32.0) / 1.8;
-        $heat_index = round(($heat_index), 1);
         log::add('temperature', 'debug', '│ Indice de Chaleur (Humidex) : ' . $heat_index . ' °C');
 
         if ($heat_index < 15.0) {
