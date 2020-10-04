@@ -62,14 +62,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     <fieldset>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Nom de l'équipement}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l\'équipement}}" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Objet parent}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
                                     <?php
@@ -120,7 +120,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-md-2 control-label">{{Température}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Température}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="temperature" placeholder="{{Température}}">
                                     <span class="input-group-btn">
@@ -133,7 +133,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Humidité Relative}}
                                 <sup><i class="fas fa-question-circle" title="{{(%) Humidité relative}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative}}">
                                     <span class="input-group-btn">
@@ -146,7 +146,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-md-2 control-label">{{Vitesse du Vent}}
                                 <sup><i class="fas fa-question-circle" title="{{(km/h) Vitesse du vent}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="vent" placeholder="{{Vitesse du vent}}">
                                     <span class="input-group-btn">
@@ -159,7 +159,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
                             </label>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
                             </div>
                         </div>
@@ -167,7 +167,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-sm-2 control-label">{{Seuil Pré-alerte Humidex}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
                             </label>
-                            <div class="col-md-2">
+                            <div class="col-md-1">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
                             </div>
                         </div>
