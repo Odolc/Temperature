@@ -79,7 +79,99 @@ class temperature extends eqLogic
             }
         }
     }
+    public function AddCommand($Name, $_logicalId, $Type = 'info', $SubType = 'binary', $Template = null, $unite = null, $generic_type = null, $IsVisible = 1, $icon, $forceLineB = '0', $valuemin = 'default', $valuemax = 'default', $_order = null, $IsHistorized = '0', $repeatevent = false, $_iconname = null, $_calculValueOffset = null, $_historizeRound = null, $_noiconname = null)
+    {
 
+        $Command = $this->getCmd(null, $_logicalId);
+        if (!is_object($Command)) {
+            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi: ' . $_calculValueOffset . '/' . $_historizeRound);
+            $Command = new roseeCmd();
+            $Command->setId(null);
+            $Command->setLogicalId($_logicalId);
+            $Command->setEqLogic_id($this->getId());
+            $Command->setName($Name);
+
+            $Command->setType($Type);
+            $Command->setSubType($SubType);
+
+            if ($Template != null) {
+                $Command->setTemplate('dashboard', $Template);
+                $Command->setTemplate('mobile', $Template);
+            }
+
+            if ($unite != null && $SubType == 'numeric') {
+                $Command->setUnite($unite);
+            }
+
+            $Command->setIsVisible($IsVisible);
+            $Command->setIsHistorized($IsHistorized);
+
+            if ($icon != null) {
+                $Command->setdisplay('icon', '<i class="' . $icon . '"></i>');
+            }
+            if ($forceLineB != null) {
+                $Command->setdisplay('forceReturnLineBefore', 1);
+            }
+            if ($_iconname != null) {
+                $Command->setdisplay('showIconAndNamedashboard', 1);
+            }
+            if ($_noiconname != null) {
+                $Command->setdisplay('showNameOndashboard', 0);
+            }
+
+            if ($_calculValueOffset != null) {
+                $Command->setConfiguration('calculValueOffset', $_calculValueOffset);
+            }
+
+            if ($_historizeRound != null) {
+                $Command->setConfiguration('historizeRound', $_historizeRound);
+            }
+            if ($generic_type != null) {
+                $Command->setGeneric_type($generic_type);
+            }
+
+            if ($repeatevent == true && $Type == 'info') {
+                $Command->setconfiguration('repeatEventManagement', 'never');
+                log::add(__CLASS__, 'debug', '│ No Repeat pour l\'info avec le nom : ' . $Name);
+            }
+            if ($valuemin != 'default') {
+                $Command->setconfiguration('minValue', $valuemin);
+            }
+            if ($valuemax != 'default') {
+                $Command->setconfiguration('maxValue', $valuemax);
+            }
+
+            $Command->save();
+        }
+
+        if ($_order != null) {
+            $Command->setOrder($_order);
+        }
+
+        $Command->save();
+
+        $createRefreshCmd = true;
+        $refresh = $this->getCmd(null, 'refresh');
+        if (!is_object($refresh)) {
+            $refresh = cmd::byEqLogicIdCmdName($this->getId(), __('Rafraichir', __FILE__));
+            if (is_object($refresh)) {
+                $createRefreshCmd = false;
+            }
+        }
+        if ($createRefreshCmd) {
+            if (!is_object($refresh)) {
+                $refresh = new roseeCmd();
+                $refresh->setLogicalId('refresh');
+                $refresh->setIsVisible(1);
+                $refresh->setName(__('Rafraichir', __FILE__));
+            }
+            $refresh->setType('action');
+            $refresh->setSubType('other');
+            $refresh->setEqLogic_id($this->getId());
+            $refresh->save();
+        }
+        return $Command;
+    }
     /*     * *********************Methode d'instance************************* */
     public function refresh()
     {
@@ -419,52 +511,36 @@ class temperature extends eqLogic
         /*  ********************** Mise à Jour des équipements *************************** */
         log::add('temperature', 'debug', '┌───────── MISE A JOUR : ' . $_eqName);
 
-        $cmd = $this->getCmd('info', 'windchill');
-        if (is_object($cmd)) {
-            $cmd->setConfiguration('value', $windchill);
-            $cmd->save();
-            $cmd->setCollectDate('');
-            $cmd->event($windchill);
-            log::add('temperature', 'debug', '│ Windchill : ' . $windchill . ' °C');
+        $Equipement = eqlogic::byId($this->getId());
+        if (is_object($Equipement) && $Equipement->getIsEnable()) {
+
+            foreach ($Equipement->getCmd('info') as $Command) {
+                if (is_object($Command)) {
+                    switch ($Command->getLogicalId()) {
+                        case "windchill": //Mise à jour de la commande Winchill
+                            log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
+                            break;
+                        case "td": //Mise à jour de la commande tendance
+                            log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
+                            break;
+                        case "heat_index": //Mise à jour de la commande Facteur Humidex
+                            log::add(__CLASS__, 'debug', '│ Facteur Humidex : ' . $heat_index . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $heat_index);
+                            break;
+                        case "alert_1": //Mise à jour de la commande Alerte 1
+                            log::add(__CLASS__, 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
+                            break;
+                        case "alert_2": //Mise à jour de la commande Alerte 1
+                            log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
+                            break;
+                    }
+                }
+            }
         }
-
-        $cmd = $this->getCmd('info', 'td');
-        if (is_object($cmd)) {
-            $cmd->setConfiguration('value', $td);
-            $cmd->save();
-            $cmd->setCollectDate('');
-            $cmd->event($td);
-            log::add('temperature', 'debug', '│ Degré de comfort : ' . $td . '');
-        }
-
-        $cmd = $this->getCmd('info', 'heat_index');
-        if (is_object($cmd)) {
-            $cmd->setConfiguration('value', $heat_index);
-            $cmd->save();
-            $cmd->setCollectDate('');
-            $cmd->event($heat_index);
-            log::add('temperature', 'debug', '│ Facteur Humidex : ' . $heat_index . ' °C');
-        }
-
-        $cmd = $this->getCmd('info', 'alert_1');
-        if (is_object($cmd)) {
-            $cmd->setConfiguration('value', $alert_1);
-            $cmd->save();
-            $cmd->setCollectDate('');
-            $cmd->event($alert_1);
-            log::add('temperature', 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1 . '');
-        }
-
-        $cmd = $this->getCmd('info', 'alert_2');
-        if (is_object($cmd)) {
-            $cmd->setConfiguration('value', $alert_2);
-            $cmd->save();
-            $cmd->setCollectDate('');
-            $cmd->event($alert_2);
-            log::add('temperature', 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2 . '');
-        }
-
-
         log::add('temperature', 'debug', '└─────────');
         log::add('temperature', 'debug', '================ FIN CRON =================');
 
