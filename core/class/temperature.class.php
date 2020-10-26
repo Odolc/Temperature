@@ -79,12 +79,12 @@ class temperature extends eqLogic
             }
         }
     }
-    public function AddCommand($Name, $_logicalId, $Type = 'info', $SubType = 'binary', $Template = null, $unite = null, $generic_type = null, $IsVisible = 1, $icon, $forceLineB = '0', $valuemin = 'default', $valuemax = 'default', $_order = null, $IsHistorized = '0', $repeatevent = false, $_iconname = null, $_calculValueOffset = null, $_historizeRound = null, $_noiconname = null)
+    public function AddCommand($Name, $_logicalId, $Type = 'info', $SubType = 'binary', $Template = null, $unite = null, $generic_type = null, $IsVisible = 1, $icon = 'default', $forceLineB = 'default', $valuemin = 'default', $valuemax = 'default', $_order = null, $IsHistorized = '0', $repeatevent = false, $_iconname = null, $_calculValueOffset = null, $_historizeRound = null, $_noiconname = null)
     {
 
         $Command = $this->getCmd(null, $_logicalId);
         if (!is_object($Command)) {
-            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi: ' . $_calculValueOffset . '/' . $_historizeRound);
+            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- Ordre : ' . $_order);
             $Command = new roseeCmd();
             $Command->setId(null);
             $Command->setLogicalId($_logicalId);
@@ -106,13 +106,13 @@ class temperature extends eqLogic
             $Command->setIsVisible($IsVisible);
             $Command->setIsHistorized($IsHistorized);
 
-            if ($icon != null) {
+            if ($icon != 'default') {
                 $Command->setdisplay('icon', '<i class="' . $icon . '"></i>');
             }
-            if ($forceLineB != null) {
+            if ($forceLineB != 'default') {
                 $Command->setdisplay('forceReturnLineBefore', 1);
             }
-            if ($_iconname != null) {
+            if ($_iconname != 'default') {
                 $Command->setdisplay('showIconAndNamedashboard', 1);
             }
             if ($_noiconname != null) {
@@ -217,21 +217,15 @@ class temperature extends eqLogic
         };
 
         $Equipement = eqlogic::byId($this->getId());
-
-        // Ajout d'une commande dans le tableau pour le windchill
-        $Equipement->AddCommand('Windchill', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', '0', 'null', 'default', 'default', 'default', $order, '0', true, null, null, 1, null);
+        $Equipement->AddCommand('Windchill', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
         $order++;
-        // Ajout d'une commande dans le tableau pour l'indice de chaleur
-        $Equipement->AddCommand('Indice de chaleur', 'heat_index', 'info', 'numeric', $templatecore_V4 . 'multiline', '°C', 'GENERIC_INFO', '0', 'null', 'default', 'default', 'default', $order, '0', true, null, null, 1, null);
+        $Equipement->AddCommand('Indice de chaleur', 'heat_index', 'info', 'numeric', $templatecore_V4 . 'multiline', '°C', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
         $order++;
-        // Ajout d'une commande dans le tableau pour la pré-alerte inconfort
-        $Equipement->AddCommand('Pré Alerte Humidex', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+        $Equipement->AddCommand('Pré Alerte Humidex', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
         $order++;
-        // Ajout d'une commande dans le tableau pour l'alerte inconfort
-        $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+        $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
         $order++;
-        // Ajout d'une commande dans le tableau pour l'info inconfort
-        $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'null', 'default', 'default', 'default', $order, '0', true, null, null, null, null);
+        $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
     }
 
 
