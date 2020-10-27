@@ -19,7 +19,7 @@ pluginId: temperature
 - Clean Log + code
 - Correction bug suppression commande Refresh
 - Correction Warning PHP
-- Correction variable non défini
+- Correction variable non définie
 - Correction Bug création des commandes
 
 # Version 20200523
