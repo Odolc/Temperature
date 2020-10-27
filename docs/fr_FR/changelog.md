@@ -6,9 +6,24 @@ pluginId: temperature
 ---
 
 # Info
->***Pour rappel*** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
+
+> **_Pour rappel_** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
+
+# Version 20201027
+
+- Amélioration Visu sur dashboard
+- Amélioration création des commandes
+- Amélioration mise à jour des commandes
+- Modification affichage des commandes
+- Ajout BP reset de recherche
+- Clean Log + code
+- Correction bug suppression commande Refresh
+- Correction Warning PHP
+- Correction variable non défini
+- Correction Bug création des commandes
 
 # Version 20200523
+
 - Ajout de log supplémentaire en mode DEBUG
 - Nettoyage log
 - Ajout bouton pour recréer les commandes
@@ -21,12 +36,14 @@ pluginId: temperature
 - Enregistrement des équipements après chaque mise à jour
 - Modification documentations
 
->*Info : Penser à sauvegarder chaque équipement
+> \*Info : Penser à sauvegarder chaque équipement
 
 # Version 3.1.1
+
 - Correction Images dans la doc
 
 # Version 3.1
+
 - Ajout d’un cron 30
 - Amélioration de l'affichage pour le Core V4
 - Possibilité de renommer les commandes
@@ -39,16 +56,19 @@ pluginId: temperature
 - Reprise des niveaux Humidex
 - Correction documentation
 
->*Important : Il faut récréer les équipements pour avoir l'ajout de la pré-alarme Humidex
->*Remarque : Il est conseillé de supprimer le plugin et ensuite le réinstaller*
+> *Important : Il faut récréer les équipements pour avoir l'ajout de la pré-alarme Humidex
+> *Remarque : Il est conseillé de supprimer le plugin et ensuite le réinstaller\*
 
 # Version 3.0
+
 - Support de PHP 7.3
 - Migration vers font-awesome 5
 - Migration affichage au format core V4
 
 # Version 2.0
+
 - Mise à jour pour compatibilité Jeedom V3
 
 # Version 1.1
+
 - Correction Doc
