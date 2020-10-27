@@ -7,15 +7,15 @@ pluginId: temperature
 
 # Description
 
-Ce plugin permet de calculer l'effet du vent sur la température ressentie, windchill (plutôt lorsque les températures sont basses), ainsi que l'effet d'incofort provoqué par le taux d'humidité lorsque les températures sont élevées (humidex).
+Ce plugin permet de calculer l'effet du vent sur la température ressentie, windchill (plutôt lorsque les températures sont basses), ainsi que l'effet d'inconfort provoqué par le taux d'humidité lorsque les températures sont élevées (humidex).
 
 # Configuration
 
 Le plugin ne comporte pas de configuration générale.
 Il faut ajouter des équipements pour la température, l’humidité et la vitesse du vent
 Il est possible d'indiquer :
-- Un seuil d'alerte pour l'indice de chaleur (HUMIDEX). Par défaut c'est 40°C qui déclenche l'alerte
-- Un seuil de pé-alerte pour l'indice de chaleur (HUMIDEX). Par défaut c'est 30°C qui déclenche la préalerte
+- Un seuil d'alerte pour l'indice de chaleur (HUMIDEX). Par défaut, c'est 40°C qui déclenche l'alerte
+- Un seuil de pré-alerte pour l'indice de chaleur (HUMIDEX). Par défaut, c'est 30°C qui déclenche la pré-alerte
 
 # Exemple de configuration
 ## Vue de la liste des équipements
@@ -47,4 +47,4 @@ Il est possible d'indiquer :
 > **Je n'ai pas d'informations qui remontent**
 >
 >Il faut bien indiquer un équipement température, humidité et vitesse de vent pour que le plugin fonctionne correctement.
->On peut rechercher les équipements grace au bouton de recherche de l’équipement
+>On peut rechercher les équipements grâce au bouton de recherche de l’équipement
