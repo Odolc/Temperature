@@ -49,7 +49,7 @@ pluginId: temperature
 - Possibilité de renommer les commandes
 - Commande Refresh (sur la tuile, scénario etc)
 - Amélioration des logs
-- Correction type de generic
+- Correction type de générique
 - Correction Bug : l'actualisation des données ne se fait plus si l'équipement est désactivé
 - Nettoyage des dossiers
 - Ajout une pré-alarme pour le seuil Humidex
