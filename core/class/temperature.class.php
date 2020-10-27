@@ -141,14 +141,12 @@ class temperature extends eqLogic
                 $Command->setconfiguration('maxValue', $valuemax);
             }
 
+            if ($_order != null) {
+                $Command->setOrder($_order);
+            }
+
             $Command->save();
         }
-
-        if ($_order != null) {
-            $Command->setOrder($_order);
-        }
-
-        $Command->save();
 
         $createRefreshCmd = true;
         $refresh = $this->getCmd(null, 'refresh');
