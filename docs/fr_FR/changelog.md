@@ -21,6 +21,7 @@ pluginId: temperature
 - Correction Warning PHP
 - Correction variable non définie
 - Correction Bug création des commandes
+- Amélioration de la liste des objets parents
 
 # Version 20200523
 
