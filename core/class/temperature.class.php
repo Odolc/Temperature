@@ -345,20 +345,28 @@ class temperature extends eqLogic
 
         if ($heat_index < 15.0) {
             $td = 'Sensation de frais ou de froid';
+            $td_num = 1;
         } elseif ($heat_index >= 15.0 && $heat_index <= 19.0) {
             $td = 'Aucun inconfort';
+            $td_num = 2;
         } elseif ($heat_index > 19.0 && $heat_index <= 29.0) {
             $td = "Sensation de bien être";
+            $td_num = 3;
         } elseif ($heat_index > 29.0 && $heat_index <= 34.0) {
             $td = "Sensation d'inconfort plus ou moins grande";
+            $td_num = 4;
         } elseif ($heat_index > 34.0 && $heat_index <= 39.0) {
             $td = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
+            $td_num = 5;
         } elseif ($heat_index > 39.0 && $heat_index <= 45.0) {
             $td = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
+            $td_num = 6;
         } elseif ($heat_index > 45.0 && $heat_index <= 53.0) {
             $td = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
+            $td_num = 7;
         } else {
             $td = 'Coup de chaleur imminent (danger de mort).';
+            $td_num = 8;
         }
         log::add('temperature', 'debug', '└─────────');
 
@@ -396,31 +404,33 @@ class temperature extends eqLogic
                             log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
                             break;
-                        case "heat_index": //Mise à jour de la commande Facteur Humidex
+                        case "heat_index":
                             log::add(__CLASS__, 'debug', '│ Facteur Humidex : ' . $heat_index . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $heat_index);
                             break;
                         case "humidityrel":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE RELATIVE');
                             //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
                             //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "td":
                             log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
                             break;
+                        case "td_num":
+                            if (isset($td_num)) {
+                                log::add(__CLASS__, 'debug', '│ Tendance Numérique : ' . $td_num);
+                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
+                            } else {
+                                log::add(__CLASS__, 'debug', '│ Problème variable Tendance Numérique ');
+                            }
+                            break;
                         case "temperature":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── Temperature');
                             //log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
                             //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "wind":
-                            log::add(__CLASS__, 'debug', '│ ┌───────── VITESSE DU VENT');
                             //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $wind . $wind_unite);
                             //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
-                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
                         case "windchill":
                             log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
