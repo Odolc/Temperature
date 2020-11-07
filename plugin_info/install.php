@@ -69,8 +69,11 @@ function temperature_update()
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
         //updateLogicalId($eqLogic, 'alert_1',null,null);
-        //updateLogicalId($eqLogic, 'alert_2', null, null);
-        //updateLogicalId($eqLogic, 'td', null, null);
+        updateLogicalId($eqLogic, 'IndiceChaleur', 'heat_index', 1);
+        updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2', null);
+        updateLogicalId($eqLogic, 'info_inconfort', 'td', null);
+        updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1', null);
+
         updateLogicalId($eqLogic, 'heat_index', null, 1);
         updateLogicalId($eqLogic, 'windchill', null, 1);
     }
