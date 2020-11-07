@@ -133,6 +133,14 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">{{Offset Température}}
+                                <sup><i class="fas fa-question-circle" title="{{A ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.}}"></i></sup>
+                            </label>
+                            <div class="col-md-1">
+                                <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="OffsetT" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">{{Humidité Relative}}
                                 <sup><i class="fas fa-question-circle" title="{{(%) Humidité relative}}"></i></sup>
                             </label>
@@ -159,19 +167,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
-                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
-                            </label>
-                            <div class="col-md-1">
-                                <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 control-label">{{Seuil Pré-alerte Humidex}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
                             </label>
                             <div class="col-md-1">
                                 <input type="number" step="0.1"" class=" eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
+                            </label>
+                            <div class="col-md-1">
+                                <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
                             </div>
                         </div>
                     </fieldset>

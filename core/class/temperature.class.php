@@ -223,7 +223,15 @@ class temperature extends eqLogic
         $order++;
         $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
         $order++;
-        $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
+        $Equipement->AddCommand('Degré de comfort', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
+        $order++;
+        $Equipement->AddCommand('Degré de comfort numérique', 'td_num', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', null, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
+        $order++;
+        $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $order++;
+        $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $order++;
+        //$Equipement->AddCommand('Vitesse du vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
     }
 
 
@@ -237,9 +245,11 @@ class temperature extends eqLogic
     public function getInformations()
     {
         if (!$this->getIsEnable()) return;
-
         $_eqName = $this->getName();
         log::add('temperature', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : ' . $_eqName);
+
+        /*  ********************** Calcul *************************** */
+        $calcul = 'temperature';
 
         /*  ********************** TEMPERATURE *************************** */
         $idvirt = str_replace("#", "", $this->getConfiguration('temperature'));
@@ -251,6 +261,14 @@ class temperature extends eqLogic
             throw new Exception(__('Le champ "Température" ne peut être vide', __FILE__));
             log::add('temperature', 'error', 'Configuration : temperature non existante : ' . $this->getConfiguration('temperature'));
         }
+        /*  ********************** Offset Température *************************** */
+        $OffsetT = $this->getConfiguration('OffsetT');
+        if ($OffsetT == '') {
+            $OffsetT = 0;
+        } else {
+            $temperature = $temperature + $OffsetT;
+        }
+        log::add(__CLASS__, 'debug', '│ Température avec Offset : ' . $temperature . ' °C' . ' - Offset Température : ' . $OffsetT . ' °C');
 
         /*  ********************** HUMIDITE *************************** */
         $idvirt = str_replace("#", "", $this->getConfiguration('humidite'));
@@ -281,6 +299,14 @@ class temperature extends eqLogic
             log::add('temperature', 'debug', '│ Vent : ' . $wind  . $wind_unite);
         }
 
+        /*  ********************** Seuil PRE-Alerte Humidex*************************** */
+        $pre_seuil = $this->getConfiguration('PRE_SEUIL');
+        if ($pre_seuil == '') {
+            $pre_seuil = 30;
+            log::add('temperature', 'debug', '│ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : ' . $pre_seuil . ' °C');
+        } else {
+            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex : ' . $pre_seuil . ' °C');
+        }
 
         /*  ********************** Seuil Alerte Humidex*************************** */
         $seuil = $this->getConfiguration('SEUIL');
@@ -290,38 +316,102 @@ class temperature extends eqLogic
         } else {
             log::add('temperature', 'debug', '│ Seuil Alerte Humidex : ' . $seuil . ' °C');
         }
-
-        /*  ********************** Seuil Alerte Humidex*************************** */
-        $pre_seuil = $this->getConfiguration('PRE_SEUIL');
-        if ($pre_seuil == '') {
-            $pre_seuil = 30;
-            log::add('temperature', 'debug', '│ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : ' . $pre_seuil . ' °C');
-        } else {
-            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex : ' . $pre_seuil . ' °C');
-        }
         log::add('temperature', 'debug', '└─────────');
 
+        /*  ********************** Calcul de la température ressentie *************************** */
+        if ($calcul == 'temperature') {
+            log::add(__CLASS__, 'debug', '┌───────── CALCUL DE LA TEMPERATURE RESSENTIE : ' . $_eqName);
+            $result_T = temperature::getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil);
+            $windchill = $result_T[0];
+            $td = $result_T[1];
+            $td_num = $result_T[2];
+            $heat_index = $result_T[3];
+            $alert_1 = $result_T[4];
+            $alert_2 = $result_T[5];
+            log::add(__CLASS__, 'debug', '└─────────');
+        }
 
+        /*  ********************** Mise à Jour des équipements *************************** */
+        log::add('temperature', 'debug', '┌───────── MISE A JOUR : ' . $_eqName);
+
+        $Equipement = eqlogic::byId($this->getId());
+        if (is_object($Equipement) && $Equipement->getIsEnable()) {
+
+            foreach ($Equipement->getCmd('info') as $Command) {
+                if (is_object($Command)) {
+                    switch ($Command->getLogicalId()) {
+                        case "alert_1":
+                            log::add(__CLASS__, 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
+                            break;
+                        case "alert_2":
+                            log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
+                            break;
+                        case "heat_index":
+                            log::add(__CLASS__, 'debug', '│ Indice de Chaleur (Humidex) : ' . $heat_index . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $heat_index);
+                            break;
+                        case "humidityrel":
+                            log::add(__CLASS__, 'debug', '│ Humidité Absolue : ' . $humidity . ' %');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
+                            break;
+                        case "td":
+                            log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
+                            break;
+                        case "td_num":
+                            if (isset($td_num)) {
+                                log::add(__CLASS__, 'debug', '│ Tendance Numérique : ' . $td_num);
+                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
+                            } else {
+                                log::add(__CLASS__, 'debug', '│ Problème variable Tendance Numérique ');
+                            }
+                            break;
+                        case "temperature":
+                            log::add(__CLASS__, 'debug', '│ Température : ' . $temperature . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
+                            break;
+                        case "wind":
+                            //log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . $wind_unite);
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
+                            break;
+                        case "windchill":
+                            log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
+                            break;
+                    }
+                }
+            }
+        }
+        log::add(__CLASS__, 'debug', '└─────────');
+        log::add(__CLASS__, 'debug', '================ FIN CRON =================');
+
+        return;
+    }
+    /*  ********************** Calcul de la température ressentie *************************** */
+    public static function getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil)
+    {
         /*  ********************** Calcul du Windchill *************************** */
-        log::add('temperature', 'debug', '┌───────── CALCUL DU WINDCHILL : ' . $_eqName);
+        log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DU WINDCHILL');
 
         if ($temperature > 10.0) {
             $windchill = $temperature;
         } else {
-            if ($vent >= 4.8) {
+            if ($wind >= 4.8) {
                 $Terme1 = 13.12 + 0.6215 * $temperature;
                 $Terme2 = 0.3965 * $temperature - 11.37;
-                $Terme3 = pow($vent, 0.16);
+                $Terme3 = pow($wind, 0.16);
                 $windchill = $Terme2 * $Terme3 + $Terme1;
             } else {
-                $windchill = $temperature + 0.2 * (0.1345 * $temperature - 1.59) * $vent;
+                $windchill = $temperature + 0.2 * (0.1345 * $temperature - 1.59) * $wind;
             }
         }
-        log::add('temperature', 'debug', '│ Windchill : ' . $windchill . '°C');
-        log::add('temperature', 'debug', '└───────');
+        log::add(__CLASS__, 'debug', '│ │ Windchill : ' . $windchill . '°C');
+        log::add(__CLASS__, 'debug', '│ └───────');
 
         /*  ********************** Calcul de l'indice de chaleur *************************** */
-        log::add('temperature', 'debug', '┌───────── CALCUL DU FACTEUR HUMIDEX : ' . $_eqName);
+        log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DU FACTEUR HUMIDEX');
         $c1 = -42.379;
         $c2 = 2.04901523;
         $c3 = 10.14333127;
@@ -332,7 +422,7 @@ class temperature extends eqLogic
         $c8 = 8.5282 * pow(10, -4);
         $c9 = -1.99 * pow(10, -6);
         $tempF = 32.0 + 1.8 * $temperature;
-        log::add('temperature', 'debug', '│ Température (F) : ' . $tempF . ' F');
+        log::add(__CLASS__, 'debug', '│ │ Température (F) : ' . $tempF . ' F');
         $terme1 = $c1 + $c2 * $tempF + $c3 * $humidity + $c4 * $tempF * $humidity;
         $terme2 = $c5 * pow($tempF, 2.0);
         $terme3 = $c6 * pow($humidity, 2.0);
@@ -341,7 +431,7 @@ class temperature extends eqLogic
         $terme6 = $c9 * pow($tempF, 2.0) * pow($humidity, 2.0);
         $heat_index_F = $terme1 + $terme2 + $terme3 + $terme4 + $terme5 + $terme6;
         $heat_index = ($heat_index_F - 32.0) / 1.8;
-        log::add('temperature', 'debug', '│ Indice de Chaleur (Humidex) : ' . $heat_index . ' °C');
+        log::add(__CLASS__, 'debug', '│ │ Indice de Chaleur (Humidex) : ' . $heat_index . ' °C');
 
         if ($heat_index < 15.0) {
             $td = 'Sensation de frais ou de froid';
@@ -368,82 +458,27 @@ class temperature extends eqLogic
             $td = 'Coup de chaleur imminent (danger de mort).';
             $td_num = 8;
         }
-        log::add('temperature', 'debug', '└─────────');
+        log::add(__CLASS__, 'debug', '│ └─────────');
 
         /*  ********************** Calcul de l'alerte inconfort indice de chaleur en fonction du seuil d'alerte *************************** */
-        log::add('temperature', 'debug', '┌───────── ALERTE HUMIDEX : ' . $_eqName);
-        if (($heat_index) >= $seuil) {
-            $alert_2 = 1;
-        } else {
-            $alert_2 = 0;
-        }
-        log::add('temperature', 'debug', '│ Seuil Alerte Haute Humidex : ' . $alert_2);
-
+        log::add(__CLASS__, 'debug', '│ ┌───────── ALERTE HUMIDEX');
         if (($heat_index) >= $pre_seuil) {
             $alert_1 = 1;
         } else {
             $alert_1 = 0;
         }
-        log::add('temperature', 'debug', '│ Seuil Pré-alerte Humidex : ' . $alert_1);
-        log::add('temperature', 'debug', '└─────────');
+        log::add(__CLASS__, 'debug', '│ │ Seuil Pré-alerte Humidex : ' . $alert_1);
 
-        /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('temperature', 'debug', '┌───────── MISE A JOUR : ' . $_eqName);
-
-        $Equipement = eqlogic::byId($this->getId());
-        if (is_object($Equipement) && $Equipement->getIsEnable()) {
-
-            foreach ($Equipement->getCmd('info') as $Command) {
-                if (is_object($Command)) {
-                    switch ($Command->getLogicalId()) {
-                        case "alert_1":
-                            log::add(__CLASS__, 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
-                            break;
-                        case "alert_2":
-                            log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
-                            break;
-                        case "heat_index":
-                            log::add(__CLASS__, 'debug', '│ Facteur Humidex : ' . $heat_index . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $heat_index);
-                            break;
-                        case "humidityrel":
-                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
-                            break;
-                        case "td":
-                            log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
-                            break;
-                        case "td_num":
-                            if (isset($td_num)) {
-                                log::add(__CLASS__, 'debug', '│ Tendance Numérique : ' . $td_num);
-                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
-                            } else {
-                                log::add(__CLASS__, 'debug', '│ Problème variable Tendance Numérique ');
-                            }
-                            break;
-                        case "temperature":
-                            //log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
-                            break;
-                        case "wind":
-                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $wind . $wind_unite);
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
-                            break;
-                        case "windchill":
-                            log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
-                            break;
-                    }
-                }
-            }
+        if (($heat_index) >= $seuil) {
+            $alert_2 = 1;
+        } else {
+            $alert_2 = 0;
         }
-        log::add('temperature', 'debug', '└─────────');
-        log::add('temperature', 'debug', '================ FIN CRON =================');
+        log::add(__CLASS__, 'debug', '│ │ Seuil Alerte Haute Humidex : ' . $alert_2);
+        log::add(__CLASS__, 'debug', '│ └─────────');
 
-        return;
+
+        return array($windchill, $td, $td_num, $heat_index, $alert_1, $alert_2);
     }
 }
 
