@@ -267,17 +267,18 @@ class temperature extends eqLogic
         $idvirt = str_replace("#", "", $this->getConfiguration('vent'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
-            $vent = $cmdvirt->execCmd();
-            $unite = $cmdvirt->getUnite();
-            log::add('temperature', 'debug', '│ Vent : ' . $vent . ' ' . $unite);
+            $wind = $cmdvirt->execCmd();
+            $wind_unite = $cmdvirt->getUnite();
+            log::add('temperature', 'debug', '│ Vent : ' . $wind . ' ' . $wind_unite);
         } else {
             throw new Exception(__('Le champ "Vitesse du Vent" ne peut être vide', __FILE__));
             log::add('temperature', 'error', 'Configuration : vent non existant : ' . $this->getConfiguration('vent'));
         }
-        if ($unite == 'm/s') {
+        if ($wind_unite == 'm/s') {
             log::add('temperature', 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
-            $vent = $vent * 3.6;
-            log::add('temperature', 'debug', '│ Vent : ' . $vent . ' km/h');
+            $wind = $wind * 3.6;
+            $wind_unite = ' km/h';
+            log::add('temperature', 'debug', '│ Vent : ' . $wind  . $wind_unite);
         }
 
 
@@ -387,25 +388,43 @@ class temperature extends eqLogic
             foreach ($Equipement->getCmd('info') as $Command) {
                 if (is_object($Command)) {
                     switch ($Command->getLogicalId()) {
-                        case "windchill": //Mise à jour de la commande Winchill
-                            log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
+                        case "alert_1":
+                            log::add(__CLASS__, 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
                             break;
-                        case "td": //Mise à jour de la commande tendance
-                            log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
+                        case "alert_2":
+                            log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
                             break;
                         case "heat_index": //Mise à jour de la commande Facteur Humidex
                             log::add(__CLASS__, 'debug', '│ Facteur Humidex : ' . $heat_index . ' °C');
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $heat_index);
                             break;
-                        case "alert_1": //Mise à jour de la commande Alerte 1
-                            log::add(__CLASS__, 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
+                        case "humidityrel":
+                            log::add(__CLASS__, 'debug', '│ ┌───────── HUMIDITE RELATIVE');
+                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $humidity . ' %');
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
                             break;
-                        case "alert_2": //Mise à jour de la commande Alerte 1
-                            log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
+                        case "td":
+                            log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
+                            break;
+                        case "temperature":
+                            log::add(__CLASS__, 'debug', '│ ┌───────── Temperature');
+                            //log::add(__CLASS__, 'debug', '│ │ Température : ' . $temperature . ' °C');
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "wind":
+                            log::add(__CLASS__, 'debug', '│ ┌───────── VITESSE DU VENT');
+                            //log::add(__CLASS__, 'debug', '│ │ Humidité Absolue : ' . $wind . $wind_unite);
+                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
+                            log::add(__CLASS__, 'debug', '│ └─────────');
+                            break;
+                        case "windchill":
+                            log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
                             break;
                     }
                 }
