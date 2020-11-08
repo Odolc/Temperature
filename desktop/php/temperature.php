@@ -21,7 +21,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Configuration}}</span>
             </div>
         </div>
-        <legend><i class="jeedom-thermo-moyen"></i> {{Mes températures ressenties}}</legend>
+        <legend><i class="jeedom-thermo-moyen"></i> {{Mes Températures ressenties}}</legend>
         <div class="input-group" style="margin:5px;">
             <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
             <div class="input-group-btn">
