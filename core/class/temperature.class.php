@@ -85,7 +85,7 @@ class temperature extends eqLogic
         $Command = $this->getCmd(null, $_logicalId);
         if (!is_object($Command)) {
             log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- Ordre : ' . $_order);
-            $Command = new roseeCmd();
+            $Command = new temperatureCmd();
             $Command->setId(null);
             $Command->setLogicalId($_logicalId);
             $Command->setEqLogic_id($this->getId());
@@ -158,7 +158,7 @@ class temperature extends eqLogic
         }
         if ($createRefreshCmd) {
             if (!is_object($refresh)) {
-                $refresh = new roseeCmd();
+                $refresh = new temperatureCmd();
                 $refresh->setLogicalId('refresh');
                 $refresh->setIsVisible(1);
                 $refresh->setName(__('Rafraichir', __FILE__));
@@ -205,7 +205,7 @@ class temperature extends eqLogic
     public function postSave()
     {
         $_eqName = $this->getName();
-        log::add('temperature', 'debug', 'postSave() =>' . $_eqName);
+        log::add(__CLASS__, 'debug', 'Sauvegarde de l\'équipement [postSave()] : ' . $_eqName);
         $order = 1;
 
         if (version_compare(jeedom::version(), "4", "<")) {
