@@ -367,15 +367,15 @@ class temperature extends eqLogic
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
                             break;
                         case "td":
-                            log::add(__CLASS__, 'debug', '│ Degré de comfort : ' . $td);
+                            log::add(__CLASS__, 'debug', '│ Degré de comfort (format texte) : ' . $td);
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
                             break;
                         case "td_num":
                             if (isset($td_num)) {
-                                log::add(__CLASS__, 'debug', '│ Tendance Numérique : ' . $td_num);
+                                log::add(__CLASS__, 'debug', '│ Degré de comfort (format numérique) : ' . $td_num);
                                 $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
                             } else {
-                                log::add(__CLASS__, 'debug', '│ Problème variable Tendance Numérique ');
+                                log::add(__CLASS__, 'debug', '│ Problème variable Degré de comfort (format numérique)');
                             }
                             break;
                         case "temperature":
