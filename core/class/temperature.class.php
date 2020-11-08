@@ -231,7 +231,17 @@ class temperature extends eqLogic
         $order++;
         $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
         $order++;
-        //$Equipement->AddCommand('Vitesse du vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+
+        $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
+        $cmdvirt = cmd::byId($idvirt);
+        if (is_object($cmdvirt)) {
+            $wind_unite = $cmdvirt->getUnite();
+        }
+        if ($wind_unite == 'm/s') {
+            $wind_unite = ' km/h';
+        }
+        $Equipement->AddCommand('Vitesse du Vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $order++;
     }
 
 
@@ -373,8 +383,8 @@ class temperature extends eqLogic
                             $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
                             break;
                         case "wind":
-                            //log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . $wind_unite);
-                            //$Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
+                            log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . $wind_unite);
+                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
                             break;
                         case "windchill":
                             log::add(__CLASS__, 'debug', '│ Windchill : ' . $windchill . ' °C');
