@@ -18,7 +18,8 @@
 
 require_once dirname(__FILE__) . '/../../../core/php/core.inc.php';
 
-function temperature_install() {
+function temperature_install()
+{
     jeedom::getApiKey('temperature');
 
     config::save('functionality::cron5::enable', 0, 'temperature');
@@ -35,7 +36,8 @@ function temperature_install() {
     //message::add('Plugin Température', 'Merci pour l\'installation du plugin.');
 }
 
-function temperature_update() {
+function temperature_update()
+{
     jeedom::getApiKey('temperature');
 
     $cron = cron::byClassAndFunction('temperature', 'pull');
@@ -66,25 +68,25 @@ function temperature_update() {
     $plugin = plugin::byId('temperature');
     $eqLogics = eqLogic::byType($plugin->getId());
     foreach ($eqLogics as $eqLogic) {
-        updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1');
-        updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2');
-        updateLogicalId($eqLogic, 'info_inconfort', 'td');
-        updateLogicalId($eqLogic, 'msg', 'td');
-        updateLogicalId($eqLogic, 'IndiceChaleur', 'heat_index');
+        //updateLogicalId($eqLogic, 'alert_1',null,null);
+        updateLogicalId($eqLogic, 'IndiceChaleur', 'heat_index', 1);
+        updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2', null);
+        updateLogicalId($eqLogic, 'info_inconfort', 'td', null);
+        updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1', null);
+
+        updateLogicalId($eqLogic, 'heat_index', null, 1);
+        updateLogicalId($eqLogic, 'windchill', null, 1);
     }
 
     //resave eqs for new cmd:
-    try
-    {
+    try {
         $eqs = eqLogic::byType('temperature');
-        foreach ($eqs as $eq){
+        foreach ($eqs as $eq) {
             $eq->save();
         }
-    }
-    catch (Exception $e)
-    {
+    } catch (Exception $e) {
         $e = print_r($e, 1);
-        log::add('temperature', 'error', 'temperature_update ERROR: '.$e);
+        log::add('temperature', 'error', 'temperature_update ERROR: ' . $e);
     }
 
     //message::add('Plugin Température', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
@@ -93,18 +95,24 @@ function temperature_update() {
     }
 }
 
-function updateLogicalId($eqLogic, $from, $to) {
-    $temperatureCmd = $eqLogic->getCmd(null, $from);
-    if (is_object($temperatureCmd)) {
-        $temperatureCmd->setLogicalId($to);
-        $temperatureCmd->save();
+function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null)
+{
+    $command = $eqLogic->getCmd(null, $from);
+    if (is_object($command)) {
+        if ($to != null) {
+            $command->setLogicalId($to);
+        }
+        if ($_historizeRound != null) {
+            $command->setConfiguration('historizeRound', $_historizeRound);
+        }
+        $command->save();
     }
 }
 
-function temperature_remove() {
+function temperature_remove()
+{
     $cron = cron::byClassAndFunction('temperature', 'pull');
     if (is_object($cron)) {
         $cron->remove();
     }
 }
-?>

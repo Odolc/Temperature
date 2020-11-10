@@ -21,7 +21,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <span>{{Configuration}}</span>
             </div>
         </div>
-        <legend><i class="jeedom-thermo-moyen"></i> {{Mes températures ressenties}}</legend>
+        <legend><i class="jeedom-thermo-moyen"></i> {{Mes Températures ressenties}}</legend>
         <div class="input-group" style="margin:5px;">
             <input class="form-control" placeholder="{{Rechercher}}" id="in_searchEqlogic" />
             <div class="input-group-btn">
@@ -62,20 +62,23 @@ $eqLogics = eqLogic::byType($plugin->getId());
                     <fieldset>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Nom de l'équipement}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="id" style="display : none;" />
                                 <input type="text" class="eqLogicAttr form-control" data-l1key="name" placeholder="{{Nom de l\'équipement}}" />
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-sm-2 control-label">{{Objet parent}}</label>
-                            <div class="col-sm-3">
+                            <div class="col-sm-4">
                                 <select id="sel_object" class="eqLogicAttr form-control" data-l1key="object_id">
                                     <option value="">{{Aucun}}</option>
                                     <?php
-                                    foreach (jeeObject::all() as $object) {
-                                        echo '<option value="' . $object->getId() . '">' . $object->getName() . '</option>';
+                                    $options = '';
+                                    foreach ((jeeObject::buildTree(null, false)) as $object) {
+                                        $decay = $object->getConfiguration('parentNumber');
+                                        $options .= '<option value="' . $object->getId() . '">' . str_repeat('&nbsp;&nbsp;', $decay) . $object->getName() . '</option>';
                                     }
+                                    echo $options;
                                     ?>
                                 </select>
                             </div>
@@ -120,7 +123,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-md-2 control-label">{{Température}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Température}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="temperature" placeholder="{{Température}}">
                                     <span class="input-group-btn">
@@ -130,10 +133,18 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
                         <div class="form-group">
+                            <label class="col-sm-2 control-label">{{Offset Température}}
+                                <sup><i class="fas fa-question-circle" title="{{A ajuster en fonction des observations locales et de la position de la sonde, 0 par défaut.}}"></i></sup>
+                            </label>
+                            <div class="col-md-1">
+                                <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="OffsetT" placeholder="0">
+                            </div>
+                        </div>
+                        <div class="form-group">
                             <label class="col-sm-2 control-label">{{Humidité Relative}}
                                 <sup><i class="fas fa-question-circle" title="{{(%) Humidité relative}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="humidite" placeholder="{{Humidité Relative}}">
                                     <span class="input-group-btn">
@@ -146,7 +157,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             <label class="col-md-2 control-label">{{Vitesse du Vent}}
                                 <sup><i class="fas fa-question-circle" title="{{(km/h) Vitesse du vent}}"></i></sup>
                             </label>
-                            <div class="col-md-6">
+                            <div class="col-md-4">
                                 <div class="input-group">
                                     <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="vent" placeholder="{{Vitesse du vent}}">
                                     <span class="input-group-btn">
@@ -156,19 +167,19 @@ $eqLogics = eqLogic::byType($plugin->getId());
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
-                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
-                            </label>
-                            <div class="col-md-2">
-                                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
-                            </div>
-                        </div>
-                        <div class="form-group">
                             <label class="col-sm-2 control-label">{{Seuil Pré-alerte Humidex}}
                                 <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de la pré-alerte inconfort de l'indice de température, 30°C par défaut}}"></i></sup>
                             </label>
-                            <div class="col-md-2">
-                                <input type="text" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
+                            <div class="col-md-1">
+                                <input type="number" step="0.1"" class=" eqLogicAttr form-control" data-l1key="configuration" data-l2key="PRE_SEUIL" value="30" placeholder="{{30}}">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-sm-2 control-label">{{Seuil Alerte Haute Humidex}}
+                                <sup><i class="fas fa-question-circle" title="{{(°C) Seuil de déclenchement de l'alerte inconfort de l'indice de température, 40°C par défaut (seuil de danger)}}"></i></sup>
+                            </label>
+                            <div class="col-md-1">
+                                <input type="number" step="0.1" class="eqLogicAttr form-control" data-l1key="configuration" data-l2key="SEUIL" value="40" placeholder="{{40}}">
                             </div>
                         </div>
                     </fieldset>
@@ -180,17 +191,15 @@ $eqLogics = eqLogic::byType($plugin->getId());
                 <table id="table_cmd" class="table table-bordered table-condensed">
                     <thead>
                         <tr>
-                            <th width="50px"> ID</th>
-                            <th width="450px">{{Nom}}</th>
-                            <th>{{Valeur}}</th>
-                            <th>{{Unité}}</th>
+                            <th style="width: 50px;"> ID</th>
+                            <th style="width: 550px;">{{Nom}}</th>
+                            <th style="width: 250px;">{{Sous-Type}}</th>
+                            <th style="width: 350px;">{{Min/Max - Unité}}</th>
                             <th>{{Paramètres}}</th>
-                            <th width="120px;">{{Options}}</th>
-                            <th style="width: 40px;"></th>
+                            <th style="width: 250px;">{{Options}}</th>
                         </tr>
                     </thead>
-                    <tbody>
-                    </tbody>
+                    <tbody></tbody>
                 </table>
             </div>
 
