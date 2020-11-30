@@ -22,12 +22,12 @@ Il est possible d'indiquer :
 
 ## Vue de la liste des équipements
 
-![exemple vue d'ensemble](../images/vue.png)
+![exemple vue d'ensemble](../images/temperature_screenshot1.png)
 
 ## Exemple de configuration
 
-![exemple équipement](../images/equipement.png)
-![exemple commandes](../images/commandes.png)
+![exemple équipement](../images/temperature_screenshot2.png)
+![exemple commandes](../images/temperature_screenshot3.png)
 
 # FAQ
 
