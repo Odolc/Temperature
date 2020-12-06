@@ -223,9 +223,9 @@ class temperature extends eqLogic
         $order++;
         $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
         $order++;
-        $Equipement->AddCommand('Degré de comfort', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
+        $Equipement->AddCommand('Degré de confort', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
         $order++;
-        $Equipement->AddCommand('Degré de comfort numérique', 'td_num', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', null, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
+        $Equipement->AddCommand('Degré de confort numérique', 'td_num', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', null, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
         $order++;
         $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
         $order++;
