@@ -306,7 +306,7 @@ class temperature extends eqLogic
             log::add('temperature', 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
             $wind = $wind * 3.6;
             $wind_unite = ' km/h';
-            log::add('temperature', 'debug', '│ Vent : ' . $wind  . $wind_unite);
+            log::add('temperature', 'debug', '│ Vent : ' . $wind  . ' ' . $wind_unite);
         }
 
         /*  ********************** Seuil PRE-Alerte Humidex*************************** */
