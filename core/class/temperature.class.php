@@ -442,7 +442,7 @@ class temperature extends eqLogic
 
         if ($temperature < 10) {
             if (0 < $windchill) {
-                $td = 'Sans risque de gelures ni d’hypothermie (pour une exposition normale)';
+                $td = 'Pas de risque de gelures ni d’hypothermie (pour une exposition normale)';
                 $td_num = -1;
             } else if (-10 < $windchill && 0 <= $windchill) {
                 $td = 'Faible risque de gelures';
