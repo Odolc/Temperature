@@ -9,6 +9,11 @@ pluginId: temperature
 
 > **_Pour rappel_** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
 
+# Version 20201208
+
+- Correction Bug Calcul Humidex
+- Correction Bug divers
+
 # Version 20201129
 
 - Amélioration de l'affichage, ajout info bulle sur les commandes
