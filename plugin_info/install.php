@@ -73,9 +73,10 @@ function temperature_update()
         updateLogicalId($eqLogic, 'alerte_humidex', 'alert_2', null);
         updateLogicalId($eqLogic, 'info_inconfort', 'td', null);
         updateLogicalId($eqLogic, 'palerte_humidex', 'alert_1', null);
-
-        updateLogicalId($eqLogic, 'heat_index', null, 1);
-        updateLogicalId($eqLogic, 'windchill', null, 1);
+        updateLogicalId($eqLogic, 'heat_index', 'humidex', 0, 'Indice de Chaleur (Humidex)', 'DELETE'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'windchill', null, 1, 'Température ressentie'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
+        updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
     }
 
     //resave eqs for new cmd:
@@ -95,7 +96,7 @@ function temperature_update()
     }
 }
 
-function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null)
+function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = null, $unite = null)
 {
     $command = $eqLogic->getCmd(null, $from);
     if (is_object($command)) {
@@ -104,6 +105,15 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null)
         }
         if ($_historizeRound != null) {
             $command->setConfiguration('historizeRound', $_historizeRound);
+        }
+        if ($name != null) {
+            $command->setName($name);
+        }
+        if ($unite != null) {
+            if ($unite == 'DELETE') {
+                $unite = null;
+            }
+            $command->setUnite($unite);
         }
         $command->save();
     }
