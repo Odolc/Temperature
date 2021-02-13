@@ -25,6 +25,10 @@ class temperature extends eqLogic
     /*     * *************************Attributs****************************** */
 
     /*     * ***********************Methode static*************************** */
+    public static function deadCmd()
+    {
+        return array();
+    }
     public static function cron5($_eqlogic_id = null)
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
