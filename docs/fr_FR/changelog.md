@@ -9,6 +9,16 @@ pluginId: temperature
 
 > **_Pour rappel_** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
 
+# Version 20220205
+
+- Affichage Core v4.2
+
+# Version 20210728
+
+- Affichage tableau Core v4.2 (beta)
+- Correction Objet Parent
+- Amélioration générale de l'affichage
+
 # Version 20201208
 
 - Correction Bug Calcul Humidex
