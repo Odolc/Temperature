@@ -37,7 +37,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
         <div class="eqLogicThumbnailContainer">
             <?php
             if (count($eqLogics) == 0) {
-                echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement de type Température ressentie a été créé, cliquer sur "Ajouter" pour commencer}}</div>';
+                echo '<br><div class="text-center" style="font-size:1.2em;font-weight:bold;">{{Aucun équipement de type Température ressentie n\'a été créé, cliquer sur "Ajouter" pour commencer}}</div>';
             } else {
                 foreach ($eqLogics as $eqLogic) {
                     $opacity = ($eqLogic->getIsEnable()) ? '' : 'disableCard';
