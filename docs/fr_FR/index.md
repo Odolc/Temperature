@@ -33,7 +33,7 @@ Il est possible d'indiquer :
 |     <b>-4</b>     | Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie'                                   |
 |     <b>-3</b>     | Faible risque de gelures et d’hypothermie                                                                          |
 |     <b>-2</b>     | Faible risque de gelures                                                                                           |
-|     <b>-1</b>     | Sans risque de gelures ni d’hypothermie (pour une exposition normale)                                              |
+|     <b>-1</b>     | Pas de risque de gelures ni d’hypothermie (pour une exposition normale)                                            |
 |     <b>1</b>      | Sensation de frais ou de froid                                                                                     |
 |     <b>2</b>      | Aucun inconfort                                                                                                    |
 |     <b>3</b>      | Sensation de bien être                                                                                             |

@@ -25,6 +25,28 @@ class temperature extends eqLogic
     /*     * *************************Attributs****************************** */
 
     /*     * ***********************Methode static*************************** */
+    public static function deadCmd()
+    {
+        $return = array();
+        foreach (eqLogic::byType('temperature') as $temperature) {
+            foreach ($temperature->getCmd() as $cmd) {
+                preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('infoName', ''), $matches);
+                foreach ($matches[1] as $cmd_id) {
+                    if (!cmd::byId(str_replace('#', '', $cmd_id))) {
+                        $return[] = array('detail' => __('temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
+                    }
+                }
+                preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('calcul', ''), $matches);
+                foreach ($matches[1] as $cmd_id) {
+                    if (!cmd::byId(str_replace('#', '', $cmd_id))) {
+                        $return[] = array('detail' => __('temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
+                    }
+                }
+            }
+        }
+        return $return;
+    }
+    public static $_widgetPossibility = array('custom' => true);
     public static function cron5($_eqlogic_id = null)
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
@@ -186,15 +208,18 @@ class temperature extends eqLogic
         if (!$this->getIsEnable()) return;
 
         if ($this->getConfiguration('temperature') == '') {
-            throw new Exception(__('Le champ "Température" ne peut etre vide', __FILE__));
+            throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
         }
 
         if ($this->getConfiguration('humidite') == '') {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut etre vide', __FILE__));
+            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
 
         if ($this->getConfiguration('vent') == '') {
-            throw new Exception(__('Le champ "Vitesse du Vent" ne peut etre vide', __FILE__));
+            throw new Exception(__('Le champ "Vitesse du vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            log::add(__CLASS__, 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
     }
 
@@ -215,7 +240,7 @@ class temperature extends eqLogic
         };
 
         $Equipement = eqlogic::byId($this->getId());
-        $Equipement->AddCommand('Température ressentie', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
+        $Equipement->AddCommand('Température ressentie', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
         $order++;
         $Equipement->AddCommand('Indice de chaleur', 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
         $order++;
@@ -268,8 +293,8 @@ class temperature extends eqLogic
             $temperature = $cmdvirt->execCmd();
             log::add('temperature', 'debug', '│ Température : ' . $temperature . ' °C');
         } else {
-            throw new Exception(__('Le champ "Température" ne peut être vide', __FILE__));
-            log::add('temperature', 'error', 'Configuration : temperature non existante : ' . $this->getConfiguration('temperature'));
+            throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
         }
         /*  ********************** Offset Température *************************** */
         $OffsetT = $this->getConfiguration('OffsetT');
@@ -287,8 +312,8 @@ class temperature extends eqLogic
             $humidity = $cmdvirt->execCmd();
             log::add('temperature', 'debug', '│ Humidité Relative : ' . $humidity . ' %');
         } else {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide', __FILE__));
-            log::add('temperature', 'error', 'Configuration : humidite non existante : ' . $this->getConfiguration('humidite'));
+            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
 
         /*  ********************** VENT *************************** */
@@ -299,8 +324,8 @@ class temperature extends eqLogic
             $wind_unite = $cmdvirt->getUnite();
             log::add('temperature', 'debug', '│ Vent : ' . $wind . ' ' . $wind_unite);
         } else {
-            throw new Exception(__('Le champ "Vitesse du Vent" ne peut être vide', __FILE__));
-            log::add('temperature', 'error', 'Configuration : vent non existant : ' . $this->getConfiguration('vent'));
+            throw new Exception(__('Le champ "Vitesse du vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            log::add(__CLASS__, 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
         if ($wind_unite == 'm/s') {
             log::add('temperature', 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
@@ -442,7 +467,7 @@ class temperature extends eqLogic
 
         if ($temperature < 10) {
             if (0 < $windchill) {
-                $td = 'Sans risque de gelures ni d’hypothermie (pour une exposition normale)';
+                $td = 'Pas de risque de gelures ni d’hypothermie (pour une exposition normale)';
                 $td_num = -1;
             } else if (-10 < $windchill && 0 <= $windchill) {
                 $td = 'Faible risque de gelures';
