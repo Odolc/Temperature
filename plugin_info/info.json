@@ -5,7 +5,7 @@
     "usage": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.",
     "licence": "AGPL",
     "author": "Claude Metzger",
-    "require": "4.2",
+    "require": "4.0",
     "category": "weather",
     "hasDependency": false,
     "hasOwnDeamon": false,
