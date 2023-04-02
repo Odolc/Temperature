@@ -9,6 +9,11 @@ pluginId: temperature
 
 > **_Pour rappel_** s'il n'y a pas d'information sur la mise à jour, c'est que celle-ci concerne uniquement de la mise à jour de documentation, de traduction ou de corrections de bugs mineur.
 
+# 02/04/2023
+
+- Correction pour core 4.4
+- Version mini Core pour le plugin est 4.2
+
 # Version 20230327
 
 - Typo
