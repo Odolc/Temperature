@@ -1,5 +1,5 @@
 {
-    "plugins\/rosee\/core\/ajax\/rosee.ajax.php": {
+    "plugins\/baro\/core\/ajax\/baro.ajax.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Plugin inconnu vérifier l\\'ID": "Plugin inconnu vérifier l\\'ID",
         "Baro eqLogic non trouvé : ": "Baro eqLogic non trouvé",
@@ -9,7 +9,7 @@
         "Plugin Horoscope .....": "Plugin Horoscope .....",
         "Aucune": "Aucune"    
     },
-    "plugins\/rosee\/core\/class\/rosee.class.php": {
+    "plugins\/baro\/core\/class\/baro.class.php": {
         "Baro": "Baro",
         "Rosee" : "Rosée",
         "Température" : "Température",
@@ -73,12 +73,12 @@
         "Santé": "Santé",
         "Travail": "Travail",
         "Famille": "Famille",
-        "Vie sociale": "Vie sociale",
-        "Citation du jour": "Citation du jour",
-        "Nombre de chance": "Nombre de chance",
-        "Clin d'oeil": "Clin d'oeil"
+        "Viesociale": "Vie sociale",
+        "Citationdujour": "Citation du jour",
+        "Nombredechance": "Nombre de chance",
+        "Clindoeil": "Clin d oeil"
     },
-    "plugins\/rosee\/desktop\/php\/rosee.php": {
+    "plugins\/baro\/desktop\/php\/baro.php": {
         "401 - Accès non autorisé": "401 - Accès non autorisé",
         "Aucun équipement de type Baro n\\'a été créé, cliquer sur Ajouter pour commencer": "Aucun équipement de type Baro n\\'a été créé, cliquer sur Ajouter pour commencer",
         "Gestion": "Gestion",
@@ -152,9 +152,35 @@
         "Configuration avancée": "Configuration avancée",
         "Sauvegarder": "Sauvegarder",
         "Supprimer": "Supprimer",
-        "Assistant cron" : "Assistant Cron"
+        "Assistant cron" : "Assistant Cron",
+        "Ajouter un template": "Ajouter template",
+        "Mes horoscopes": "Mes horoscopes",
+        "Général": "Général",
+        "Nom de la personne": "Nom de la personne",
+        "Signe": "Signe",
+        "horoscope": "horoscope",
+        "Action": "Action",
+        "Taureau": "Taureau",
+        "Bélier": "Bélier",
+        "Poissons": "Poissons",
+        "Vierge": "Vierge",
+        "Capricorne": "Capricorne",
+        "Scorpion": "Scorpion",
+        "Sagittaire": "Sagittaire",
+        "Verseau": "Verseau",
+        "Cancer": "Cancer",
+        "Balance": "Balance",
+        "Gemeaux": "Gémeaux",
+        "Lion": "Lion",
+        "Ajouter un horoscope": "Ajouter un horoscope",
+        "Paramètres": "Paramètres",
+        "Auto-actualisation" : "Auto-actualisation",
+        "Fréquence de rafraîchissement des commandes infos de l'équipement": "Fréquence de rafraîchissement des commandes infos de l'équipement",
+        "Fréquence de rafraîchissement" : "Fréquence de rafraîchissement",
+        "Signe du zodiaque":"Signe du zodiaque",
+        "Choisir un signe zodiaque":"Choisir un signe zodiaque"
     },
-    "plugins\/rosee\/desktop\/js\/rosee.js": {
+    "plugins\/baro\/desktop\/js\/baro.js": {
         "Recréer les commandes": "Recréer les commandes",
         "Attention, cela va supprimer les commandes existantes.": "Attention, cela va supprimer les commandes existantes.",
         "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes": "Etes-vous sûr de vouloir récréer toutes les commandes ? Cela va supprimer les commandes existantes",
