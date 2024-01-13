@@ -33,13 +33,13 @@ class temperature extends eqLogic
                 preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('infoName', ''), $matches);
                 foreach ($matches[1] as $cmd_id) {
                     if (!cmd::byId(str_replace('#', '', $cmd_id))) {
-                        $return[] = array('detail' => __('temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
+                        $return[] = array('detail' => __('Temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
                     }
                 }
                 preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('calcul', ''), $matches);
                 foreach ($matches[1] as $cmd_id) {
                     if (!cmd::byId(str_replace('#', '', $cmd_id))) {
-                        $return[] = array('detail' => __('temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
+                        $return[] = array('detail' => __('Temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
                     }
                 }
             }
@@ -202,23 +202,22 @@ class temperature extends eqLogic
         }
     }
 
-
     public function preUpdate()
     {
         if (!$this->getIsEnable()) return;
 
         if ($this->getConfiguration('temperature') == '') {
-            throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ TEMPERATURE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
         }
 
         if ($this->getConfiguration('humidite') == '') {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
 
         if ($this->getConfiguration('vent') == '') {
-            throw new Exception(__('Le champ "Vitesse du vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
     }
@@ -238,23 +237,32 @@ class temperature extends eqLogic
         } else {
             $templatecore_V4  = 'core::';
         };
+        $temp_ressentiename =  (__('Température ressentie', __FILE__));
+        $indice_chaleur_name =  (__('Indice de Chaleur (Humidex)', __FILE__));
+        $alert1 = (__('Pré Alerte Humidex', __FILE__));
+        $alert2 = (__('Alerte Humidex', __FILE__));
+        $name_td = (__('Message', __FILE__));
+        $name_td_num =  (__('Message numérique', __FILE__));
+        $temp_name =  (__('Température', __FILE__));
+        $humidity_relative_name =  (__('Humidité Relative', __FILE__));
+        $vent_name =  (__('Vitesse du Vent', __FILE__));
 
         $Equipement = eqlogic::byId($this->getId());
-        $Equipement->AddCommand('Température ressentie', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
+        $Equipement->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
         $order++;
-        $Equipement->AddCommand('Indice de chaleur', 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
+        $Equipement->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
         $order++;
-        $Equipement->AddCommand('Pré Alerte Humidex', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
+        $Equipement->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
         $order++;
-        $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
+        $Equipement->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
         $order++;
-        $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
+        $Equipement->AddCommand($name_td, 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
         $order++;
-        $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', null, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
+        $Equipement->AddCommand($name_td_num, 'td_num', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', null, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
         $order++;
-        $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $Equipement->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
         $order++;
-        $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $Equipement->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
         $order++;
 
         $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
@@ -265,7 +273,7 @@ class temperature extends eqLogic
         if ($wind_unite == 'm/s') {
             $wind_unite = ' km/h';
         }
-        $Equipement->AddCommand('Vitesse du Vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
+        $Equipement->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
         $order++;
     }
 
@@ -293,7 +301,7 @@ class temperature extends eqLogic
             $temperature = $cmdvirt->execCmd();
             log::add('temperature', 'debug', '│ Température : ' . $temperature . ' °C');
         } else {
-            throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ TEMPERATURE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
         }
         /*  ********************** Offset Température *************************** */
@@ -312,7 +320,7 @@ class temperature extends eqLogic
             $humidity = $cmdvirt->execCmd();
             log::add('temperature', 'debug', '│ Humidité Relative : ' . $humidity . ' %');
         } else {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
 
@@ -324,7 +332,7 @@ class temperature extends eqLogic
             $wind_unite = $cmdvirt->getUnite();
             log::add('temperature', 'debug', '│ Vent : ' . $wind . ' ' . $wind_unite);
         } else {
-            throw new Exception(__('Le champ "Vitesse du vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
+            throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add(__CLASS__, 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
         if ($wind_unite == 'm/s') {
@@ -467,51 +475,51 @@ class temperature extends eqLogic
 
         if ($temperature < 10) {
             if (0 < $windchill) {
-                $td = 'Pas de risque de gelures ni d’hypothermie (pour une exposition normale)';
+                $td = (__('Pas de risque de gelures ni d’hypothermie (pour une exposition normale', __FILE__));
                 $td_num = -1;
             } else if (-10 < $windchill && 0 <= $windchill) {
-                $td = 'Faible risque de gelures';
+                $td = (__('Faible risque de gelures', __FILE__));
                 $td_num = -2;
             } else if (-28 < $windchill && -10 <= $windchill) {
-                $td = 'Faible risque de gelures et d’hypothermie';
+                $td = (__('Faible risque de gelures et d’hypothermie', __FILE__));
                 $td_num = -3;
             } else if (-40 < $windchill && -28 <= $windchill) {
-                $td = 'Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie';
+                $td = (__('Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -4;
             } else if (-48 < $windchill && -40 <= $windchill) {
-                $td = 'Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie';
+                $td = (__('Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -5;
             } else if (-55 < $windchill && -48 <= $windchill) {
-                $td = 'Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité';
+                $td = (__('Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité', __FILE__));
                 $td_num = -6;
             } else if ($windchill <= -55) {
-                $td = 'Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\'hypothermie. Rester à l\'abri';
+                $td = (__('Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\'hypothermie. Rester à l\'abri', __FILE__));
                 $td_num = -7;
             }
         } else {
             if ($humidex < 15.0) {
+                $td = (__('Sensation de frais ou de froid', __FILE__));
                 $td_num = 1;
-                $td = 'Sensation de frais ou de froid';
             } elseif ($humidex >= 15.0 && $humidex <= 19.0) {
-                $td = 'Aucun inconfort';
+                $td = (__('Aucun inconfort', __FILE__));
                 $td_num = 2;
             } elseif ($humidex > 19.0 && $humidex <= 29.0) {
-                $td = "Sensation de bien être";
+                $td = (__('Sensation de bien être', __FILE__));
                 $td_num = 3;
             } elseif ($humidex > 29.0 && $humidex <= 34.0) {
-                $td = "Sensation d'inconfort plus ou moins grande";
+                $td = (__('Sensation d\'inconfort plus ou moins grande', __FILE__));
                 $td_num = 4;
             } elseif ($humidex > 34.0 && $humidex <= 39.0) {
-                $td = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
+                $td = (__('Sensation d\'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.', __FILE__));
                 $td_num = 5;
             } elseif ($humidex > 39.0 && $humidex <= 45.0) {
-                $td = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
+                $td = (__('Sensation d\'inconfort généralisée. Danger. Éviter les efforts.', __FILE__));
                 $td_num = 6;
             } elseif ($humidex > 45.0 && $humidex <= 53.0) {
-                $td = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
+                $td = (__('Danger extrême. Arrêt de travail dans de nombreux domaines.', __FILE__));
                 $td_num = 7;
             } else {
-                $td = 'Coup de chaleur imminent (danger de mort).';
+                $td = (__('Coup de chaleur imminent (danger de mort).', __FILE__));
                 $td_num = 8;
             }
         }

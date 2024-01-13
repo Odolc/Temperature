@@ -27,7 +27,7 @@ try {
     if (init('action') == 'getTemperature') {
         $temperature = temperature::byId(init('id'));
         if (!is_object($temperature)) {
-            throw new Exception(__('Plugin inconnu verifier l\'id', __FILE__));
+            throw new Exception(__('Plugin inconnu vérifier l\'id', __FILE__));
         }
         $return = utils::o2a($temperature);
         $return['cmd'] = array();
@@ -42,7 +42,7 @@ try {
     if (init('action') == 'autoDEL_eq') {
         $eqLogic = temperature::byId(init('id'));
         if (!is_object($eqLogic)) {
-            throw new Exception(__('Temperature eqLogic non trouvé : ', __FILE__) . init('id'));
+            throw new Exception(__('Température eqLogic non trouvé : ', __FILE__) . init('id'));
         }
         foreach ($eqLogic->getCmd() as $cmd) {
             $cmd->remove();
