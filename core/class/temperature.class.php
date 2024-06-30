@@ -47,7 +47,7 @@ class temperature extends eqLogic
         return $return;
     }
     public static $_widgetPossibility = array('custom' => true);
-    public static function cron5($_eqlogic_id = null)
+    public static function cron5()
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
             if ($temperature->getIsEnable()) {
@@ -57,7 +57,7 @@ class temperature extends eqLogic
         }
     }
 
-    public static function cron10($_eqlogic_id = null)
+    public static function cron10()
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
             if ($temperature->getIsEnable()) {
@@ -67,7 +67,7 @@ class temperature extends eqLogic
         }
     }
 
-    public static function cron15($_eqlogic_id = null)
+    public static function cron15()
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
             if ($temperature->getIsEnable()) {
@@ -77,7 +77,7 @@ class temperature extends eqLogic
         }
     }
 
-    public static function cron30($_eqlogic_id = null)
+    public static function cron30()
     {
         //no both cron5 and cron30 enabled:
         if (config::byKey('functionality::cron15::enable', 'temperature', 0) == 1) {
