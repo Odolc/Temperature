@@ -237,9 +237,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
     </div><!-- /.eqLogic -->
 </div><!-- /.row row-overflow -->
 <?php
-
-use Exception;
-
 include_file('desktop', 'temperature', 'js', 'temperature');
 include_file('core', 'plugin.template', 'js');
 ?>
