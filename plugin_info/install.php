@@ -39,7 +39,6 @@ function temperature_install()
 function temperature_update()
 {
     jeedom::getApiKey('temperature');
-
     $cron = cron::byClassAndFunction('temperature', 'pull');
     if (is_object($cron)) {
         $cron->remove();
@@ -77,8 +76,8 @@ function temperature_update()
         updateLogicalId($eqLogic, 'windchill', null, 1, 'Température ressentie'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
+        updateconfiqEqLogic($eqLogic, 'vent', 'wind');
     }
-
     //resave eqs for new cmd:
     try {
         $eqs = eqLogic::byType('temperature');
@@ -93,6 +92,13 @@ function temperature_update()
     //message::add('Plugin Température', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
     foreach (eqLogic::byType('temperature') as $temperature) {
         $temperature->getInformations();
+    }
+}
+function updateconfiqEqLogic($eqLogic, $oldconfig = null, $newconfig = null)
+{
+    $EQLOGIC = $eqLogic->getConfiguration('vent');
+    if (is_object($EQLOGIC)) {
+        log::add('temperature', 'debug', 'TEST: ');
     }
 }
 
