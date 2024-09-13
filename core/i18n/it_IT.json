@@ -9,6 +9,7 @@
         "Alerte Humidex": "Allarme Humidex",
         "Aucun inconfort": "Nessun disagio",
         "Calcul": "Calcolo",
+        "Configuration :": "Configurazione :",
         "Coup de chaleur imminent (danger de mort).": "Colpo di calore imminente (pericolo di vita).",
         "Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\\'hypothermie. Rester à l\\'abri": "Pericolo! Rischio estremamente elevato di congelamento in meno di 2 minuti (vedi nota) e di ipotermia. Rimanere al riparo",
         "Danger extrême. Arrêt de travail dans de nombreux domaines.": "Pericolo estremo. Interruzione dei lavori in molte aree.",
@@ -16,8 +17,12 @@
         "Faible risque de gelures et d’hypothermie": "Basso rischio di congelamento e ipotermia",
         "Humidité Relative": "Umidità relativa",
         "Indice de Chaleur (Humidex)": "Indice di calore (Humidex)",
+        "La valeur :": "Il valore :",
+        "Le champ HUMIDITÉ RELATIVE": "Il campo UMIDITÀ RELATIVA",
         "Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\\'équipement : ": "Il campo UMIDITÀ RELATIVA non può essere vuoto per l'apparecchiatura:",
+        "Le champ TEMPERATURE": "Il campo TEMPERATURA",
         "Le champ TEMPERATURE ne peut être vide pour l\\'équipement : ": "Il campo TEMPERATURA non può essere vuoto per l'apparecchiatura:",
+        "Le champ VITESSE DU VENT": "Il campo VELOCITÀ DEL VENTO",
         "Le champ VITESSE DU VENT ne peut être vide pour l\\'équipement : ": "Il campo VELOCITÀ DEL VENTO non può essere vuoto per l'apparecchiatura:",
         "Message": "Message",
         "Message numérique": "Messaggio digitale",
@@ -37,7 +42,9 @@
         "Température": "Temperatura",
         "Température ressentie": "La temperatura",
         "Vitesse du Vent": "Velocità del vento",
-        "dans la commande": "nel"
+        "dans la commande": "nel",
+        "ne peut être vide": "non può essere vuoto",
+        "pour l\\'équipement": "per le apparecchiature"
     },
     "plugins\/temperature\/desktop\/js\/temperature.js": {
         "Afficher": "Mostra",
