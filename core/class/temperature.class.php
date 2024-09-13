@@ -279,11 +279,16 @@ class temperature extends eqLogic
             throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add('temperature', 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
-        if (!isset($this->getConfiguration('vent'))) {
-            if ($this->getConfiguration('wind') == '') {
-                throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
-                log::add('temperature', 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
-            }
+        /* Provisoire */
+        if ($this->getConfiguration('vent') != '') {
+            $this->setConfiguration('wind', $this->getConfiguration('vent'));
+            log::add('temperature', 'debug', '| ───▶︎ Modification variable vent pour être aligner avec rosee de vent => wind');
+            $this->setConfiguration('vent', null);
+            $this->save(true);
+        }
+        if ($this->getConfiguration('wind') == '') {
+            throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+            log::add('temperature', 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
     }
 
