@@ -76,7 +76,6 @@ function temperature_update()
         updateLogicalId($eqLogic, 'windchill', null, 1, 'Température ressentie'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
-        updateconfiqEqLogic($eqLogic, 'vent', 'wind');
     }
     //resave eqs for new cmd:
     try {
@@ -92,19 +91,6 @@ function temperature_update()
     //message::add('Plugin Température', 'Merci pour la mise à jour de ce plugin, consultez le changelog.');
     foreach (eqLogic::byType('temperature') as $temperature) {
         $temperature->getInformations();
-    }
-}
-function updateconfiqEqLogic($eqLogic, $oldconfig = null, $newconfig = null)
-{
-    $EQLOGIC = $eqLogic->getConfiguration('vent');
-    $EQLOGIC2 = byLogicalId($eqLogic, 'Freebox_OS');
-    //$name = $eqLogic->getName();
-    log::add('temperature', 'debug', 'TEST update: ');
-    if (is_object($EQLOGIC)) {
-        log::add('temperature', 'debug', 'TEST update: ');
-    }
-    if (is_object($EQLOGIC2)) {
-        log::add('temperature', 'debug', 'TEST 2 update: ');
     }
 }
 

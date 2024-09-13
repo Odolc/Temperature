@@ -247,7 +247,13 @@ class temperature extends eqLogic
 
         /*  ********************** Vitesse vent *************************** */
         if ($calcul == 'temperature') {
-            $idvirt = str_replace("#", "", $this->getConfiguration('vent'));
+            if ($this->getConfiguration('vent') != '') {
+                $this->setConfiguration('wind', $this->getConfiguration('vent'));
+                log::add('temperature', 'debug', '| ───▶︎ Modification variable vent pour être aligner avec rosee de vent => wind');
+                $this->setConfiguration('vent', null);
+                $this->save(true);
+            }
+            $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
             $cmdvirt = cmd::byId($idvirt);
             if (is_object($cmdvirt)) {
                 $wind_unite = $cmdvirt->getUnite();
@@ -274,7 +280,7 @@ class temperature extends eqLogic
             log::add('temperature', 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
 
-        if ($this->getConfiguration('vent') == '') {
+        if ($this->getConfiguration('wind') == '') {
             throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add('temperature', 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
@@ -318,7 +324,7 @@ class temperature extends eqLogic
         log::add('temperature', 'debug', '| ───▶︎ Température avec Offset : ' . $temperature . ' °C' . ' - Offset Température : ' . $OffsetT . ' °C');
 
         /*  ********************** VENT *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
-        $idvirt = str_replace("#", "", $this->getConfiguration('vent'));
+        $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $wind = $cmdvirt->execCmd();
