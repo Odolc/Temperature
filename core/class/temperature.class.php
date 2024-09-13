@@ -282,7 +282,7 @@ class temperature extends eqLogic
         /* Provisoire */
         if ($this->getConfiguration('vent') != '') {
             $this->setConfiguration('wind', $this->getConfiguration('vent'));
-            log::add('temperature', 'debug', '| ───▶︎ Modification variable vent pour être aligner avec rosee de vent => wind');
+            log::add('temperature', 'debug', '| :fg-warning:───▶︎ Modification variable vent pour être aligner avec rosee de vent => wind:/fg:');
             $this->setConfiguration('vent', null);
             $this->save(true);
         }
