@@ -9,6 +9,7 @@
         "Alerte Humidex": "Alerta Humidex",
         "Aucun inconfort": "Sem desconforto",
         "Calcul": "Cálculo",
+        "Configuration :": "Configuração :",
         "Coup de chaleur imminent (danger de mort).": "Golpe de calor iminente (com risco de vida).",
         "Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\\'hypothermie. Rester à l\\'abri": "Perigo! Risco extremamente elevado de queimaduras pelo frio em menos de 2 minutos (ver nota) e de hipotermia. Manter-se abrigado",
         "Danger extrême. Arrêt de travail dans de nombreux domaines.": "Perigo extremo. Paragem de trabalho em muitas zonas.",
@@ -16,8 +17,12 @@
         "Faible risque de gelures et d’hypothermie": "Baixo risco de queimaduras pelo frio e hipotermia",
         "Humidité Relative": "Humidade relativa",
         "Indice de Chaleur (Humidex)": "Índice de calor (Humidex)",
+        "La valeur :": "O valor :",
+        "Le champ HUMIDITÉ RELATIVE": "O campo HUMIDADE RELATIVA",
         "Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\\'équipement : ": "O campo HUMIDADE RELATIVA não pode estar vazio para o equipamento:",
+        "Le champ TEMPERATURE": "O campo TEMPERATURA",
         "Le champ TEMPERATURE ne peut être vide pour l\\'équipement : ": "O campo TEMPERATURA não pode estar vazio para o equipamento:",
+        "Le champ VITESSE DU VENT": "O campo VELOCIDADE DO VENTO",
         "Le champ VITESSE DU VENT ne peut être vide pour l\\'équipement : ": "O campo VELOCIDADE DO VENTO não pode estar vazio para o equipamento:",
         "Message": "Mensagem",
         "Message numérique": "Mensagem digital",
@@ -37,7 +42,9 @@
         "Température": "Temperatura",
         "Température ressentie": "Temperatura",
         "Vitesse du Vent": "Velocidade do vento",
-        "dans la commande": "no"
+        "dans la commande": "no",
+        "ne peut être vide": "não pode estar vazio",
+        "pour l\\'équipement": "para equipamentos"
     },
     "plugins\/temperature\/desktop\/js\/temperature.js": {
         "Afficher": "Mostrar",

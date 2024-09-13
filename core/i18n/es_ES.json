@@ -9,6 +9,7 @@
         "Alerte Humidex": "Alerta Humidex",
         "Aucun inconfort": "Sin molestias",
         "Calcul": "Cálculo",
+        "Configuration :": "Configuración :",
         "Coup de chaleur imminent (danger de mort).": "Golpe de calor inminente (potencialmente mortal).",
         "Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\\'hypothermie. Rester à l\\'abri": "Peligro Riesgo extremadamente alto de congelación en menos de 2 minutos (ver nota) e hipotermia. Permanezca protegido",
         "Danger extrême. Arrêt de travail dans de nombreux domaines.": "Peligro extremo. Paro laboral en muchas zonas.",
@@ -16,8 +17,12 @@
         "Faible risque de gelures et d’hypothermie": "Bajo riesgo de congelación e hipotermia",
         "Humidité Relative": "Humedad relativa",
         "Indice de Chaleur (Humidex)": "Índice de calor (Humidex)",
+        "La valeur :": "El valor :",
+        "Le champ HUMIDITÉ RELATIVE": "El campo HUMEDAD RELATIVA",
         "Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\\'équipement : ": "El campo HUMEDAD RELATIVA no puede estar vacío para el equipo:",
+        "Le champ TEMPERATURE": "El campo TEMPERATURA",
         "Le champ TEMPERATURE ne peut être vide pour l\\'équipement : ": "El campo TEMPERATURA no puede estar vacío para el equipo:",
+        "Le champ VITESSE DU VENT": "El campo VELOCIDAD DEL VIENTO",
         "Le champ VITESSE DU VENT ne peut être vide pour l\\'équipement : ": "El campo VELOCIDAD DEL VIENTO no puede estar vacío para el equipo:",
         "Message": "Mensaje",
         "Message numérique": "Mensaje digital",
@@ -37,7 +42,9 @@
         "Température": "Temperatura",
         "Température ressentie": "Temperatura",
         "Vitesse du Vent": "Velocidad del viento",
-        "dans la commande": "en el"
+        "dans la commande": "en el",
+        "ne peut être vide": "no puede estar vacío",
+        "pour l\\'équipement": "para equipos"
     },
     "plugins\/temperature\/desktop\/js\/temperature.js": {
         "Afficher": "Mostrar",

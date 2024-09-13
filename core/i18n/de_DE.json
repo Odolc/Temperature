@@ -9,6 +9,7 @@
         "Alerte Humidex": "Humidex-Alarm",
         "Aucun inconfort": "Kein Unbehagen",
         "Calcul": "Berechnung",
+        "Configuration :": "Konfiguration :",
         "Coup de chaleur imminent (danger de mort).": "Drohender Hitzschlag (Lebensgefahr).",
         "Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\\'hypothermie. Rester à l\\'abri": "Gefahr Extrem hohes Risiko von Erfrierungen in weniger als 2 Minuten (siehe Hinweis) und Unterkühlung. In Deckung bleiben",
         "Danger extrême. Arrêt de travail dans de nombreux domaines.": "Extreme Gefahr. Arbeitsunterbrechung in vielen Bereichen.",
@@ -16,8 +17,12 @@
         "Faible risque de gelures et d’hypothermie": "Geringes Risiko von Erfrierungen und Unterkühlung",
         "Humidité Relative": "Relative Luftfeuchtigkeit",
         "Indice de Chaleur (Humidex)": "Hitzeindex (Humidex)",
+        "La valeur :": "Wert :",
+        "Le champ HUMIDITÉ RELATIVE": "Das Feld RELATIVE FEUCHTIGKEIT",
         "Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\\'équipement : ": "Das Feld RELATIVE FEUCHTIGKEIT darf für das Gerät nicht leer sein:",
+        "Le champ TEMPERATURE": "Das Feld TEMPERATURE",
         "Le champ TEMPERATURE ne peut être vide pour l\\'équipement : ": "Das Feld TEMPERATURE darf für das Gerät nicht leer sein:",
+        "Le champ VITESSE DU VENT": "Das Feld WINDGESCHWINDIGKEIT",
         "Le champ VITESSE DU VENT ne peut être vide pour l\\'équipement : ": "Das Feld WINDGESCHWINDIGKEIT darf für die Ausrüstung nicht leer sein:",
         "Message": "Nachricht",
         "Message numérique": "Digitale Nachricht",
@@ -37,7 +42,9 @@
         "Température": "Temperatur",
         "Température ressentie": "Gefühlte Temperatur",
         "Vitesse du Vent": "Windgeschwindigkeit",
-        "dans la commande": "in der Bestellung"
+        "dans la commande": "in der Bestellung",
+        "ne peut être vide": "kann nicht leer sein",
+        "pour l\\'équipement": "für die Ausstattung"
     },
     "plugins\/temperature\/desktop\/js\/temperature.js": {
         "Afficher": "Anzeige",
