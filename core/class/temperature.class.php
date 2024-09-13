@@ -33,13 +33,13 @@ class temperature extends eqLogic
                 preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('infoName', ''), $matches);
                 foreach ($matches[1] as $cmd_id) {
                     if (!cmd::byId(str_replace('#', '', $cmd_id))) {
-                        $return[] = array('detail' => __('temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
+                        $return[] = array('detail' => __('Temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Nom Information', __FILE__), 'who' => '#' . $cmd_id . '#');
                     }
                 }
                 preg_match_all("/#([0-9]*)#/", $cmd->getConfiguration('calcul', ''), $matches);
                 foreach ($matches[1] as $cmd_id) {
                     if (!cmd::byId(str_replace('#', '', $cmd_id))) {
-                        $return[] = array('detail' => __('temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
+                        $return[] = array('detail' => __('Temperature', __FILE__) . ' ' . $temperature->getHumanName() . ' ' . __('dans la commande', __FILE__) . ' ' . $cmd->getName(), 'help' => __('Calcul', __FILE__), 'who' => '#' . $cmd_id . '#');
                     }
                 }
             }
@@ -47,7 +47,7 @@ class temperature extends eqLogic
         return $return;
     }
     public static $_widgetPossibility = array('custom' => true);
-    public static function cron5($_eqlogic_id = null)
+    public static function cron5()
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
             if ($temperature->getIsEnable()) {
@@ -57,7 +57,7 @@ class temperature extends eqLogic
         }
     }
 
-    public static function cron10($_eqlogic_id = null)
+    public static function cron10()
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
             if ($temperature->getIsEnable()) {
@@ -67,7 +67,7 @@ class temperature extends eqLogic
         }
     }
 
-    public static function cron15($_eqlogic_id = null)
+    public static function cron15()
     {
         foreach (eqLogic::byType('temperature') as $temperature) {
             if ($temperature->getIsEnable()) {
@@ -77,7 +77,7 @@ class temperature extends eqLogic
         }
     }
 
-    public static function cron30($_eqlogic_id = null)
+    public static function cron30()
     {
         //no both cron5 and cron30 enabled:
         if (config::byKey('functionality::cron15::enable', 'temperature', 0) == 1) {
@@ -106,7 +106,7 @@ class temperature extends eqLogic
 
         $Command = $this->getCmd(null, $_logicalId);
         if (!is_object($Command)) {
-            log::add(__CLASS__, 'debug', '│ Name : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- Ordre : ' . $_order);
+            log::add('temperature', 'debug', '| ───▶︎ CRÉATION COMMANDE : ' . $Name . ' -- Type : ' . $Type . ' -- LogicalID : ' . $_logicalId . ' -- Template Widget / Ligne : ' . $Template . '/' . $forceLineB . '-- Type de générique : ' . $generic_type . ' -- Icône : ' . $icon . ' -- Min/Max : ' . $valuemin . '/' . $valuemax . ' -- Calcul/Arrondi : ' . $_calculValueOffset . '/' . $_historizeRound . ' -- Ordre : ' . $_order);
             $Command = new temperatureCmd();
             $Command->setId(null);
             $Command->setLogicalId($_logicalId);
@@ -154,7 +154,7 @@ class temperature extends eqLogic
 
             if ($repeatevent == true && $Type == 'info') {
                 $Command->setconfiguration('repeatEventManagement', 'never');
-                log::add(__CLASS__, 'debug', '│ No Repeat pour l\'info avec le nom : ' . $Name);
+                //log::add('temperature', 'debug', '│ No Repeat pour l\'info avec le nom : ' . $Name);
             }
             if ($valuemin != 'default') {
                 $Command->setconfiguration('minValue', $valuemin);
@@ -201,161 +201,196 @@ class temperature extends eqLogic
             $cmd->execute();
         }
     }
+    public function preInsert() {}
 
+    public function postInsert() {}
+
+    public function preSave() {}
+
+    public function postSave()
+    {
+
+        $order = 0;
+        $templatecore_V4  = 'core::';
+        $calcul = 'temperature';
+
+        /* spécifique à température */
+        $td_num_min = -7;
+        $td_num_max = 8;
+        $td_num_visible = 0;
+        $td_num = 1;
+        $template_td = 'default';
+        $template_td_num = $templatecore_V4 . 'line';
+        $name_td = (__('Message', __FILE__));
+        $name_td_num = (__('Message numérique', __FILE__));
+        $_iconname_td = 1;
+        $_iconname_td_num = null;
+        $alert1 = (__('Pré Alerte Humidex', __FILE__));
+        $alert2 = (__('Alerte Humidex', __FILE__));
+
+        /* Commun */
+        $temp_ressentiename =  (__('Température ressentie', __FILE__));
+        $indice_chaleur_name =  (__('Indice de Chaleur (Humidex)', __FILE__));
+        $temp_name =  (__('Température', __FILE__));
+        $humidity_relative_name =  (__('Humidité Relative', __FILE__));
+        $vent_name =  (__('Vitesse du Vent', __FILE__));
+
+        $this->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
+        $this->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
+        $this->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+        $this->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+        $this->AddCommand($name_td, 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num, 'default', 'default', 'default', 'default', $order++, '0', true, $_iconname_td, null, null, null);
+        $this->AddCommand($name_td_num, 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'default', 'default', $td_num_min, $td_num_max, $order++, '0', true, $_iconname_td_num, null, null, null);
+        $this->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+        $this->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+
+
+        /*  ********************** Vitesse vent *************************** */
+        if ($calcul == 'temperature') {
+            if ($this->getConfiguration('vent') != '') {
+                $this->setConfiguration('wind', $this->getConfiguration('vent'));
+                log::add('temperature', 'debug', '| ───▶︎ Modification variable vent pour être aligner avec rosee de vent => wind');
+                $this->setConfiguration('vent', null);
+                $this->save(true);
+            }
+            $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
+            $cmdvirt = cmd::byId($idvirt);
+            if (is_object($cmdvirt)) {
+                $wind_unite = $cmdvirt->getUnite();
+            }
+            if ($wind_unite == 'm/s') {
+                $wind_unite = 'km/h';
+            }
+        }
+        $this->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+        $this->getInformations();
+    }
 
     public function preUpdate()
     {
         if (!$this->getIsEnable()) return;
 
         if ($this->getConfiguration('temperature') == '') {
-            throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-            log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
+            throw new Exception(__((__('Le champ TEMPERATURE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+            log::add('temperature', 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
         }
 
         if ($this->getConfiguration('humidite') == '') {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-            log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
+            throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+            log::add('temperature', 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
-
-        if ($this->getConfiguration('vent') == '') {
-            throw new Exception(__('Le champ "Vitesse du vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-            log::add(__CLASS__, 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
+        /* Provisoire */
+        if ($this->getConfiguration('vent') != '') {
+            $this->setConfiguration('wind', $this->getConfiguration('vent'));
+            log::add('temperature', 'debug', '| :fg-warning:───▶︎ Modification variable vent pour être aligner avec rosee de vent => wind:/fg:');
+            $this->setConfiguration('vent', null);
+            $this->save(true);
+        }
+        if ($this->getConfiguration('wind') == '') {
+            throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+            log::add('temperature', 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
         }
     }
-
-    public function postInsert()
-    {
-    }
-
-    public function postSave()
-    {
-        $_eqName = $this->getName();
-        log::add(__CLASS__, 'debug', 'Sauvegarde de l\'équipement [postSave()] : ' . $_eqName);
-        $order = 1;
-
-        if (version_compare(jeedom::version(), "4", "<")) {
-            $templatecore_V4 = null;
-        } else {
-            $templatecore_V4  = 'core::';
-        };
-
-        $Equipement = eqlogic::byId($this->getId());
-        $Equipement->AddCommand('Température ressentie', 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
-        $order++;
-        $Equipement->AddCommand('Indice de chaleur', 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 1, null);
-        $order++;
-        $Equipement->AddCommand('Pré Alerte Humidex', 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
-        $order++;
-        $Equipement->AddCommand('Alerte Humidex', 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, null, null);
-        $order++;
-        $Equipement->AddCommand('Message', 'td', 'info', 'string', $templatecore_V4 . 'Multiline', null, 'GENERIC_INFO', 1, 'default', 'default', 'default', 'default', $order, '0', true, null, 'default', null, null);
-        $order++;
-        $Equipement->AddCommand('Message numérique', 'td_num', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', null, 'default', 'default', '0', $td_num_max, $order, '0', true, $_iconname_td_num, null, null, null);
-        $order++;
-        $Equipement->AddCommand('Température', 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-        $order++;
-        $Equipement->AddCommand('Humidité Relative', 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-        $order++;
-
-        $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
-        $cmdvirt = cmd::byId($idvirt);
-        if (is_object($cmdvirt)) {
-            $wind_unite = $cmdvirt->getUnite();
-        }
-        if ($wind_unite == 'm/s') {
-            $wind_unite = ' km/h';
-        }
-        $Equipement->AddCommand('Vitesse du Vent', 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order, '0', true, 'default', null, 2, null);
-        $order++;
-    }
-
 
 
     /*  **********************Getteur Setteur*************************** */
-    public function postUpdate()
-    {
-        $this->getInformations();
-    }
+    public function postUpdate() {}
 
     public function getInformations()
     {
         if (!$this->getIsEnable()) return;
         $_eqName = $this->getName();
-        log::add('temperature', 'debug', '┌───────── CONFIGURATION EQUIPEMENT : ' . $_eqName);
+        log::add('temperature', 'debug', '┌── :fg-success:Configuration de l\'équipement ::/fg: '  . $_eqName . ' ──');
 
         /*  ********************** Calcul *************************** */
         $calcul = 'temperature';
 
-        /*  ********************** TEMPERATURE *************************** */
+        /*  ********************** TEMPERATURE *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         $idvirt = str_replace("#", "", $this->getConfiguration('temperature'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $temperature = $cmdvirt->execCmd();
-            log::add('temperature', 'debug', '│ Température : ' . $temperature . ' °C');
+            if ($temperature === '') {
+                log::add('temperature', 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Température', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
+                throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Température', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
+            } else {
+                log::add('temperature', 'debug', '| ───▶︎ Température : ' . $temperature . ' °C');
+            }
         } else {
-            throw new Exception(__('Le champ "Température" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-            log::add(__CLASS__, 'error', '│ Configuration : Température inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('temperature'));
+            log::add('temperature', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ TEMPERATURE', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');
+            throw new Exception(__((__('Le champ TEMPERATURE', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
         }
-        /*  ********************** Offset Température *************************** */
+        /*  ********************** Offset Température *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         $OffsetT = $this->getConfiguration('OffsetT');
         if ($OffsetT == '') {
             $OffsetT = 0;
         } else {
             $temperature = $temperature + $OffsetT;
         }
-        log::add(__CLASS__, 'debug', '│ Température avec Offset : ' . $temperature . ' °C' . ' - Offset Température : ' . $OffsetT . ' °C');
+        log::add('temperature', 'debug', '| ───▶︎ Température avec Offset : ' . $temperature . ' °C' . ' - Offset Température : ' . $OffsetT . ' °C');
 
-        /*  ********************** HUMIDITE *************************** */
-        $idvirt = str_replace("#", "", $this->getConfiguration('humidite'));
-        $cmdvirt = cmd::byId($idvirt);
-        if (is_object($cmdvirt)) {
-            $humidity = $cmdvirt->execCmd();
-            log::add('temperature', 'debug', '│ Humidité Relative : ' . $humidity . ' %');
-        } else {
-            throw new Exception(__('Le champ "Humidité Relative" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-            log::add(__CLASS__, 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
-        }
-
-        /*  ********************** VENT *************************** */
-        $idvirt = str_replace("#", "", $this->getConfiguration('vent'));
+        /*  ********************** VENT *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
+        $idvirt = str_replace("#", "", $this->getConfiguration('wind'));
         $cmdvirt = cmd::byId($idvirt);
         if (is_object($cmdvirt)) {
             $wind = $cmdvirt->execCmd();
             $wind_unite = $cmdvirt->getUnite();
-            log::add('temperature', 'debug', '│ Vent : ' . $wind . ' ' . $wind_unite);
+            if ($wind === '') {
+                log::add('temperature', 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Vitesse du Vent', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
+                throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Vitesse du Vent', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
+            } else {
+                log::add('temperature', 'debug', '| ───▶︎ Vent : ' . $wind . ' ' . $wind_unite);
+            }
         } else {
-            throw new Exception(__('Le champ "Vitesse du vent" ne peut être vide pour l\'équipement : ' . $this->getName(), __FILE__));
-            log::add(__CLASS__, 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
+            log::add('temperature', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ VITESSE DU VENT', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');
+            throw new Exception(__((__('Le champ VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
         }
         if ($wind_unite == 'm/s') {
-            log::add('temperature', 'debug', '│ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
+            log::add('temperature', 'debug', '| ───▶︎ La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h');
             $wind = $wind * 3.6;
-            $wind_unite = ' km/h';
-            log::add('temperature', 'debug', '│ Vent : ' . $wind  . ' ' . $wind_unite);
+            $wind_unite = 'km/h';
+            log::add('temperature', 'debug', '| ───▶︎ Vent : ' . $wind  . ' ' . $wind_unite);
         }
 
-        /*  ********************** Seuil PRE-Alerte Humidex*************************** */
+        /*  ********************** Seuil PRE-Alerte Humidex*************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         $pre_seuil = $this->getConfiguration('PRE_SEUIL');
-        if ($pre_seuil == '') {
+        if ($pre_seuil === '') {
             $pre_seuil = 30;
-            log::add('temperature', 'debug', '│ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : ' . $pre_seuil . ' °C');
+            log::add('temperature', 'debug', '| ───▶︎ Aucun Seuil Pré-Alerte Humidex de saisie, valeur par défaut : ' . $pre_seuil . ' °C');
         } else {
-            log::add('temperature', 'debug', '│ Seuil Pré-Alerte Humidex : ' . $pre_seuil . ' °C');
+            log::add('temperature', 'debug', '| ───▶︎ Seuil Pré-Alerte Humidex : ' . $pre_seuil . ' °C');
         }
 
-        /*  ********************** Seuil Alerte Humidex*************************** */
+        /*  ********************** Seuil Alerte Humidex*************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         $seuil = $this->getConfiguration('SEUIL');
-        if ($seuil == '') {
+        if ($seuil === '') {
             $seuil = 40;
-            log::add('temperature', 'debug', '│ Aucun Seuil Alerte Humidex de saisie, valeur par défaut : ' . $seuil . ' °C');
+            log::add('temperature', 'debug', '| ───▶︎ Aucun Seuil Alerte Humidex de saisie, valeur par défaut : ' . $seuil . ' °C');
         } else {
-            log::add('temperature', 'debug', '│ Seuil Alerte Humidex : ' . $seuil . ' °C');
+            log::add('temperature', 'debug', '| ───▶︎ Seuil Alerte Humidex : ' . $seuil . ' °C');
         }
-        log::add('temperature', 'debug', '└─────────');
 
-        /*  ********************** Calcul de la température ressentie *************************** */
+        /*  ********************** HUMIDITE *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
+        $idvirt = str_replace("#", "", $this->getConfiguration('humidite'));
+        $cmdvirt = cmd::byId($idvirt);
+        if (is_object($cmdvirt)) {
+            $humidity = $cmdvirt->execCmd();
+            if ($humidity === '') {
+                log::add('temperature', 'error', (__('La valeur :', __FILE__)) . ' ' . (__('Humidité Relative', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
+                throw new Exception((__('La valeur :', __FILE__)) . ' ' . (__('Humidité Relative', __FILE__)) . ' (' . $cmdvirt->getName() .  ')' . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('ne peut être vide', __FILE__)));
+            } else {
+                log::add('temperature', 'debug', '| ───▶︎ Humidité Relative : ' . $humidity . ' %');
+            }
+        } else {
+            log::add('temperature', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ HUMIDITÉ RELATIVE', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');
+            throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
+        }
+
+        log::add('temperature', 'debug', '└──');
+
+        /*  ********************** Calcul de la température ressentie *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         if ($calcul == 'temperature') {
-            log::add(__CLASS__, 'debug', '┌───────── CALCUL DE LA TEMPERATURE RESSENTIE : ' . $_eqName);
+            log::add('temperature', 'debug', '┌── :fg-warning:Calcul de la température ressentie ::/fg: '  . $_eqName . ' ──');
             $result_T = temperature::getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil);
             $windchill = $result_T[0];
             $td = $result_T[1];
@@ -363,95 +398,61 @@ class temperature extends eqLogic
             $humidex = $result_T[3];
             $alert_1 = $result_T[4];
             $alert_2 = $result_T[5];
-            log::add(__CLASS__, 'debug', '└─────────');
+            log::add('temperature', 'debug', '└──');
         }
 
         /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('temperature', 'debug', '┌───────── MISE A JOUR : ' . $_eqName);
+        log::add('temperature', 'debug', '┌── :fg-success:Mise à jour ::/fg: '  . $_eqName . ' ──');
 
         $Equipement = eqlogic::byId($this->getId());
         if (is_object($Equipement) && $Equipement->getIsEnable()) {
-
-            foreach ($Equipement->getCmd('info') as $Command) {
-                if (is_object($Command)) {
-                    switch ($Command->getLogicalId()) {
-                        case "alert_1":
-                            log::add(__CLASS__, 'debug', '│ Etat Pré-alerte Humidex : ' . $alert_1);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_1);
-                            break;
-                        case "alert_2":
-                            log::add(__CLASS__, 'debug', '│ Etat Alerte Haute Humidex : ' . $alert_2);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $alert_2);
-                            break;
-                        case "humidex":
-                            log::add(__CLASS__, 'debug', '│ Indice de Chaleur (Humidex) : ' . $humidex);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidex);
-                            break;
-                        case "humidityrel":
-                            log::add(__CLASS__, 'debug', '│ Humidité Absolue : ' . $humidity . ' %');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $humidity);
-                            break;
-                        case "td":
-                            log::add(__CLASS__, 'debug', '│ Message (format texte) : ' . $td);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td);
-                            break;
-                        case "td_num":
-                            if (isset($td_num)) {
-                                log::add(__CLASS__, 'debug', '│ Message (format numérique) : ' . $td_num);
-                                $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $td_num);
-                            } else {
-                                log::add(__CLASS__, 'debug', '│ Problème avec la variable td_num non déclaré ');
-                            }
-                            break;
-                        case "temperature":
-                            log::add(__CLASS__, 'debug', '│ Température : ' . $temperature . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $temperature);
-                            break;
-                        case "wind":
-                            log::add(__CLASS__, 'debug', '│ Vitesse du vent : ' . $wind . ' ' . $wind_unite);
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $wind);
-                            break;
-                        case "windchill":
-                            log::add(__CLASS__, 'debug', '│ Température ressentie (Windchill) : ' . $windchill . ' °C');
-                            $Equipement->checkAndUpdateCmd($Command->getLogicalId(), $windchill);
-                            break;
+            $list = 'alert_1,alert_2,humidex,humidityrel,temperature,td,td_num,wind,windchill';
+            $Value_calcul = array('alert_1' => $alert_1, 'alert_2' => $alert_2, 'humidex' => $humidex, 'humidityrel' => $humidity, 'temperature' => $temperature, 'td' => $td, 'td_num' => $td_num, 'wind' => $wind, 'windchill' => $windchill);
+            $fields = explode(',', $list);
+            foreach ($this->getCmd() as $cmd) {
+                foreach ($fields as $fieldname) {
+                    if ($cmd->getLogicalId('data') == $fieldname) {
+                        $this->checkAndUpdateCmd($fieldname, $Value_calcul[$fieldname]);
+                        log::add('temperature', 'debug', '| :fg-info:───▶︎ ' . $cmd->getName() . ' ::/fg: ' . $Value_calcul[$fieldname]);
                     }
                 }
             }
+            log::add('temperature', 'debug', '└──');
         }
-        log::add(__CLASS__, 'debug', '└─────────');
-        log::add(__CLASS__, 'debug', '================ FIN CRON =================');
+        log::add('temperature', 'debug', '================ FIN CRON OU SAUVEGARDE =================');
 
         return;
     }
-    /*  ********************** Calcul de la température ressentie *************************** */
+    /*  ********************** Calcul de la température ressentie *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
     public static function getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil)
     {
         /*  ********************** Calcul du Windchill *************************** */
-        log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DE LA TEMPERATURE RESSENTIE (WINDCHILL)');
+        //log::add('temperature', 'debug', '│ | ───▶︎ CALCUL DE LA TEMPERATURE RESSENTIE (WINDCHILL)');
         // sources : https://fr.m.wikipedia.org/wiki/Refroidissement_éolien#Calcul
         if ($temperature > 10.0) {
             $windchill = $temperature;
         } else {
             if ($wind >= 4.8) {
-                $Terme1 = 13.12 + 0.6215 * $temperature;
-                $Terme2 = 0.3965 * $temperature - 11.37;
-                $Terme3 = pow($wind, 0.16);
-                $windchill = $Terme2 * $Terme3 + $Terme1;
+                $Rc1 = 13.12 + 0.6215 * $temperature;
+                $Rc2 = 0.3965 * $temperature - 11.37;
+                $Rc3 = pow($wind, 0.16);
+                $windchill = $Rc1 + ($Rc2 * $Rc3);
             } else {
-                $windchill = $temperature + 0.2 * (0.1345 * $temperature - 1.59) * $wind;
+                $Rc2 = 0.1345 * $temperature - 1.59;
+                $Rc3 = 0.2 * $Rc2;
+                $windchill = $temperature + $Rc3 * $wind;
             }
         }
-        log::add(__CLASS__, 'debug', '│ │ Température ressentie (Windchill) : ' . $windchill . '°C');
-        log::add(__CLASS__, 'debug', '│ └───────');
+        log::add('temperature', 'debug', '| ───▶︎ Température ressentie (Windchill) : ' . $windchill . '°C');
+        //log::add('temperature', 'debug', '└──');
 
-        /*  ********************** Calcul de l'indice de chaleur *************************** */
-        log::add(__CLASS__, 'debug', '│ ┌───────── CALCUL DU FACTEUR HUMIDEX');
+        /*  ********************** Calcul de l'indice de chaleur *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
+        //log::add('temperature', 'debug', '│ | ───▶︎ CALCUL DU FACTEUR HUMIDEX');
         // sources : http://www.meteo-mussidan.fr/hum.php
         $var1 = null;
         // Calcul pression vapeur eau
         $temperature_k = $temperature + 273.15;
-        log::add(__CLASS__, 'debug', '│ │ Temperature Kelvin : ' . $temperature_k . ' K');
+        log::add('temperature', 'debug', '| ───▶︎ Temperature Kelvin : ' . $temperature_k . ' K');
         // Partage calcul
         $var1 = (-2937.4 / $temperature_k);
         $eTs = pow(10, ($var1 - 4.9283 * log($temperature_k) / 2.302585092994046 + 23.5471));
@@ -459,80 +460,80 @@ class temperature extends eqLogic
         //Calcul de l'humidex
         $humidex = round($temperature + (($eTd - 10) * 5 / 9));
         if ($humidex  < $temperature) {
-            log::add(__CLASS__, 'debug', '│ │ Indice de Chaleur (Humidex) < Température : ' . $humidex);
+            log::add('temperature', 'debug', '| ───▶︎ Indice de Chaleur (Humidex) < Température : ' . $humidex);
             $humidex  = $temperature;
         } else {
-            log::add(__CLASS__, 'debug', '│ │ Indice de Chaleur (Humidex) : ' . $humidex);
+            log::add('temperature', 'debug', '| ───▶︎ Indice de Chaleur (Humidex) : ' . $humidex);
         }
 
         if ($temperature < 10) {
             if (0 < $windchill) {
-                $td = 'Pas de risque de gelures ni d’hypothermie (pour une exposition normale)';
+                $td = (__('Pas de risque de gelures ni d’hypothermie (pour une exposition normale', __FILE__));
                 $td_num = -1;
             } else if (-10 < $windchill && 0 <= $windchill) {
-                $td = 'Faible risque de gelures';
+                $td = (__('Faible risque de gelures', __FILE__));
                 $td_num = -2;
             } else if (-28 < $windchill && -10 <= $windchill) {
-                $td = 'Faible risque de gelures et d’hypothermie';
+                $td = (__('Faible risque de gelures et d’hypothermie', __FILE__));
                 $td_num = -3;
             } else if (-40 < $windchill && -28 <= $windchill) {
-                $td = 'Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie';
+                $td = (__('Risque modéré de gelures en 10 à 30 minutes de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -4;
             } else if (-48 < $windchill && -40 <= $windchill) {
-                $td = 'Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie';
+                $td = (__('Risque élevé de gelures en 5 à 10 minutes (voir note) de la peau exposée et d’hypothermie', __FILE__));
                 $td_num = -5;
             } else if (-55 < $windchill && -48 <= $windchill) {
-                $td = 'Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité';
+                $td = (__('Risque très élevé de gelures en 2 à 5 minutes (voir note) sans protection intégrale ni activité', __FILE__));
                 $td_num = -6;
             } else if ($windchill <= -55) {
-                $td = 'Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\'hypothermie. Rester à l\'abri';
+                $td = (__('Danger ! Risque extrêmement élevé de gelures en moins de 2 minutes (voir note) et d\'hypothermie. Rester à l\'abri', __FILE__));
                 $td_num = -7;
             }
         } else {
             if ($humidex < 15.0) {
+                $td = (__('Sensation de frais ou de froid', __FILE__));
                 $td_num = 1;
-                $td = 'Sensation de frais ou de froid';
             } elseif ($humidex >= 15.0 && $humidex <= 19.0) {
-                $td = 'Aucun inconfort';
+                $td = (__('Aucun inconfort', __FILE__));
                 $td_num = 2;
             } elseif ($humidex > 19.0 && $humidex <= 29.0) {
-                $td = "Sensation de bien être";
+                $td = (__('Sensation de bien être', __FILE__));
                 $td_num = 3;
             } elseif ($humidex > 29.0 && $humidex <= 34.0) {
-                $td = "Sensation d'inconfort plus ou moins grande";
+                $td = (__('Sensation d\'inconfort plus ou moins grande', __FILE__));
                 $td_num = 4;
             } elseif ($humidex > 34.0 && $humidex <= 39.0) {
-                $td = "Sensation d'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.";
+                $td = (__('Sensation d\'inconfort assez grande. Prudence. Ralentir certaines activités en plein air.', __FILE__));
                 $td_num = 5;
             } elseif ($humidex > 39.0 && $humidex <= 45.0) {
-                $td = "Sensation d'inconfort généralisée. Danger. Éviter les efforts.";
+                $td = (__('Sensation d\'inconfort généralisée. Danger. Éviter les efforts.', __FILE__));
                 $td_num = 6;
             } elseif ($humidex > 45.0 && $humidex <= 53.0) {
-                $td = 'Danger extrême. Arrêt de travail dans de nombreux domaines.';
+                $td = (__('Danger extrême. Arrêt de travail dans de nombreux domaines.', __FILE__));
                 $td_num = 7;
             } else {
-                $td = 'Coup de chaleur imminent (danger de mort).';
+                $td = (__('Coup de chaleur imminent (danger de mort).', __FILE__));
                 $td_num = 8;
             }
         }
-        log::add(__CLASS__, 'debug', '│ └─────────');
+        //log::add('temperature', 'debug', '│ └─────────');
 
-        /*  ********************** Calcul de l'alerte inconfort indice de chaleur en fonction du seuil d'alerte *************************** */
-        log::add(__CLASS__, 'debug', '│ ┌───────── ALERTE HUMIDEX');
+        /*  ********************** Calcul de l'alerte inconfort indice de chaleur en fonction du seuil d'alerte *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
+        // log::add('temperature', 'debug', '│ | ───▶︎ ALERTE HUMIDEX');
         if (($humidex) >= $pre_seuil) {
             $alert_1 = 1;
         } else {
             $alert_1 = 0;
         }
-        log::add(__CLASS__, 'debug', '│ │ Seuil Pré-alerte Humidex : ' . $alert_1);
+        log::add('temperature', 'debug', '| ───▶︎ Seuil Pré-alerte Humidex : ' . $alert_1);
 
         if (($humidex) >= $seuil) {
             $alert_2 = 1;
         } else {
             $alert_2 = 0;
         }
-        log::add(__CLASS__, 'debug', '│ │ Seuil Alerte Haute Humidex : ' . $alert_2);
-        log::add(__CLASS__, 'debug', '│ └─────────');
+        log::add('temperature', 'debug', '| ───▶︎ Seuil Alerte Haute Humidex : ' . $alert_2);
+        //  log::add('temperature', 'debug', '│ └─────────');
 
 
         return array($windchill, $td, $td_num, $humidex, $alert_1, $alert_2);
