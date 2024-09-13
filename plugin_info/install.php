@@ -77,6 +77,8 @@ function temperature_update()
         updateLogicalId($eqLogic, 'td', null, null, 'Message'); // Modification du 7/12/2020
         updateLogicalId($eqLogic, 'td_num', null, null, 'Message numérique'); // Modification du 7/12/2020
     }
+    //Suppression commande car il y a un soucis avec modification du 13/09/2024
+    removeLogicId('td');
     //resave eqs for new cmd:
     try {
         $eqs = eqLogic::byType('temperature');
@@ -116,7 +118,16 @@ function updateLogicalId($eqLogic, $from, $to, $_historizeRound = null, $name = 
         $command->save();
     }
 }
-
+function removeLogicId($cmdDel)
+{
+    $eqLogics = eqLogic::byType('temperature');
+    foreach ($eqLogics as $eqLogic) {
+        $cmd = $eqLogic->getCmd(null, $cmdDel);
+        if (is_object($cmd)) {
+            $cmd->remove();
+        }
+    }
+}
 function temperature_remove()
 {
     $cron = cron::byClassAndFunction('temperature', 'pull');
