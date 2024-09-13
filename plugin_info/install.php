@@ -97,8 +97,8 @@ function temperature_update()
 function updateconfiqEqLogic($eqLogic, $oldconfig = null, $newconfig = null)
 {
     $EQLOGIC = $eqLogic->getConfiguration('vent');
-    $name = $eqLogic->getName();
-    log::add('temperature', 'debug', 'TEST update: ' . $name);
+    //$name = $eqLogic->getName();
+    log::add('temperature', 'debug', 'TEST update: ');
     if (is_object($EQLOGIC)) {
         log::add('temperature', 'debug', 'TEST update: ');
     }
