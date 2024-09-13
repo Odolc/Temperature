@@ -97,10 +97,14 @@ function temperature_update()
 function updateconfiqEqLogic($eqLogic, $oldconfig = null, $newconfig = null)
 {
     $EQLOGIC = $eqLogic->getConfiguration('vent');
+    $EQLOGIC2 = byLogicalId($eqLogic, 'Freebox_OS');
     //$name = $eqLogic->getName();
     log::add('temperature', 'debug', 'TEST update: ');
     if (is_object($EQLOGIC)) {
         log::add('temperature', 'debug', 'TEST update: ');
+    }
+    if (is_object($EQLOGIC2)) {
+        log::add('temperature', 'debug', 'TEST 2 update: ');
     }
 }
 
