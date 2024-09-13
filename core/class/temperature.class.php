@@ -279,10 +279,11 @@ class temperature extends eqLogic
             throw new Exception(__((__('Le champ HUMIDITÉ RELATIVE ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
             log::add('temperature', 'error', '│ Configuration : Humidité Relative inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('humidite'));
         }
-
-        if ($this->getConfiguration('wind') == '') {
-            throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
-            log::add('temperature', 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
+        if (!isset($this->getConfiguration('vent'))) {
+            if ($this->getConfiguration('wind') == '') {
+                throw new Exception(__((__('Le champ VITESSE DU VENT ne peut être vide pour l\'équipement : ', __FILE__)) . $this->getName(), __FILE__));
+                log::add('temperature', 'error', '│ Configuration : Vitesse du vent inexistant pour l\'équipement : ' . $this->getName() . ' ' . $this->getConfiguration('vent'));
+            }
         }
     }
 
