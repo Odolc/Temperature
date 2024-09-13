@@ -11,6 +11,18 @@ pluginId: temperature
 
 ## 2024
 
+### 13/09/2024
+
+- Amélioration log plugin
+- Reprise de la création des commandes
+- Correction bug sur la mise à jour (2 crons actifs en même temps)
+- Modification du nom de la commande vent
+- Traduction merci a @Mips
+- Correction warning PHP8
+
+> **Attention : Cette mise à jour supprime la commande message, elle est recrée automatiquement après la mise à jour.**
+
+
 ### 04/02/2024
 
 - Suppression lien community suite changement core 4.4

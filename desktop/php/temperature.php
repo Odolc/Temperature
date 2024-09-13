@@ -172,7 +172,7 @@ $eqLogics = eqLogic::byType($plugin->getId());
                                 </label>
                                 <div class="col-sm-6">
                                     <div class="input-group">
-                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="vent" placeholder="{{Vitesse du Vent}}">
+                                        <input type="text" class="eqLogicAttr form-control roundedLeft" data-l1key="configuration" data-l2key="wind" placeholder="{{Vitesse du Vent}}">
                                         <span class="input-group-btn">
                                             <a class="btn btn-default listCmdActionOther roundedRight" title="{{Rechercher une commande}}""><i class=" fas fa-list-alt"></i></a>
                                         </span>
@@ -237,9 +237,6 @@ $eqLogics = eqLogic::byType($plugin->getId());
     </div><!-- /.eqLogic -->
 </div><!-- /.row row-overflow -->
 <?php
-
-use Exception;
-
 include_file('desktop', 'temperature', 'js', 'temperature');
 include_file('core', 'plugin.template', 'js');
 ?>

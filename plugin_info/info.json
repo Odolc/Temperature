@@ -1,33 +1,41 @@
 {
-    "id": "temperature",
-    "name": "Température",
-    "description": "Plugin pour calculer le windchill et l'indice de température",
-    "usage": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.",
-    "licence": "AGPL",
-    "author": "Claude Metzger",
-    "require": "4.0",
-    "category": "weather",
-    "hasDependency": false,
-    "hasOwnDeamon": false,
-    "maxDependancyInstallTime": 0,
-    "changelog": "https://odolc.github.io/Temperature/#language#/changelog",
-    "documentation": "https://odolc.github.io/Temperature/#language#/",
-    "changelog_beta" : "https://odolc.github.io/Temperature/#language#/changelog",
-    "documentation_beta" : "https://odolc.github.io/Temperature/#language#/",
-    "language": [
-        "de_DE",
-        "en_US",
-        "es_ES",
-        "fr_FR",
-        "id_ID",
-        "it_IT",
-        "ru_RU",
-        "sp_SP"
-    ],
-    "link" : {
-		"forum":"https://community.jeedom.com/tag/plugin-temperature"
+	"id": "temperature",
+	"name": "Température",
+	"description": {
+		"fr_FR": "Plugin pour calculer le windchill et l'indice de température",
+		"en_US": "Plugin to calculate windchill and temperature index",
+		"es_ES": "Plugin para calcular la sensación térmica y el índice de temperatura",
+		"de_DE": "Plugin zur Berechnung von Windchill und Temperaturindex",
+		"it_IT": "Plugin per il calcolo del windchill e dell'indice di temperatura",
+		"pt_PT": "Plugin para calcular a sensação térmica e o índice de temperatura"
 	},
-    "compatibility": [
+	"usage": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.",
+	"licence": "AGPL",
+	"author": "Claude Metzger",
+	"require": "4.2",
+	"os": {
+		"min": 10
+	},
+	"category": "weather",
+	"hasDependency": false,
+	"hasOwnDeamon": false,
+	"maxDependancyInstallTime": 0,
+	"changelog": "https://odolc.github.io/Temperature/#language#/changelog",
+	"documentation": "https://odolc.github.io/Temperature/#language#/",
+	"changelog_beta": "https://odolc.github.io/Temperature/#language#/changelog",
+	"documentation_beta": "https://odolc.github.io/Temperature/#language#/",
+	"language": [
+		"de_DE",
+		"en_US",
+		"es_ES",
+		"fr_FR",
+		"it_IT",
+		"pt_PT"
+	],
+	"link": {
+		"forum": "https://community.jeedom.com/tag/plugin-temperature"
+	},
+	"compatibility": [
 		"miniplus",
 		"smart",
 		"rpi",
