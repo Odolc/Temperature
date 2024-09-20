@@ -11,6 +11,10 @@ pluginId: temperature
 
 ## 2024
 
+### 20/09/2024
+
+- Traduction
+
 ### 13/09/2024
 
 - Amélioration log plugin
