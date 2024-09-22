@@ -9,9 +9,11 @@
 		"it_IT": "Plugin per il calcolo del windchill e dell'indice di temperatura",
 		"pt_PT": "Plugin para calcular a sensação térmica e o índice de temperatura"
 	},
-	"usage": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.",
+	"usage": {
+		"fr_FR": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température."
+	},
 	"licence": "AGPL",
-	"author": "Claude Metzger",
+	"author": "Claude Metzger / JAG",
 	"require": "4.2",
 	"os": {
 		"min": 10
@@ -20,10 +22,6 @@
 	"hasDependency": false,
 	"hasOwnDeamon": false,
 	"maxDependancyInstallTime": 0,
-	"changelog": "https://odolc.github.io/Temperature/#language#/changelog",
-	"documentation": "https://odolc.github.io/Temperature/#language#/",
-	"changelog_beta": "https://odolc.github.io/Temperature/#language#/changelog",
-	"documentation_beta": "https://odolc.github.io/Temperature/#language#/",
 	"language": [
 		"de_DE",
 		"en_US",
@@ -32,6 +30,10 @@
 		"it_IT",
 		"pt_PT"
 	],
+	"changelog": "https://odolc.github.io/Temperature/#language#/changelog",
+	"documentation": "https://odolc.github.io/Temperature/#language#/",
+	"changelog_beta": "https://odolc.github.io/Temperature/#language#/changelog",
+	"documentation_beta": "https://odolc.github.io/Temperature/#language#/",
 	"link": {
 		"forum": "https://community.jeedom.com/tag/plugin-temperature"
 	},
