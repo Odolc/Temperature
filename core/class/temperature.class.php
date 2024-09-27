@@ -125,10 +125,10 @@ class temperature extends eqLogic
                     $Command->setUnite($unite);
                 }
                 if ($valuemin != 'default') {
-                    $Command->setconfiguration('minValue', $valuemin);
+                    $Command->setConfiguration('minValue', $valuemin);
                 }
                 if ($valuemax != 'default') {
-                    $Command->setconfiguration('maxValue', $valuemax);
+                    $Command->setConfiguration('maxValue', $valuemax);
                 }
             }
 
@@ -160,7 +160,7 @@ class temperature extends eqLogic
             }
 
             if ($repeatevent == true && $Type == 'info') {
-                $Command->setconfiguration('repeatEventManagement', 'never');
+                $Command->setConfiguration('repeatEventManagement', 'never');
             }
 
             if ($_order != null) {
