@@ -9,9 +9,7 @@
 		"it_IT": "Plugin per il calcolo del windchill e dell'indice di temperatura",
 		"pt_PT": "Plugin para calcular a sensação térmica e o índice de temperatura"
 	},
-	"usage": {
-		"fr_FR": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température."
-	},
+	"usage": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.",
 	"licence": "AGPL",
 	"author": "Claude Metzger / JAG",
 	"require": "4.2",

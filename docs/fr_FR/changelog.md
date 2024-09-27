@@ -11,6 +11,10 @@ pluginId: temperature
 
 ## 2024
 
+### 27/09/2024
+
+- Correction bug installation depuis Market
+
 ### 20/09/2024
 
 - Traduction
