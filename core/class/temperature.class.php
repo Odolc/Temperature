@@ -300,8 +300,7 @@ class temperature extends eqLogic
     public function getInformations()
     {
         if (!$this->getIsEnable()) return;
-        $_eqName = $this->getName();
-        log::add('temperature', 'debug', '┌── :fg-success:' . __('Mise à jour', __FILE__) . ' ::/fg: '  . $_eqName . ' ──');
+        log::add('temperature', 'debug', '┌── :fg-success:' . __('Mise à jour', __FILE__) . ' ::/fg: '  . $this->getName() . ' (' . $this->getHumanName() . ') ──');
 
         /*  ********************** Calcul *************************** */
         $calcul = 'temperature';
@@ -389,7 +388,7 @@ class temperature extends eqLogic
 
         /*  ********************** Calcul de la température ressentie *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         if ($calcul == 'temperature') {
-            log::add('temperature', 'debug', '┌── :fg-warning:' . __('Calcul de la température ressentie', __FILE__)  . ' ::/fg: '  . $_eqName . ' ──');
+            log::add('temperature', 'debug', '┌── :fg-warning:' . __('Calcul de la température ressentie', __FILE__)  . ' ::/fg: '  . $this->getName() . ' ──');
             $result_T = temperature::getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil);
             $windchill = $result_T[0];
             $td = $result_T[1];
@@ -401,7 +400,7 @@ class temperature extends eqLogic
         }
 
         /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('temperature', 'debug', '┌── :fg-info:' . __('Mise à jour', __FILE__)  . ' ::/fg: '  . $_eqName . ' ──');
+        log::add('temperature', 'debug', '┌── :fg-info:' . __('Mise à jour', __FILE__)  . ' ::/fg: '  . $this->getName() . ' ──');
 
         $Equipement = eqlogic::byId($this->getId());
         if (is_object($Equipement) && $Equipement->getIsEnable()) {
