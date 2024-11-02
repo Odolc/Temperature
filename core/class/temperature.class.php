@@ -441,14 +441,14 @@ class temperature extends eqLogic
                 $windchill = $temperature + $Rc3 * $wind;
             }
         }
-        log::add('temperature', 'debug', 'debug', '| ───▶︎ '  . __('Température ressentie', __FILE__) . ' (Windchill) : ' . $windchill . '°C');
+        log::add('temperature', 'debug', '| ───▶︎ '  . __('Température ressentie', __FILE__) . ' (Windchill) : ' . $windchill . '°C');
 
         /*  ********************** Calcul de l'indice de chaleur *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         // sources : http://www.meteo-mussidan.fr/hum.php
         $var1 = null;
         // Calcul pression vapeur eau
         $temperature_k = $temperature + 273.15;
-        log::add('temperature', 'debug', '| ───▶︎ '  . __('Temperature', __FILE__) . 'Kelvin : ' . $temperature_k . ' K');
+        log::add('temperature', 'debug', '| ───▶︎ '  . __('Temperature', __FILE__) . ' ' . 'Kelvin : ' . $temperature_k . ' K');
         // Partage calcul
         $var1 = (-2937.4 / $temperature_k);
         $eTs = pow(10, ($var1 - 4.9283 * log($temperature_k) / 2.302585092994046 + 23.5471));
