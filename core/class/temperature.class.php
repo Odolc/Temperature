@@ -552,7 +552,7 @@ class temperatureCmd extends cmd
         if ($this->getLogicalId() == 'refresh') {
             log::add('baro', 'debug', ' ─────────▶︎ ' . (__('Début de l\'actualisation manuelle', __FILE__)));
             $this->getEqLogic()->getInformations();
-            log::add('baro', 'debug', ' ─────────▶︎ ' . (__("Fin De l\'actualisation manuelle", __FILE__)));
+            log::add('baro', 'debug', ' ─────────▶︎ ' . (__("Fin de l\'actualisation manuelle", __FILE__)));
             return;
         } else {
             log::add('baro', 'debug', '│  [WARNING] ' . __("Pas d'action pour la commande execute",  __FILE__) . ' : ' . $this->getLogicalId());
