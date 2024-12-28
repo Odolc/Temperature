@@ -136,16 +136,16 @@ class temperature extends eqLogic
             $Command->setIsHistorized($IsHistorized);
 
             if ($icon != 'default') {
-                $Command->setdisplay('icon', '<i class="' . $icon . '"></i>');
+                $Command->setDisplay('icon', '<i class="' . $icon . '"></i>');
             }
             if ($forceLineB != 'default') {
-                $Command->setdisplay('forceReturnLineBefore', 1);
+                $Command->setDisplay('forceReturnLineBefore', 1);
             }
             if ($_iconname != 'default') {
-                $Command->setdisplay('showIconAndNamedashboard', 1);
+                $Command->setDisplay('showIconAndNamedashboard', 1);
             }
             if ($_noiconname != null) {
-                $Command->setdisplay('showNameOndashboard', 0);
+                $Command->setDisplay('showNameOndashboard', 0);
             }
 
             if ($_calculValueOffset != null) {
@@ -209,9 +209,7 @@ class temperature extends eqLogic
 
     public function postSave()
     {
-
         $order = 0;
-        $templatecore_V4  = 'core::';
         $calcul = 'temperature';
 
         /* spécifique à température */
@@ -220,7 +218,7 @@ class temperature extends eqLogic
         $td_num_visible = 0;
         $td_num = 1;
         $template_td = 'default';
-        $template_td_num = $templatecore_V4 . 'line';
+        $template_td_num = 'core::line';
         $name_td = (__('Message', __FILE__));
         $name_td_num = (__('Message numérique', __FILE__));
         $_iconname_td = 1;
@@ -235,14 +233,14 @@ class temperature extends eqLogic
         $humidity_relative_name =  (__('Humidité Relative', __FILE__));
         $vent_name =  (__('Vitesse du Vent', __FILE__));
 
-        $this->AddCommand($alert1, 'alert_1', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
-        $this->AddCommand($alert2, 'alert_2', 'info', 'binary', $templatecore_V4 . 'line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
-        $this->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', $templatecore_V4 . 'line', '', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
-        $this->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', $templatecore_V4 . 'line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+        $this->AddCommand($alert1, 'alert_1', 'info', 'binary', 'core::line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
+        $this->AddCommand($alert2, 'alert_2', 'info', 'binary', 'core::line', null, 'SIREN_STATE', 1, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, null, null);
+        $this->AddCommand($temp_ressentiename, 'windchill', 'info', 'numeric', 'core::line',  '°C', 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
+        $this->AddCommand($indice_chaleur_name, 'humidex', 'info', 'numeric', 'core::line', null, 'GENERIC_INFO', '0', 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 1, null);
         $this->AddCommand($name_td, 'td', 'info', 'string', $template_td, null, 'WEATHER_CONDITION', $td_num, 'default', 'default', 'default', 'default', $order++, '0', true, $_iconname_td, null, null, null);
         $this->AddCommand($name_td_num, 'td_num', 'info', 'numeric', $template_td_num, null, 'GENERIC_INFO', $td_num_visible, 'default', 'default', $td_num_min, $td_num_max, $order++, '0', true, $_iconname_td_num, null, null, null);
-        $this->AddCommand($temp_name, 'temperature', 'info', 'numeric', $templatecore_V4 . 'line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
-        $this->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', $templatecore_V4 . 'line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+        $this->AddCommand($temp_name, 'temperature', 'info', 'numeric', 'core::line', '°C', 'WEATHER_TEMPERATURE', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+        $this->AddCommand($humidity_relative_name, 'humidityrel', 'info', 'numeric', 'core::line', '%', 'WEATHER_HUMIDITY', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
 
 
         /*  ********************** Vitesse vent *************************** */
@@ -262,7 +260,7 @@ class temperature extends eqLogic
                 $wind_unite = 'km/h';
             }
         }
-        $this->AddCommand($vent_name, 'wind', 'info', 'numeric', $templatecore_V4 . 'line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
+        $this->AddCommand($vent_name, 'wind', 'info', 'numeric', 'core::line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
         if (!$this->getIsEnable()) return;
         $this->getInformations();
     }
@@ -300,8 +298,7 @@ class temperature extends eqLogic
     public function getInformations()
     {
         if (!$this->getIsEnable()) return;
-        $_eqName = $this->getName();
-        log::add('temperature', 'debug', '┌── :fg-success:' . __('Mise à jour', __FILE__) . ' ::/fg: '  . $_eqName . ' ──');
+        log::add('temperature', 'debug', '┌── :fg-success:' . __('Mise à jour', __FILE__) . ' ::/fg: '  . $this->getName() . ' (' . $this->getHumanName() . ') ──');
 
         /*  ********************** Calcul *************************** */
         $calcul = 'temperature';
@@ -389,7 +386,7 @@ class temperature extends eqLogic
 
         /*  ********************** Calcul de la température ressentie *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         if ($calcul == 'temperature') {
-            log::add('temperature', 'debug', '┌── :fg-warning:' . __('Calcul de la température ressentie', __FILE__)  . ' ::/fg: '  . $_eqName . ' ──');
+            log::add('temperature', 'debug', '┌── :fg-warning:' . __('Calcul de la température ressentie', __FILE__)  . ' ::/fg: '  . $this->getName() . ' ──');
             $result_T = temperature::getTemperature($wind, $temperature, $humidity, $pre_seuil, $seuil);
             $windchill = $result_T[0];
             $td = $result_T[1];
@@ -401,7 +398,7 @@ class temperature extends eqLogic
         }
 
         /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('temperature', 'debug', '┌── :fg-info:' . __('Mise à jour', __FILE__)  . ' ::/fg: '  . $_eqName . ' ──');
+        log::add('temperature', 'debug', '┌── :fg-info:' . __('Mise à jour', __FILE__)  . ' ::/fg: '  . $this->getName() . ' ──');
 
         $Equipement = eqlogic::byId($this->getId());
         if (is_object($Equipement) && $Equipement->getIsEnable()) {
@@ -412,7 +409,7 @@ class temperature extends eqLogic
                 foreach ($fields as $fieldname) {
                     if ($cmd->getLogicalId('data') == $fieldname) {
                         $this->checkAndUpdateCmd($fieldname, $Value_calcul[$fieldname]);
-                        log::add('temperature', 'debug', '| :fg-info:───▶︎ ' . $cmd->getName() . ' ::/fg: ' . $Value_calcul[$fieldname]);
+                        log::add('temperature', 'debug', '| :fg-info:───▶︎ ' . $cmd->getName() . ' ::/fg: ' . $Value_calcul[$fieldname] . ' ' . $cmd->getUnite());
                     }
                 }
             }
@@ -442,14 +439,14 @@ class temperature extends eqLogic
                 $windchill = $temperature + $Rc3 * $wind;
             }
         }
-        log::add('temperature', 'debug', 'debug', '| ───▶︎ '  . __('Température ressentie', __FILE__) . ' (Windchill) : ' . $windchill . '°C');
+        log::add('temperature', 'debug', '| ───▶︎ '  . __('Température ressentie', __FILE__) . ' (Windchill) : ' . $windchill . '°C');
 
         /*  ********************** Calcul de l'indice de chaleur *************************** => VALABLE AUSSI POUR LE PLUGIN TEMPERATURE/ROSEE*/
         // sources : http://www.meteo-mussidan.fr/hum.php
         $var1 = null;
         // Calcul pression vapeur eau
         $temperature_k = $temperature + 273.15;
-        log::add('temperature', 'debug', '| ───▶︎ '  . __('Temperature', __FILE__) . 'Kelvin : ' . $temperature_k . ' K');
+        log::add('temperature', 'debug', '| ───▶︎ '  . __('Temperature', __FILE__) . ' ' . 'Kelvin : ' . $temperature_k . ' K');
         // Partage calcul
         $var1 = (-2937.4 / $temperature_k);
         $eTs = pow(10, ($var1 - 4.9283 * log($temperature_k) / 2.302585092994046 + 23.5471));
@@ -553,7 +550,7 @@ class temperatureCmd extends cmd
         if ($this->getLogicalId() == 'refresh') {
             log::add('baro', 'debug', ' ─────────▶︎ ' . (__('Début de l\'actualisation manuelle', __FILE__)));
             $this->getEqLogic()->getInformations();
-            log::add('baro', 'debug', ' ─────────▶︎ ' . (__("Fin De l\'actualisation manuelle", __FILE__)));
+            log::add('baro', 'debug', ' ─────────▶︎ ' . (__("Fin de l\'actualisation manuelle", __FILE__)));
             return;
         } else {
             log::add('baro', 'debug', '│  [WARNING] ' . __("Pas d'action pour la commande execute",  __FILE__) . ' : ' . $this->getLogicalId());
