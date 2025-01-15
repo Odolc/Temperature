@@ -11,6 +11,10 @@ pluginId: temperature
 
 ## 2025
 
+### 15/01/2025
+
+- Ajout contrôle unité pour la vitesse du vent
+
 ### 14/01/2025
 
 - Correction calcul température ressentie :https://community.jeedom.com/t/erreur-calcul-de-la-temperature-ressentie/136577?u=jag
