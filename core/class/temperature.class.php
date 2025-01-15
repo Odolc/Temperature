@@ -365,7 +365,6 @@ class temperature extends eqLogic
         if ($seuil === '') {
             $seuil = 40;
             $msg_log_seuil =  __('Aucun Seuil Alerte Humidex de saisie, valeur par défaut', __FILE__);
-            log::add('temperature', 'debug', '| ───▶︎ ' . __('Aucun Seuil Alerte Humidex de saisie, valeur par défaut', __FILE__) . ' : ' .  $seuil . ' °C');
         }
         log::add('temperature', 'debug', '| ───▶︎ ' . $msg_log_seuil . ' : ' .  $seuil . ' °C');
 
