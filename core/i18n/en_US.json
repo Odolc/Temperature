@@ -29,6 +29,7 @@
         "Icône": "Icon",
         "Indice de Chaleur": "Heat Index",
         "Indice de Chaleur (Humidex)": "Heat Index (Humidex)",
+        "L\\'unité de la VITESSE DU VENT": "WIND SPEED unit",
         "La valeur :": "Value :",
         "La vitesse du vent sélectionnée est en m\/s, le plugin va convertir en km\/h": "The selected wind speed is in m\/s, the plugin will convert to km\/h",
         "Le champ HUMIDITÉ RELATIVE": "The RELATIVE HUMIDITY field",
@@ -70,6 +71,7 @@
         "Vent": "Wind",
         "Vitesse du Vent": "Wind speed",
         "dans la commande": "in the order",
+        "n\\'est pas renseignée": "is not filled in",
         "ne peut être vide": "cannot be empty",
         "pour l\\'équipement": "for equipment"
     },
