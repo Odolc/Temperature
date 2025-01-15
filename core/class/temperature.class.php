@@ -340,7 +340,10 @@ class temperature extends eqLogic
             log::add('temperature', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('Le champ VITESSE DU VENT', __FILE__))  . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName() . ']');
             throw new Exception(__((__('Le champ VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
         }
-        if ($wind_unite == 'm/s') {
+        if ($wind_unite == '') {
+            log::add('temperature', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('L\'unité de la VITESSE DU VENT', __FILE__))  . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('n\'est pas renseignée', __FILE__)));
+            throw new Exception(__((__('L\'unité de la VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
+        } else if ($wind_unite == 'm/s') {
             log::add('temperature', 'debug', '| ───▶︎ ' . __('La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h', __FILE__));
             $wind = $wind * 3.6;
             $wind_unite = 'km/h';
@@ -362,7 +365,6 @@ class temperature extends eqLogic
         if ($seuil === '') {
             $seuil = 40;
             $msg_log_seuil =  __('Aucun Seuil Alerte Humidex de saisie, valeur par défaut', __FILE__);
-            log::add('temperature', 'debug', '| ───▶︎ ' . __('Aucun Seuil Alerte Humidex de saisie, valeur par défaut', __FILE__) . ' : ' .  $seuil . ' °C');
         }
         log::add('temperature', 'debug', '| ───▶︎ ' . $msg_log_seuil . ' : ' .  $seuil . ' °C');
 

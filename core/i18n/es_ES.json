@@ -29,6 +29,7 @@
         "Icône": "Icono",
         "Indice de Chaleur": "Índice de calor",
         "Indice de Chaleur (Humidex)": "Índice de calor (Humidex)",
+        "L\\'unité de la VITESSE DU VENT": "La unidad WIND SPEED",
         "La valeur :": "El valor :",
         "La vitesse du vent sélectionnée est en m\/s, le plugin va convertir en km\/h": "La velocidad del viento seleccionada está en m\/s, el plugin la convertirá a km\/h",
         "Le champ HUMIDITÉ RELATIVE": "El campo HUMEDAD RELATIVA",
@@ -70,6 +71,7 @@
         "Vent": "Viento",
         "Vitesse du Vent": "Velocidad del viento",
         "dans la commande": "en el",
+        "n\\'est pas renseignée": "no se rellena",
         "ne peut être vide": "no puede estar vacío",
         "pour l\\'équipement": "para equipos"
     },
