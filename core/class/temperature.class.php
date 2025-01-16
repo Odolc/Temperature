@@ -259,6 +259,7 @@ class temperature extends eqLogic
             if ($wind_unite == 'm/s') {
                 $wind_unite = 'km/h';
             } else if ($wind_unite == '') {
+                log::add('temperature', 'debug', '| ───▶︎ :fg-warning:' . __('Aucune unité pour la vitesse du vent n\'est renseignée, le plugin va faire les calculs en utiisant l\'unité : km/h', __FILE__) . ':/fg:');
                 $wind_unite = 'km/h';
             }
         }
@@ -343,7 +344,7 @@ class temperature extends eqLogic
             throw new Exception(__((__('Le champ VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
         }
         if ($wind_unite == '') {
-            log::add('rosee', 'debug', '| ───▶︎ :fg-warning:' . __('Aucune unité pour la vitesse du vent n\'est renseignée, le plugin va faire les calculs en utiisant l\'unité : km/h', __FILE__) . ':/fg:');
+            log::add('temperature', 'debug', '| ───▶︎ :fg-warning:' . __('Aucune unité pour la vitesse du vent n\'est renseignée, le plugin va faire les calculs en utiisant l\'unité : km/h', __FILE__) . ':/fg:');
             $wind_unite = 'km/h';
         } else if ($wind_unite == 'm/s') {
             log::add('temperature', 'debug', '| ───▶︎ ' . __('La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h', __FILE__));
