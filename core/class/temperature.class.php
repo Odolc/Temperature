@@ -258,6 +258,8 @@ class temperature extends eqLogic
             }
             if ($wind_unite == 'm/s') {
                 $wind_unite = 'km/h';
+            } else if ($wind_unite == '') {
+                $wind_unite = 'km/h';
             }
         }
         $this->AddCommand($vent_name, 'wind', 'info', 'numeric', 'core::line', $wind_unite, 'WEATHER_WIND_SPEED', 0, 'default', 'default', 'default', 'default', $order++, '0', true, 'default', null, 2, null);
@@ -341,8 +343,8 @@ class temperature extends eqLogic
             throw new Exception(__((__('Le champ VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
         }
         if ($wind_unite == '') {
-            log::add('temperature', 'error', (__('Configuration :', __FILE__)) . ' ' . (__('L\'unité de la VITESSE DU VENT', __FILE__))  . ' ' . (__('pour l\'équipement', __FILE__)) . ' [' . $this->getName() . '] ' . (__('n\'est pas renseignée', __FILE__)));
-            throw new Exception(__((__('L\'unité de la VITESSE DU VENT', __FILE__)) . ' ' . (__('ne peut être vide', __FILE__)) . ' ['  . $this->getName(), __FILE__) . ']');
+            log::add('rosee', 'debug', '| ───▶︎ :fg-warning:' . __('Aucune unité pour la vitesse du vent n\'est renseignée, le plugin va faire les calculs en utiisant l\'unité : km/h', __FILE__) . ':/fg:');
+            $wind_unite = 'km/h';
         } else if ($wind_unite == 'm/s') {
             log::add('temperature', 'debug', '| ───▶︎ ' . __('La vitesse du vent sélectionnée est en m/s, le plugin va convertir en km/h', __FILE__));
             $wind = $wind * 3.6;
@@ -400,7 +402,7 @@ class temperature extends eqLogic
         }
 
         /*  ********************** Mise à Jour des équipements *************************** */
-        log::add('temperature', 'debug', '┌── :fg-info:' . __('Mise à jour', __FILE__)  . ' ::/fg: '  . $this->getName() . ' ──');
+        log::add('temperature', 'debug', '┌── :fg-info:' . __('Mise à jour des valeurs', __FILE__)  . ' ::/fg: '  . $this->getName() . ' ──');
 
         $Equipement = eqlogic::byId($this->getId());
         if (is_object($Equipement) && $Equipement->getIsEnable()) {
