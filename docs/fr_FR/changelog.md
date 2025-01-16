@@ -11,7 +11,7 @@ pluginId: temperature
 
 ## 2025
 
-### 15/01/2025
+### 15-16/01/2025
 
 - Ajout contrôle unité pour la vitesse du vent
 
