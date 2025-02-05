@@ -9,7 +9,7 @@
 		"it_IT": "Plugin per il calcolo del windchill e dell'indice di temperatura",
 		"pt_PT": "Plugin para calcular a sensação térmica e o índice de temperatura"
 	},
-	"usage": "Indiquer des équipements température, humidité relative et vitesse du vent. Indiquer un seuil d'alerte pour l'indice de température (40°C par défaut). Si les conditions météo de température et d'humidité s'y prêtent, le plugin calcul le Windchill et l'indice de température.",
+	"usage": "Ce plugin permet de calculer l'effet du vent sur la température ressentie, windchill (plutôt lorsque les températures sont basses), ainsi que l'effet d'inconfort provoqué par le taux d'humidité lorsque les températures sont élevées (humidex).",
 	"licence": "AGPL",
 	"author": "Claude Metzger / JAG",
 	"require": "4.2",
@@ -29,10 +29,10 @@
 		"it_IT",
 		"pt_PT"
 	],
-	"changelog": "https://odolc.github.io/Temperature/#language#/changelog",
-	"documentation": "https://odolc.github.io/Temperature/#language#/",
-	"changelog_beta": "https://odolc.github.io/Temperature/#language#/changelog",
-	"documentation_beta": "https://odolc.github.io/Temperature/#language#/",
+	"changelog": "https://jealg.github.io/documentation/plugin-temperature/#language#/changelog",
+	"documentation": "https://jealg.github.io/documentation/plugin-temperature/#language#/",
+	"changelog_beta": "https://jealg.github.io/documentation/plugin-temperaturee/#language#/beta_changelog",
+	"documentation_beta": "https://jealg.github.io/documentation/plugin-temperature/#language#/",
 	"link": {
 		"forum": "https://community.jeedom.com/tag/plugin-temperature"
 	},
